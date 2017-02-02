@@ -2,9 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import store from '../store' 
 
-import { setSearch, setStreams, fetchStreams } from '../actions/searchActions'
+import { fetchStreams } from '../actions/searchActions'
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.timer;
+  }
+
+  onChangeHandler(e) {
+    e.persist();
+    if(this.timer) clearTimeout(this.timer);
+
+    this.timer = setTimeout(() => {
+      this.props.searchStreams(e.target.value);
+    }, 500)
+  }
 
   streamList() {
     const streams = this.props.streams.map(stream => {
@@ -19,8 +32,9 @@ class App extends React.Component {
     return (
       <div>
         <h1>{this.props.query}</h1>
+        <input type="text" placeholder="Search" onChange={this.onChangeHandler.bind(this)}/>
+        
         {this.props.query ? this.streamList() : []}
-        <input type="text" placeholder="Search" onChange={e => this.props.searchStreams(e.target.value)}/>
       </div>
     )
   }

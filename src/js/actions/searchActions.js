@@ -18,7 +18,7 @@ export function fetchStreams(query) {
     dispatch(setQuery(query))
 
     if(query) {
-      fetch("https://api.twitch.tv/kraken/search/streams?query=" + query, 
+      fetch("https://api.twitch.tv/kraken/search/streams?limit=100&query=" + query, 
         {
           method: "GET",
           headers: { "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56" }
@@ -31,6 +31,7 @@ export function fetchStreams(query) {
         return response.json()
       })
       .then(json => {
+        console.log(query)
         console.log(json)
         dispatch(setStreams(json.streams))
       })

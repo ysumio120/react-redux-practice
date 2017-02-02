@@ -1,4 +1,4 @@
-export default function reducer(state={toggle:"NOT CLICKED", streams: []}, action) {
+export default function reducer(state={streams: []}, action) {
   switch(action.type) {
     case "SET_QUERY": {
       return Object.assign({}, state, {query: action.query})
