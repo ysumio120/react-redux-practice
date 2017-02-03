@@ -1,0 +1,8 @@
+.profile_logo {
+  width: 40px;
+  margin: 0 5px;
+}
+
+li:hover {
+  background-color: yellow;
+}

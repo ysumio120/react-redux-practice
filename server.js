@@ -1,10 +1,13 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var path = require('path')
+import express from 'express'
+import bodyParser from 'body-parser'
+import path from 'path'
 
-var app = express();
+import app_controller from './src/js/controllers/app_controller'
 
-var PORT = process.env.PORT || 8080;
+const app = express();
+
+const PORT = process.env.PORT || 8080;
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -12,11 +15,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', function(req, res) {
-  console.log('here');
+
   res.sendFile(__dirname + '/index.html');
 });
 
-//app.use('/', twitch_controller);
+app.use('/', app_controller);
 
 //require('./client/src/config/connection');
 

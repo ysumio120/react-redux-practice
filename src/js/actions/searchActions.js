@@ -25,6 +25,7 @@ export function fetchStreams(query) {
         }
       )
       .then(response => {
+        console.log(response)
         if(!response.ok) 
           throw new Error()
         
