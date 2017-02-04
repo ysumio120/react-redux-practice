@@ -4,3 +4,11 @@ export function addStream(stream) {
     stream
   }
 }
+
+export function loadStream(channel, player) {
+  return {
+    type: "LOAD_STREAM",
+    channel,
+    player
+  }
+}

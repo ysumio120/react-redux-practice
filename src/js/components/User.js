@@ -66,7 +66,7 @@ class User extends React.Component {
     if(this.props.user && this.props.isLoggedIn)
       return (
         <span>
-          <img className="profile_logo" src={this.props.user.logo ? this.props.user.logo : "src/images/profile_default.jpg"} />
+          <img className="profile-logo" src={this.props.user.logo ? this.props.user.logo : "src/images/profile_default.jpg"} />
           {this.props.user.display_name}
           <button onClick={this.props.logoutUser}>Logout</button>
         </span>
