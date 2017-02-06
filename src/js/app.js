@@ -5,6 +5,6 @@ import { Provider } from "react-redux"
 import Route from "./components/Root"
 import store from "./store"
 
-const app = document.getElementById('app')
+const Root = document.getElementById('root')
 
-ReactDOM.render(<Route />, app);
+ReactDOM.render(<Route />, Root);

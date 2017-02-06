@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 import store from '../store' 
 
 
-class ChatColumn extends React.Component {
+class Results extends React.Component {
   
   constructor(props) {
     super(props);
   }
 
   render() {
-    
     return (
-      <div id="chat-col">
+      <div id="search-results">
+        
       </div>
     )
   }
@@ -30,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatColumn)
+export default connect(mapStateToProps, mapDispatchToProps)(Results)

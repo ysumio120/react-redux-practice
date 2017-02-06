@@ -1,18 +1,17 @@
 html {
   height: 100%;
+  overflow-y: hidden;
 }
 
-body {
+body,
+#root,
+#app {
   height: 100%;
   position: relative;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif
 }
 
-.profile-logo {
-  width: 40px;
-  margin: 0 5px;
-}
 
 .stream-canvas {
   width: 100%
@@ -39,6 +38,45 @@ body {
   height: 100%;
 }
 
+.list-results {
+  height: 182px;
+  margin-left: 240px;
+  margin-right: 320px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#games-list > ul > li {
+  display: inline-block;
+  list-style-type: none;
+  margin: 10px 15px;
+  text-overflow: ellipsis;
+  width: 90px;
+}
+
+#games-list > ul {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+
+.game-image {
+  width: 90px;
+  margin-bottom: 5px;
+}
+
+.game-title {
+  font-size: 10px;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
 #main-col {
   margin-left: 240px;
   margin-right: 320px;
@@ -52,6 +90,94 @@ body {
   height: 100%;
   width: 240px;
   background-color: #3a2c55;
+}height
+
+#nav-col > h1 {
+  text-align: center;
+  color: white;
+}
+
+#user-wrapper {
+  color: white;
+  background-color: #30264d;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border-top: 1px solid #5c42a5;
+  border-bottom: 1px solid #5c42a5;
+}
+
+#user {
+  margin-left: 20px;
+}
+
+.profile-logo {
+  width: 40px;
+  margin-right: 8px;
+  vertical-align: top;
+  border: 1px solid grey;
+}
+
+.user-info {
+  font-size: 13px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.logout-btn {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  color: black;
+ /* background-color: #1d1338;*/
+}
+
+.fa-sign-out {
+  margin-right: 5px;
+}
+
+#search {
+  position: relative;
+  margin-left: 20px;
+}
+
+.fa.fa-search {
+  position: absolute;
+  font-size: 14px;
+  color: #dddddd;
+  background-color: #1d1338;
+  height: 21px;
+  padding-top: 6px;
+  padding-left: 8px;
+  padding-right: 10px;
+  border: 1px solid #583aaa;
+  border-right: none;
+  transition: border .3s;
+}
+
+.fa.fa-search.search-focus {
+  border: 1px solid #7a63b8;
+  border-right: none;
+  outline: none;
+  transition: border .3s;
+}
+
+#search > input {
+  color: #dddddd;
+  background-color: #1d1338;
+  height: 25px;
+  width: 164px;
+  padding-left: 35px;
+  border: 1px solid #583aaa;
+  border-left: none;
+  transition: border .3s;
+}
+
+#search > input:focus {
+  border: 1px solid #7a63b8;
+  border-left: none;
+  outline: none;
+  transition: border .3s;
 }
 
 #nav-menu {
@@ -62,20 +188,32 @@ body {
   padding: 0;
 }
 
-#nav-menu > ul > li {
-  font-size: 17px;
+#nav-menu > ul >  li {
+  font-size: 15px;
   list-style-type: none;
   color: white;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 20px;
+
   transition: background-color .5s;
 }
 
-#nav-menu > ul > li.active,
+#nav-menu > ul > a >  li.active,
 #nav-menu > ul > li:hover {
   cursor: pointer;
   background-color: #614b88;
+}
+
+#nav-menu a, 
+#nav-menu a:visited, 
+#nav-menu a:hover, 
+#nav-menu a:active {  
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 35px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
 }
 
 #nav-menu i {

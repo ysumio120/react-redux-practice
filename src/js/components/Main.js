@@ -2,10 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import store from '../store' 
 
-import User from './User'
 import Streams from './Streams'
 
-import { fetchStreams } from '../actions/searchActions'
 import { addStream } from '../actions/streamsActions'
 
 
@@ -13,15 +11,6 @@ class Main extends React.Component {
   
   constructor(props) {
     super(props);
-  }
-
-  onChangeHandler(e) {
-    e.persist();
-    if(this.timer) clearTimeout(this.timer);
-
-    this.timer = setTimeout(() => {
-      this.props.fetchStreams(e.target.value);
-    }, 500)
   }
 
   streamList() {
@@ -37,10 +26,6 @@ class Main extends React.Component {
     
     return (
       <div id="main-col">
-        <div>TwitchAvidReactRedux</div>
-        <div>{this.props.query}</div>
-        <input type="text" placeholder="Search" onChange={this.onChangeHandler.bind(this)}/>
-        <User />
         {this.props.query ? this.streamList() : []}
         <Streams />
       </div>
@@ -48,19 +33,16 @@ class Main extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    query: store.search.query,
-    searchStreams: store.search.streams,
-    activeStreams: store.streams.streams
+    query: state.search.query,
+    searchStreams: state.search.streams,
+    activeStreams: state.streams.streams
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchStreams: (query) => {
-      dispatch( fetchStreams(query) )
-    },
     addStream: (stream) => {
       dispatch( addStream(stream) )
     }

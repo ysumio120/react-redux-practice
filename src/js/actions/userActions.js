@@ -59,6 +59,7 @@ export function getUser(token) {
     fetch("https://api.twitch.tv/kraken/user", {
       method: "GET",
       headers: {
+        "Accept": "application/vnd.twitchtv.v5+json",
         "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56",
         "Authorization": "OAuth " + token
       }

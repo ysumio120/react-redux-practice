@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import store from '../store' 
 
+import Search from './Search'
 import NavMenu from './NavMenu'
+import User from './User'
 
 class NavColumn extends React.Component {
   
@@ -14,13 +16,16 @@ class NavColumn extends React.Component {
 
     return (
       <div id="nav-col">
+        <h1>TwitchAvid</h1>
+        <User />
+        <Search />
         <NavMenu />
       </div>
     )
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state, ownProps) => {
   return {
 
   }

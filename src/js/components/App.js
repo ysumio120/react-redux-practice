@@ -14,12 +14,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.timer;
+    console.log(this.props.children)
   }
 
   render() {
     return (
-      <div>
+      <div id="app">
         <NavColumn />
+        {this.props.children}
         <Main />
         <ChatColumn />
       </div>
@@ -27,11 +29,11 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    query: store.search.query,
-    searchStreams: store.search.streams,
-    activeStreams: store.streams.streams
+    query: state.search.query,
+    searchStreams: state.search.streams,
+    activeStreams: state.streams.streams
   }
 }
 

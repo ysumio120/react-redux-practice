@@ -5,7 +5,7 @@ import store from '../store'
 import { fetchStreams } from '../actions/searchActions'
 import * as user from '../actions/userActions'
 
-console.log(user)
+
 class User extends React.Component {
   
   constructor(props) {
@@ -65,11 +65,13 @@ class User extends React.Component {
   isLoggedIn() {
     if(this.props.user && this.props.isLoggedIn)
       return (
-        <span>
+        <div id="user">
           <img className="profile-logo" src={this.props.user.logo ? this.props.user.logo : "src/images/profile_default.jpg"} />
-          {this.props.user.display_name}
-          <button onClick={this.props.logoutUser}>Logout</button>
-        </span>
+          <div className="user-info">  
+            {this.props.user.display_name}
+            <button className="logout-btn" onClick={this.props.logoutUser}><i className="fa fa-sign-out" aria-hidden="true"></i>Logout</button>
+          </div>
+        </div>
       )
     else
       return <a href='/login'> Connect to Twitch </a>
@@ -77,18 +79,18 @@ class User extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="user-wrapper">
         {this.isLoggedIn()}
       </div>
     )
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    isLoggedIn: store.user.isLoggedIn,
-    token: store.user.token,
-    user: store.user.user
+    isLoggedIn: state.user.isLoggedIn,
+    token: state.user.token,
+    user: state.user.user
   }
 }
 

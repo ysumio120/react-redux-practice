@@ -4,7 +4,6 @@ import store from '../store'
 
 import { loadStream } from '../actions/streamsActions'
 
-console.log(Twitch)
 class Streams extends React.Component {
   
   constructor(props) {
@@ -31,7 +30,6 @@ class Streams extends React.Component {
 
   render() {
 
-    console.log("test")
     return (
       <div className="stream-canvas">
         {this.streamContainer()}
@@ -40,9 +38,9 @@ class Streams extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    activeStreams: store.streams.streams
+    activeStreams: state.streams.streams
   }
 }
 

@@ -12,16 +12,19 @@ export function setStreams(streams) {
   }
 }
 
-export function fetchStreams(query) {
+export function fetchStreamsByQuery(query) {
     
   return (dispatch) => {
     dispatch(setQuery(query))
 
     if(query) {
-      fetch("https://api.twitch.tv/kraken/search/streams?limit=100&query=" + query, 
+      fetch("https://api.twitch.tv/kraken/search/streams/?limit=100&query=" + query, 
         {
           method: "GET",
-          headers: { "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56" }
+          headers: {
+            "Accept": "application/vnd.twitchtv.v5+json", 
+            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+          }
         }
       )
       .then(response => {
@@ -43,5 +46,38 @@ export function fetchStreams(query) {
     }
     else
       dispatch(setStreams([]))
+  }
+}
+
+export function fetchStreamsByGame(game) {
+    
+  return (dispatch) => {
+
+    if(game) {
+      fetch("https://api.twitch.tv/kraken/streams/?limit=100&game=" + game, 
+        {
+          method: "GET",
+          headers: {
+            "Accept": "application/vnd.twitchtv.v5+json", 
+            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+          }
+        }
+      )
+      .then(response => {
+        console.log(response)
+        if(!response.ok) 
+          throw new Error()
+        
+        return response.json()
+      })
+      .then(json => {
+        console.log(json)
+        dispatch(setStreams(json.streams))
+      })
+      .catch(err => {
+        console.log("caught error")
+        dispatch(setStreams([]))
+      })
+    }
   }
 }
