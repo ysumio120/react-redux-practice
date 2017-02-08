@@ -5,9 +5,9 @@ export function setQuery(query) {
   }
 }
 
-export function setStreams(streams) {
+export function setStreamsQuery(streams) {
   return {
-    type: "SET_STREAMS",
+    type: "SET_STREAMS_QUERY",
     streams
   }
 }
@@ -37,47 +37,15 @@ export function fetchStreamsByQuery(query) {
       .then(json => {
         console.log(query)
         console.log(json)
-        dispatch(setStreams(json.streams))
+        dispatch(setStreamsQuery(json.streams))
       })
       .catch(err => {
+        console.log(err)
         console.log("caught error")
-        dispatch(setStreams([]))
+        dispatch(setStreamsQuery([]))
       })
     }
     else
-      dispatch(setStreams([]))
-  }
-}
-
-export function fetchStreamsByGame(game) {
-    
-  return (dispatch) => {
-
-    if(game) {
-      fetch("https://api.twitch.tv/kraken/streams/?limit=100&game=" + game, 
-        {
-          method: "GET",
-          headers: {
-            "Accept": "application/vnd.twitchtv.v5+json", 
-            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
-          }
-        }
-      )
-      .then(response => {
-        console.log(response)
-        if(!response.ok) 
-          throw new Error()
-        
-        return response.json()
-      })
-      .then(json => {
-        console.log(json)
-        dispatch(setStreams(json.streams))
-      })
-      .catch(err => {
-        console.log("caught error")
-        dispatch(setStreams([]))
-      })
-    }
+      dispatch(setStreamsQuery([]))
   }
 }

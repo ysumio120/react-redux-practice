@@ -12,3 +12,10 @@ export function loadStream(channel, player) {
     player
   }
 }
+
+export function setMuted(muted) {
+  return {
+    type: "SET_MUTED",
+    muted
+  }
+}

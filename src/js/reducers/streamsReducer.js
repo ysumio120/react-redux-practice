@@ -29,6 +29,9 @@ export default function reducer(state=initialState, action) {
       })
       return Object.assign({}, state, {streams: newStreams});
     }
+    case "SET_MUTED": {
+      return Object.assign({}, state, {muted: action.muted})
+    }
     // case "REMOVE_STREAM": {
     //   return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn})
     // } 

@@ -12,6 +12,13 @@ export function setGamesList(games) {
   }
 }
 
+export function setStreamsGame(streams) {
+  return {
+    type: "SET_STREAMS_GAME",
+    streams
+  }
+}
+
 export function fetchTopGames() {
     
   return (dispatch) => {
@@ -26,7 +33,7 @@ export function fetchTopGames() {
       }
     )
     .then(response => {
-      console.log(response)
+      //console.log(response)
       if(!response.ok) 
         throw new Error()
       
@@ -37,9 +44,41 @@ export function fetchTopGames() {
       dispatch(setGamesList(json.top))
     })
     .catch(err => {
-      console.log(err)
       console.log("caught error")
       dispatch(setGamesList([]))
     })
+  }
+}
+
+export function fetchStreamsByGame(game) {
+    
+  return (dispatch) => {
+
+    if(game) {
+      fetch("https://api.twitch.tv/kraken/streams/?limit=100&game=" + game, 
+        {
+          method: "GET",
+          headers: {
+            "Accept": "application/vnd.twitchtv.v5+json", 
+            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+          }
+        }
+      )
+      .then(response => {
+        //console.log(response)
+        if(!response.ok) 
+          throw new Error()
+        
+        return response.json()
+      })
+      .then(json => {
+        console.log(json)
+        dispatch(setStreamsGame(json.streams))
+      })
+      .catch(err => {
+        console.log("caught error")
+        dispatch(setStreamsGame([]))
+      })
+    }
   }
 }

@@ -52,8 +52,8 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props)
-    console.log(nextProps)
+    // console.log(this.props)
+    // console.log(nextProps)
     if(this.props.token != nextProps.token) {
       localStorage.setItem("accessToken", nextProps.token);
       if(nextProps.token)

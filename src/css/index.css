@@ -14,13 +14,56 @@ body,
 
 
 .stream-canvas {
-  width: 100%
+  padding: 10px 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stream-canvas-controls {
+  width: 100%;
 }
 
 .stream-container {
   width: 50%;
   display: inline-block;
 }
+
+.player-controls {
+  position: absolute;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 10;
+  bottom: 12px;
+  left: 46%;
+/*  display: none;*/
+}
+
+.player-controls > div {
+  position: relative;
+  display: inline-block;
+}
+
+.player-controls .fa-commenting {
+  color: white;
+  font-size: 134%;
+/*  display: none;*/
+  padding: 4px 4px;
+
+}
+
+.player-controls .fa-commenting-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: absolute;
+  z-index: 10;
+  font-size: 11px;
+  color: white;
+  left: -4.5%;
+  bottom: 38px;
+  background-color: rgba(0,0,0,0.7);
+  padding: 4px 5px;
+  white-space: nowrap;
+/*  display: none;*/
+}
+
 .vid {
   position: relative;
   width: 100%;
@@ -40,10 +83,74 @@ body,
 
 .list-results {
   height: 182px;
+  max-height: 182px;
   margin-left: 240px;
   margin-right: 320px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+}
+
+.search-results {
+  position: absolute;
+  width: 100%;
+  padding-left: 240px;
+  padding-right: 320px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 10px 10px 28px -8px black;
+  z-index: 5000;
+  transition: all .15s;
+}
+
+.search-results-close {
+  width: 0%;
+  padding-left: 0;
+  padding-right: 0;
+  transition: all .15s;
+}
+
+.streams-list > ul {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.streams-list > ul > li {
+  display: inline-block;
+  list-style-type: none;
+  margin: 4px 15px;
+  text-overflow: ellipsis;
+  width: 200px;
+  cursor: pointer;
+}
+
+.stream-image {
+  width: 200px;
+}
+
+.stream-info {
+  font-size: 12px;
+}
+
+.stream-status,
+.stream-channel {
+  line-height: 1em;
+  margin: 7px 0 0 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#games-list > ul {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 #games-list > ul > li {
@@ -52,16 +159,20 @@ body,
   margin: 10px 15px;
   text-overflow: ellipsis;
   width: 90px;
+  cursor: pointer;
 }
 
-#games-list > ul {
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  white-space: nowrap;
-  overflow-x: scroll;
-}
 
+
+#games-list a, 
+#games-list a:visited, 
+#games-list a:hover, 
+#games-list a:active {  
+  display: block;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+}
 
 .game-image {
   width: 90px;
@@ -89,8 +200,9 @@ body,
   left: 0;
   height: 100%;
   width: 240px;
+  z-index: 10000;
   background-color: #3a2c55;
-}height
+}
 
 #nav-col > h1 {
   text-align: center;
@@ -227,6 +339,6 @@ body,
   right: 0;
   height: 100%;
   width: 320px;
+  z-index: 10000;
   background-color: black;
 }
-

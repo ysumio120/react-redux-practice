@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import store from '../store' 
 
@@ -12,11 +13,11 @@ class Game extends React.Component {
 
   render() {
     return (
-      <li>
-        <div className="game-display">
+      <li title={this.props.title}>
+        <Link to={"/game/" + this.props.title} className="game-display">
           <img className="game-image" src={this.props.boxArt}/>
           <p className="game-title">{this.props.title}</p>
-        </div>
+        </Link>
       </li>
     )
   }
@@ -31,9 +32,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fecthGames: () => {
-      dispatch( fetchTopGames() )
-    }
+
   }
 }
 

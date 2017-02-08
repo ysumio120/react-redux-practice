@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import store from '../store' 
 
+import SearchResults from './SearchResults'
 import NavColumn from './NavColumn'
 import Main from './Main'
 import ChatColumn from './ChatColumn'
@@ -17,9 +18,14 @@ class App extends React.Component {
     console.log(this.props.children)
   }
 
+  appOnClick(e) {
+    this.props.toggleSearch(false);
+  }
+
   render() {
     return (
-      <div id="app">
+      <div id="app" onClick={this.appOnClick.bind(this)}>
+        <SearchResults />
         <NavColumn />
         {this.props.children}
         <Main />
@@ -44,6 +50,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     addStream: (stream) => {
       dispatch( addStream(stream) )
+    },
+    toggleSearch: (toggle) => {
+      dispatch( {type: "TOGGLE_SEARCH", toggle} )
     }
   }
 }

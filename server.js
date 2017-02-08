@@ -12,11 +12,11 @@ const PORT = process.env.PORT || 8080;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, '/')));
+app.use("/src", express.static(path.join(__dirname, '/src')));
 
 app.get('/*', function(req, res) {
 
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/src/index.html');
 });
 
 app.use('/', app_controller);

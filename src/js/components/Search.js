@@ -16,7 +16,12 @@ class Search extends React.Component {
 
     this.timer = setTimeout(() => {
       this.props.fetchStreams(e.target.value);
-    }, 500)
+    }, 300)
+  }
+
+  onClickHandler(e) {
+    e.stopPropagation();
+    this.props.toggleSearch(true);
   }
 
   onFocusHandler() {
@@ -32,8 +37,11 @@ class Search extends React.Component {
     return (
       <div id="search">
         <i className="fa fa-search" aria-hidden="true"></i>
-        <input type="text" placeholder="Search" onFocus={this.onFocusHandler}
-            onBlur={this.onBlurHandler} onChange={this.onChangeHandler.bind(this)}/>
+        <input type="text" placeholder="Search" 
+            onClick={this.onClickHandler.bind(this)} 
+            onFocus={this.onFocusHandler.bind(this)}
+            onBlur={this.onBlurHandler.bind(this)} 
+            onChange={this.onChangeHandler.bind(this)}/>
       </div>
     )
   }
@@ -49,6 +57,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchStreams: (query) => {
       dispatch( fetchStreamsByQuery(query) )
+    },
+    toggleSearch: (toggle) => {
+      dispatch( {type: "TOGGLE_SEARCH", toggle} )
     }
   }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import store from '../store' 
 
-import Game from './Game'
+import GameItem from './GameItem'
 
 import { setGame, fetchTopGames } from '../actions/gamesActions'
 
@@ -16,7 +16,7 @@ class GamesList extends React.Component {
 
   gamesList() {
     const gamesList = this.props.games.map((game) => {
-      return <Game game={game}/>
+      return <GameItem game={game}/>
     })
 
     return <ul>{gamesList}</ul>
