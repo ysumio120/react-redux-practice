@@ -46,8 +46,10 @@ class User extends React.Component {
     }
 
     else if(queryObj.code) {
-      console.log("here code")
       this.props.getToken(queryObj.code);
+    }
+    else {
+      this.props.logoutUser();
     }
   }
 
@@ -62,8 +64,31 @@ class User extends React.Component {
 
   }
 
+  buildQuery(headers) {
+    let params = [];
+    for(let key in headers) {
+      if(headers[key] !== null && headers[key] !== undefined)
+        params.push(key + '=' + headers[key]);
+    }
+
+    return encodeURI(params.join('&'));
+  }
+
+  login() {
+    const headers = {
+      response_type: "code",
+      client_id: "kw4mh30kbtoewy0b9dh0mmyrt38r56",
+      redirect_uri: "http://localhost:8080",
+      scope: "user_read channel_read user_follows_edit",
+      force_verify: "true"
+    };
+    
+    const params = this.buildQuery(headers);
+    window.location = "https://api.twitch.tv/kraken/oauth2/authorize?" + params;  
+  }
+
   isLoggedIn() {
-    if(this.props.user && this.props.isLoggedIn)
+    if(this.props.user && this.props.isLoggedIn && !this.props.loggingIn)
       return (
         <div id="user">
           <img className="profile-logo" src={this.props.user.logo ? this.props.user.logo : "src/images/profile_default.jpg"} />
@@ -73,8 +98,8 @@ class User extends React.Component {
           </div>
         </div>
       )
-    else
-      return <a href='/login'> Connect to Twitch </a>
+    else if(!this.props.loggingIn)
+      return <img onClick={this.login.bind(this)} src="http://ttv-api.s3.amazonaws.com/assets/connect_light.png" className="twitch-connect"/>
   }
 
   render() {
@@ -88,6 +113,7 @@ class User extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    loggingIn: state.user.loggingIn,
     isLoggedIn: state.user.isLoggedIn,
     token: state.user.token,
     user: state.user.user

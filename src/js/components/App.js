@@ -25,6 +25,8 @@ class App extends React.Component {
   render() {
     return (
       <div id="app" onClick={this.appOnClick.bind(this)}>
+        <i className="fa fa-caret-left nav-toggle" aria-hidden="true"></i>
+        <i className="fa fa-caret-right chat-toggle" aria-hidden="true"></i>
         <SearchResults />
         <NavColumn />
         {this.props.children}

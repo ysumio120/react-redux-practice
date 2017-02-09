@@ -16,6 +16,7 @@ body,
 .stream-canvas {
   padding: 10px 5px;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
 }
 
@@ -28,9 +29,14 @@ body,
   display: inline-block;
 }
 
+.stream-container:hover .player-controls {
+  display: block;
+}
+
 .player-controls {
+  display: none;
   position: absolute;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.5);
   z-index: 10;
   bottom: 12px;
   left: 46%;
@@ -44,10 +50,17 @@ body,
 
 .player-controls .fa-commenting {
   color: white;
-  font-size: 134%;
-/*  display: none;*/
+  font-size: 125%;
   padding: 4px 4px;
+}
 
+.player-controls .fa-commenting:hover {
+  cursor: pointer;
+  color: #b2a0d2;
+}
+
+.player-controls .fa-commenting:hover + .fa-commenting-text {
+  display: inline;
 }
 
 .player-controls .fa-commenting-text {
@@ -61,7 +74,7 @@ body,
   background-color: rgba(0,0,0,0.7);
   padding: 4px 5px;
   white-space: nowrap;
-/*  display: none;*/
+  display: none;
 }
 
 .vid {
@@ -86,6 +99,7 @@ body,
   max-height: 182px;
   margin-left: 240px;
   margin-right: 320px;
+  padding: 0 35px;
 }
 
 .search-results {
@@ -191,6 +205,7 @@ body,
 #main-col {
   margin-left: 240px;
   margin-right: 320px;
+  padding: 0 25px;
   height: 100%;
 }
 
@@ -220,6 +235,10 @@ body,
 
 #user {
   margin-left: 20px;
+}
+
+.twitch-connect {
+  margin-left: 15%;
 }
 
 .profile-logo {
@@ -339,6 +358,64 @@ body,
   right: 0;
   height: 100%;
   width: 320px;
+/*  border: 1px solid grey;*/
   z-index: 10000;
-  background-color: black;
+}
+
+.chat {
+  display: none;
+  height: calc(100% - 30px);
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 1px solid grey;
+}
+
+select {
+  font-size: 14px;
+  width: 100%;
+  height: 30px;
+}
+
+.chat-selected {
+  display: block;
+}
+
+.empty-chat {
+  box-sizing: border-box;
+  border: 3px dashed black;
+  border-radius: 4%;
+  height: 100%;
+  width: 100%;
+}
+
+.chat-instructions {
+  text-align: center;
+  font-size: 20px;
+  line-height: 2em;
+  color: grey;
+}
+
+.fa.nav-toggle {
+  font-size: 20px;
+  position: absolute;
+  left: 241px;
+  padding: 5px 10px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+
+.fa.chat-toggle {
+  font-size: 20px;
+  position: absolute;
+  right: 322px;
+  padding: 5px 10px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.nav-toggle:hover,
+.chat-toggle:hover {
+  opacity: 1.0;
+  background-color: #b2a0d2;
 }

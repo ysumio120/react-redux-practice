@@ -3,13 +3,12 @@ import { connect } from 'react-redux'
 import store from '../store' 
 
 import { loadStream } from '../actions/streamsActions'
-
+import { addChat } from '../actions/chatActions'
 
 class StreamPlayer extends React.Component {
   
   constructor(props) {
     super(props);
-console.log(this.props.stream.channel)
   }
 
   componentDidMount() {
@@ -25,13 +24,12 @@ console.log(this.props.stream.channel)
         <div className="vid" id={this.props.stream.channel}>
           <div className="player-controls">
             <div>
-              <i className="fa fa-commenting" aria-hidden="true"></i>
+              <i onClick={() => this.props.addChat(this.props.stream.channel)} className="fa fa-commenting" aria-hidden="true"></i>
               <span className="fa-commenting-text">Open Chat</span>
             </div>
-          </div>        
+          </div>   
         </div>
       </div>
-
     )
   }
 }
@@ -46,6 +44,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadStream: (channel, player) => {
       dispatch( loadStream(channel, player) )
+    },
+    addChat: (channel) => {
+      dispatch ( addChat(channel) )
     }
   }
 }

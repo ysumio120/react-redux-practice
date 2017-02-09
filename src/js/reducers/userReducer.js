@@ -1,4 +1,5 @@
 const initialState = {
+  loggingIn: true,
   isLoggedIn: false, 
   user: null, 
   token: ""
@@ -11,7 +12,7 @@ export default function reducer(state=initialState, action) {
       return Object.assign({}, state, {token: action.token})
     }
     case "SET_USER": {
-      return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn})
+      return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn, loggingIn: false})
     } 
   }
 
