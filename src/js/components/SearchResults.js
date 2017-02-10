@@ -26,10 +26,11 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const classes = "streams-list list-results search-results " + (this.props.query && this.props.searchOpen ? "" : "search-results-close");
+    const classes = "streams-list list-results search-results " + (this.props.query && this.props.searchCollapse ? "" : "search-results-close");
+    const extend = this.props.chatCollapse ? "right-extend " : "";
 
     return (
-      <div id="search-results" className={classes} onClick={this.onClickHandler.bind(this)}>
+      <div id="search-results" className={classes + " " + extend} onClick={this.onClickHandler.bind(this)}>
          {this.streamsList()}
       </div>
     )
@@ -38,9 +39,9 @@ class SearchResults extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navOpen: state.app.navOpen,
-    chatOpen: state.app.chatOpen,
-    searchOpen: state.app.searchOpen,
+    navCollapse: state.app.navCollapse,
+    chatCollapse: state.app.chatCollapse,
+    searchCollapse: state.app.searchCollapse,
     query: state.search.query,
     streams: state.search.streams
   }

@@ -4,6 +4,7 @@ import store from '../store'
 
 import SearchResults from './SearchResults'
 import NavColumn from './NavColumn'
+import StreamCanvas from './StreamCanvas'
 import Main from './Main'
 import ChatColumn from './ChatColumn'
 
@@ -14,8 +15,6 @@ class App extends React.Component {
   
   constructor(props) {
     super(props);
-    this.timer;
-    console.log(this.props.children)
   }
 
   appOnClick(e) {
@@ -23,14 +22,22 @@ class App extends React.Component {
   }
 
   render() {
+    const navCollapse = this.props.navCollapse ? "nav-toggle-close fa-caret-right" : "fa-caret-left";
+    const chatCollapse = this.props.chatCollapse ? "chat-toggle-close fa-caret-left" : "fa-caret-right";
+
+    let extend = this.props.navCollapse ? "left-extend " : "";
+    extend +=  this.props.chatCollapse ? "right-extend" : ""; 
+
     return (
       <div id="app" onClick={this.appOnClick.bind(this)}>
-        <i className="fa fa-caret-left nav-toggle" aria-hidden="true"></i>
-        <i className="fa fa-caret-right chat-toggle" aria-hidden="true"></i>
+        <i onClick={() => this.props.toggleNav(!this.props.navCollapse)} className={"nav-toggle fa " + navCollapse} aria-hidden="true"></i>
+        <i onClick={() => this.props.toggleChat(!this.props.chatCollapse)} className={"chat-toggle fa " + chatCollapse} aria-hidden="true"></i>
         <SearchResults />
         <NavColumn />
-        {this.props.children}
-        <Main />
+        <div id="main-col" className={extend}>
+          {this.props.children}
+          <StreamCanvas/>
+        </div>
         <ChatColumn />
       </div>
     )
@@ -41,7 +48,10 @@ const mapStateToProps = (state, ownProps) => {
   return {
     query: state.search.query,
     searchStreams: state.search.streams,
-    activeStreams: state.streams.streams
+    activeStreams: state.streams.streams,
+    navCollapse: state.app.navCollapse,
+    chatCollapse: state.app.chatCollapse,
+    searchCollapse: state.app.searchCollapse
   }
 }
 
@@ -53,8 +63,14 @@ const mapDispatchToProps = (dispatch) => {
     addStream: (stream) => {
       dispatch( addStream(stream) )
     },
+    toggleNav: (toggle) => {
+      dispatch( {type:"TOGGLE_NAV", toggle: toggle})
+    },
+    toggleChat: (toggle) => {
+      dispatch( {type:"TOGGLE_CHAT", toggle: toggle})
+    },
     toggleSearch: (toggle) => {
-      dispatch( {type: "TOGGLE_SEARCH", toggle} )
+      dispatch( {type:"TOGGLE_SEARCH", toggle: toggle})
     }
   }
 }

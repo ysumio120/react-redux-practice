@@ -4,25 +4,52 @@ import store from '../store'
 
 import StreamItem from './StreamItem'
 
-import { fetchStreamsByGame } from '../actions/gamesActions'
+import { fetchStreamsByGame, fetchFeatured } from '../actions/gamesActions'
 
 class StreamsList extends React.Component {
   
   constructor(props) {
     super(props);
 
-    this.props.fetchStreams(this.props.game);
+    const route = this.props.route.path;
+
+    if(route == "/featured")
+      this.props.fetchFeatured();
+    else if(route == "/game/:game")
+      this.props.fetchStreams(this.props.game);
+  }
+
+  componentWillReceiveProps(newProps) {
+    const route = this.props.route.path;
+
+    if(route !== newProps.route.path){
+      console.log(newProps)
+      if(newProps.route.path == "/featured")
+        this.props.fetchFeatured();
+      else if(newProps.route.path == "/game/:game")
+        this.props.fetchStreams(this.props.game);
+    }
   }
 
   streamsList() {
-    const streamsList = this.props.streams.map((stream) => {
-      return <StreamItem stream={stream}/>
-    })
+    let streamsList;
+
+    if(this.props.route.path == "/featured") {
+      streamsList = this.props.featured.map((stream) => {
+        return <StreamItem stream={stream.stream}/>
+      })
+    }
+    else if(this.props.route.path == "/game/:game") {
+      streamsList = this.props.streams.map((stream) => {
+        return <StreamItem stream={stream}/>
+      })
+    }
 
     return <ul>{streamsList}</ul>
   }
 
   render() {
+
     return (
       <div className="streams-list list-results">
         {this.streamsList()}
@@ -34,7 +61,8 @@ class StreamsList extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     game: ownProps.params.game,
-    streams: state.games.streamsByGame
+    streams: state.games.streamsByGame,
+    featured: state.games.featured
   }
 }
 
@@ -42,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchStreams: (game) => {
       dispatch( fetchStreamsByGame(game) )
+    },
+    fetchFeatured: () => {
+      dispatch( fetchFeatured() )
     }
   }
 }

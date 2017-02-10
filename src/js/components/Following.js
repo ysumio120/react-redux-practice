@@ -23,6 +23,7 @@ class Following extends React.Component {
   }
 
   render() {
+
     return (
       <div className="streams-list list-results">
         {this.followingList()}
@@ -34,7 +35,7 @@ class Following extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     token: state.user.token,
-    streams: state.following.streams
+    streams: state.following.streams,
   }
 }
 

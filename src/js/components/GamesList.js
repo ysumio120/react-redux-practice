@@ -23,6 +23,7 @@ class GamesList extends React.Component {
   }
 
   render() {
+
     return (
       <div id="games-list" className="list-results">
         {this.gamesList()}

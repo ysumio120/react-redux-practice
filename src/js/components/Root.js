@@ -13,6 +13,7 @@ const Root = (props) => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} >
+        <Route path="/featured" component={StreamsList}/>   
         <Route path="/game/:game" component={StreamsList}/>        
         <Route path="/games" component={GamesList}/>
         <Route path="/following" component={Following}/>

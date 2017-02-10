@@ -15,7 +15,7 @@ class NavColumn extends React.Component {
   render() {
 
     return (
-      <div id="nav-col">
+      <div id="nav-col" className={this.props.navCollapse ? "nav-close" : "nav-open"}>
         <h1>TwitchAvid</h1>
         <User />
         <Search />
@@ -27,7 +27,7 @@ class NavColumn extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-
+    navCollapse: state.app.navCollapse
   }
 }
 

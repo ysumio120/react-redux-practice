@@ -11,9 +11,11 @@ class Main extends React.Component {
   }
 
   render() {
+    let extend = this.props.navCollapse ? "left-extend " : "";
+    extend +=  this.props.chatCollapse ? "right-extend" : "";
     
     return (
-      <div id="main-col">
+      <div id="main-col" className={extend}>
         <StreamCanvas />
       </div>
     )
@@ -22,7 +24,8 @@ class Main extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-
+    navCollapse: state.app.navCollapse,
+    chatCollapse: state.app.chatCollapse
   }
 }
 

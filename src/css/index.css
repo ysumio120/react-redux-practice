@@ -97,9 +97,7 @@ body,
 .list-results {
   height: 182px;
   max-height: 182px;
-  margin-left: 240px;
-  margin-right: 320px;
-  padding: 0 35px;
+  padding: 0 10px;
 }
 
 .search-results {
@@ -381,9 +379,10 @@ select {
 }
 
 .empty-chat {
+  background-color: lightgrey;
   box-sizing: border-box;
-  border: 3px dashed black;
-  border-radius: 4%;
+  border: 3px dotted black;
+  border-radius: 1%;
   height: 100%;
   width: 100%;
 }
@@ -404,6 +403,9 @@ select {
   opacity: 0.5;
 }
 
+.fa.nav-toggle-close {
+  left: 5px;
+}
 
 .fa.chat-toggle {
   font-size: 20px;
@@ -414,8 +416,36 @@ select {
   opacity: 0.5;
 }
 
+.fa.chat-toggle-close {
+  right: 3px;
+}
+
 .nav-toggle:hover,
 .chat-toggle:hover {
   opacity: 1.0;
   background-color: #b2a0d2;
+}
+
+.chat-open,
+.nav-open {
+  display: block;
+}
+
+.chat-close,
+.nav-close {
+  display: none;
+}
+
+.left-extend,
+#main-col.left-extend {
+  margin-left: 0;
+}
+
+.right-extend,
+#main-col.right-extend {
+  margin-right: 0;
+}
+
+#search-results.right-extend {
+  padding-right: 0;
 }

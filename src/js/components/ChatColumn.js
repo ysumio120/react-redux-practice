@@ -65,7 +65,7 @@ class ChatColumn extends React.Component {
     }
 
     return (
-      <div id="chat-col">
+      <div id="chat-col" className={this.props.chatCollapse ? "chat-close" : "chat-open"}>
         {ifChatExist()}
         {this.loadChats()}
       </div>
@@ -76,7 +76,8 @@ class ChatColumn extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     selected: state.chats.selected,
-    chats: state.chats.chats
+    chats: state.chats.chats,
+    chatCollapse: state.app.chatCollapse
   }
 }
 

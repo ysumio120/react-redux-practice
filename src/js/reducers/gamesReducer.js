@@ -1,7 +1,8 @@
 const initialState = {
   game: "",
   gamesList: [],
-  streamsByGame: []
+  streamsByGame: [],
+  featured: []
 }
 
 export default function reducer(state=initialState, action) {
@@ -15,6 +16,9 @@ export default function reducer(state=initialState, action) {
     }
     case "SET_STREAMS_GAME": {
       return Object.assign({}, state, {streamsByGame: action.streams});
+    }
+    case "SET_FEATURED": {
+      return Object.assign({}, state, {featured: action.streams});
     }
   }
 

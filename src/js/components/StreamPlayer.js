@@ -47,7 +47,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     addChat: (channel) => {
       dispatch ( addChat(channel) )
+      dispatch ( {type: "TOGGLE_CHAT", toggle: false} )
     }
+
   }
 }
 
