@@ -5,6 +5,7 @@ import store from '../store'
 import Search from './Search'
 import NavMenu from './NavMenu'
 import User from './User'
+import Channels from './Channels'
 
 class NavColumn extends React.Component {
   
@@ -20,6 +21,7 @@ class NavColumn extends React.Component {
         <User />
         <Search />
         <NavMenu />
+        <Channels />
       </div>
     )
   }

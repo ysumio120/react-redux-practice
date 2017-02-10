@@ -19,3 +19,10 @@ export function setMuted(muted) {
     muted
   }
 }
+
+export function setActiveChannel(tabName) {
+  return {
+    type: "SET_CHANNEL",
+    tabName
+  }
+}

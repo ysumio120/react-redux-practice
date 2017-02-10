@@ -29,16 +29,16 @@ class StreamCanvas extends React.Component {
   }
 
   render() {
-
-    return (
-      <div className="stream-canvas">
-        <div className="stream-canvas-controls">
-          <button onClick={() => this.muteToggle(true)}>Mute All</button>
-          <button onClick={() => this.muteToggle(false)}>Unmute All</button>
-        </div>
-        {this.streamContainer()}
-      </div>
-    )
+    return(<p></p>)
+    // return (
+    //   <div className="stream-canvas">
+    //     <div className="stream-canvas-controls">
+    //       <button onClick={() => this.muteToggle(true)}>Mute All</button>
+    //       <button onClick={() => this.muteToggle(false)}>Unmute All</button>
+    //     </div>
+    //     {this.streamContainer()}
+    //   </div>
+    // )
   }
 }
 

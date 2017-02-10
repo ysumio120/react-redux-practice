@@ -1,12 +1,17 @@
 const initialState = {
   /*
-  {
-    isLoaded: boolean,
-    channel: String,
-    player: Object (Twtich Player)
+  { 
+    name: String,
+    streams: [{
+      isLoaded: boolean,
+      channel: String,
+      player: Object (Twtich Player)
+    }}
   }
+
   */
-  streams: []
+  activeChannel: "Home",
+  streams: [{name: "Home", streams: [{isLoaded:false}]}]
 }
 
 export default function reducer(state=initialState, action) {
@@ -18,7 +23,30 @@ export default function reducer(state=initialState, action) {
         channel: action.stream,
         player: null
       }
-      return Object.assign({}, state, {streams: [...state.streams, newStream]});
+
+      const deepCopy = state.streams.map((elem) => {
+        const streamClone = elem.streams.map((stream) => {
+          return {...stream};
+        })
+        return Object.assign({}, {name: elem.name, streams: streamClone});
+      })
+      // console.log(test)
+      // console.log(state.streams)
+      // console.log(test === state.streams)
+      // console.log(test[0])
+      // test[0].streams[0].isLoaded = true;
+      // console.log(state.streams[0])
+      // console.log(test[0] === state.streams[0])
+      // let streamsCopy = [...state.streams];
+      const streamsCopy = state.streams.map((elem) => {
+        if(elem.name == state.activeChannel) {
+          const newStreams = [...elem.streams, newStream];
+          return {name: elem.name, streams: newStreams};
+        }
+        return elem;
+      })
+      return Object.assign({}, state, {streams: streamsCopy})
+      // return Object.assign({}, state, {streams: [...state.streams, newStream]});
     }
     case "LOAD_STREAM": {
       const newStreams = state.streams.map((stream) => {
@@ -31,6 +59,9 @@ export default function reducer(state=initialState, action) {
     }
     case "SET_MUTED": {
       return Object.assign({}, state, {muted: action.muted})
+    }
+    case "SET_CHANNEL": {
+      return Object.assign({}, state, {activeChannel: action.tabName})
     }
     // case "REMOVE_STREAM": {
     //   return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn})
