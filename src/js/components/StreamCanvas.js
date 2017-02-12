@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import store from '../store' 
 
 import StreamPlayer from './StreamPlayer'
-
-import { loadStream } from '../actions/streamsActions'
 
 class StreamCanvas extends React.Component {
   
@@ -21,15 +18,11 @@ class StreamCanvas extends React.Component {
   }
 
   streamContainer() {
-    console.log(this.props.activeStreams)
-    const currentStreams = this.props.activeStreams.find((elem) => {
-      console.log(this.props.tab)
-      console.log(elem.name)
-      return elem.name === this.props.tab;
+    const filteredStreams = this.props.activeStreams.filter((stream) => {
+      return this.props.navChannel === stream.navChannel;
     })
-    console.log(currentStreams);
 
-    const streamContainers = currentStreams.streams.map((stream) => {
+    const streamContainers = filteredStreams.map((stream) => {
       return <StreamPlayer stream={stream}/>
     })
 
@@ -37,8 +30,10 @@ class StreamCanvas extends React.Component {
   }
 
   render() {
+    const classNames = "stream-canvas" + (this.props.navChannel === this.props.activeChannel ? " show" : " hide");
+
     return (
-      <div className="stream-canvas">
+      <div data-tab={this.props.navChannel} className={classNames}>
         <div className="stream-canvas-controls">
           <button onClick={() => this.muteToggle(true)}>Mute All</button>
           <button onClick={() => this.muteToggle(false)}>Unmute All</button>
@@ -51,7 +46,8 @@ class StreamCanvas extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    tab: ownProps.tab,
+    navChannel: ownProps.navChannel,
+    activeChannel: state.streams.activeChannel,
     activeStreams: state.streams.streams,
     muted: state.streams.muted
   }

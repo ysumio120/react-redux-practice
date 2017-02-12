@@ -31,7 +31,7 @@ class Game extends React.Component {
 
   render() {
     return (
-      <li onClick={() => this.props.addStream(this.props.name)}>
+      <li onClick={() => this.props.addStream(this.props.activeChannel, this.props.name)}>
         <img className="stream-image" src={this.props.preview}/>
         <div className="stream-info">
           <p className="stream-status" title={this.props.status}>{this.props.status}</p>
@@ -44,6 +44,7 @@ class Game extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    activeChannel: state.streams.activeChannel,
     name: ownProps.stream.channel.name,
     displayName: ownProps.stream.channel.display_name,
     preview: ownProps.stream.preview.large,
@@ -54,8 +55,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addStream: (stream) => {
-      dispatch( addStream(stream) )
+    addStream: (navChannel, streamChannel) => {
+      dispatch( addStream(navChannel, streamChannel) )
     },
     fecthGames: () => {
       dispatch( fetchTopGames() )

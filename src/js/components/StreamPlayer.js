@@ -14,17 +14,17 @@ class StreamPlayer extends React.Component {
   componentDidMount() {
     this.props.loadStream(
       this.props.stream.channel, 
-      new Twitch.Player(this.props.stream.channel, {channel: this.props.stream.channel})
+      new Twitch.Player(this.props.stream.navChannel + "-" + this.props.stream.streamChannel, {channel: this.props.stream.streamChannel})
     )
   }
 
   render() {
     return (
       <div className="stream-container">
-        <div className="vid" id={this.props.stream.channel}>
+        <div className="vid" id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel}>
           <div className="player-controls">
             <div>
-              <i onClick={() => this.props.addChat(this.props.stream.channel)} className="fa fa-commenting" aria-hidden="true"></i>
+              <i onClick={() => this.props.addChat(this.props.stream.streamChannel)} className="fa fa-commenting" aria-hidden="true"></i>
               <span className="fa-commenting-text">Open Chat</span>
             </div>
           </div>   

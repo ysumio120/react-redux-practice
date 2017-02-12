@@ -1,11 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import store from '../store' 
 
 import SearchResults from './SearchResults'
 import NavColumn from './NavColumn'
 import StreamCanvas from './StreamCanvas'
-import Main from './Main'
 import ChatColumn from './ChatColumn'
 
 import { fetchStreams } from '../actions/searchActions'
@@ -22,8 +20,8 @@ class App extends React.Component {
   }
 
   appendStreamCanvases() {
-    const streamCanvases = this.props.activeStreams.map((stream) => {
-      return <StreamCanvas tab={stream.name} />
+    const streamCanvases = this.props.navChannels.map((channel) => {
+      return <StreamCanvas navChannel={channel} />
     })
 
     return streamCanvases;
@@ -54,23 +52,14 @@ class App extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    query: state.search.query,
-    searchStreams: state.search.streams,
-    activeStreams: state.streams.streams,
+    navChannels: state.streams.navChannels,
     navCollapse: state.app.navCollapse,
     chatCollapse: state.app.chatCollapse,
-    searchCollapse: state.app.searchCollapse
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchStreams: (query) => {
-      dispatch( fetchStreams(query) )
-    },
-    addStream: (stream) => {
-      dispatch( addStream(stream) )
-    },
     toggleNav: (toggle) => {
       dispatch( {type:"TOGGLE_NAV", toggle: toggle})
     },
