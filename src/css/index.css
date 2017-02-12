@@ -309,11 +309,17 @@ body,
   transition: border .3s;
 }
 
+
+.nav-list {
+  margin: 20px 0;
+}
+
 #nav-menu {
 
 }
 
-#nav-menu > ul {
+#nav-menu > ul,
+#nav-channels > ul {
   padding: 0;
 }
 
@@ -321,12 +327,13 @@ body,
   font-size: 15px;
   list-style-type: none;
   color: white;
-
   transition: background-color .5s;
 }
 
 #nav-menu > ul > a >  li.active,
-#nav-menu > ul > li:hover {
+#nav-menu > ul > li:hover,
+#nav-channels > ul > li.active,
+#nav-channels > ul > li:hover {
   cursor: pointer;
   background-color: #614b88;
 }
@@ -345,9 +352,42 @@ body,
   color: inherit;
 }
 
-#nav-menu i {
+#nav-menu > ul > li > a > i,
+#nav-channels > ul > li > i {
   margin-right: 15px;
   width: 15px;
+}
+
+.nav-header > i {
+  float: right;
+  width: 15px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.nav-header > i:hover {
+  opacity: 1.0;
+}
+
+#nav-channels > ul > li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 35px;
+  box-sizing: border-box;
+  color: white;
+  list-style-type: none;
+  cursor: pointer;
+  transition: background-color .5s;
+}
+
+.nav-header {
+  color: white;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.nav-header hr {
+
 }
 
 #chat-col {
@@ -448,4 +488,21 @@ select {
 
 #search-results.right-extend {
   padding-right: 0;
+}
+
+#addChannel.open {
+  margin-left: 20px;
+  display: block;
+/*  transform: translateX(0%);
+  transition: all .3s;*/
+}
+
+#addChannel.close {
+  display: none;
+/*  transform: translateX(-100%);
+  transition: all .3s;*/
+}
+
+#addChannel button {
+  margin: 5px 10px; 
 }

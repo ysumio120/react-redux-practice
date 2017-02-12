@@ -5,13 +5,14 @@ import store from '../store'
 import Search from './Search'
 import NavMenu from './NavMenu'
 import User from './User'
-import Channels from './Channels'
+import NavChannelsList from './NavChannelsList'
 
 class NavColumn extends React.Component {
   
   constructor(props) {
     super(props);
   }
+
 
   render() {
 
@@ -21,7 +22,7 @@ class NavColumn extends React.Component {
         <User />
         <Search />
         <NavMenu />
-        <Channels />
+        <NavChannelsList />
       </div>
     )
   }

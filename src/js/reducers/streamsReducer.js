@@ -11,7 +11,7 @@ const initialState = {
 
   */
   activeChannel: "Home",
-  streams: [{name: "Home", streams: [{isLoaded:false}]}]
+  streams: [{name: "Home", streams: []}]
 }
 
 export default function reducer(state=initialState, action) {
@@ -28,37 +28,43 @@ export default function reducer(state=initialState, action) {
         const streamClone = elem.streams.map((stream) => {
           return {...stream};
         })
+        if(state.activeChannel === elem.name) {
+          return Object.assign({}, {name: elem.name, streams: [...streamClone, newStream]});
+        }
         return Object.assign({}, {name: elem.name, streams: streamClone});
       })
-      // console.log(test)
-      // console.log(state.streams)
-      // console.log(test === state.streams)
-      // console.log(test[0])
-      // test[0].streams[0].isLoaded = true;
-      // console.log(state.streams[0])
-      // console.log(test[0] === state.streams[0])
-      // let streamsCopy = [...state.streams];
-      const streamsCopy = state.streams.map((elem) => {
-        if(elem.name == state.activeChannel) {
-          const newStreams = [...elem.streams, newStream];
-          return {name: elem.name, streams: newStreams};
-        }
-        return elem;
-      })
-      return Object.assign({}, state, {streams: streamsCopy})
-      // return Object.assign({}, state, {streams: [...state.streams, newStream]});
+
+      return Object.assign({}, state, {streams: deepCopy});
     }
     case "LOAD_STREAM": {
-      const newStreams = state.streams.map((stream) => {
-        if(stream.channel == action.channel)
-          return {channel: action.channel, player: action.player, isLoaded: true}
-        else 
-          return stream
+      const deepCopy = state.streams.map((elem) => {
+        const streamClone = elem.streams.map((stream) => {
+          if(action.channel === stream.channel) {
+            return {channel: action.channel, player: action.player, isLoaded: true}
+          }
+          return {...stream};
+        })
+        if(state.activeChannel === elem.name) {
+          return Object.assign({}, {name: elem.name, streams: [...streamClone, newStream]});
+        }
+        return Object.assign({}, {name: elem.name, streams: streamClone});
       })
-      return Object.assign({}, state, {streams: newStreams});
+
+      return Object.assign({}, state, {streams: deepCopy});
     }
+
     case "SET_MUTED": {
       return Object.assign({}, state, {muted: action.muted})
+    }
+    case "ADD_CHANNEL": {
+      const deepCopy = state.streams.map((elem) => {
+        const streamClone = elem.streams.map((stream) => {
+          return {...stream};
+        })
+        return Object.assign({}, {name: elem.name, streams: streamClone});
+      })
+      
+      return Object.assign({}, state, {streams: [...deepCopy, {name: action.channel, streams: []}]})
     }
     case "SET_CHANNEL": {
       return Object.assign({}, state, {activeChannel: action.tabName})

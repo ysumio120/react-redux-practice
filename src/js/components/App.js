@@ -21,6 +21,14 @@ class App extends React.Component {
     this.props.toggleSearch(false);
   }
 
+  appendStreamCanvases() {
+    const streamCanvases = this.props.activeStreams.map((stream) => {
+      return <StreamCanvas tab={stream.name} />
+    })
+
+    return streamCanvases;
+  }
+
   render() {
     const navCollapse = this.props.navCollapse ? "nav-toggle-close fa-caret-right" : "fa-caret-left";
     const chatCollapse = this.props.chatCollapse ? "chat-toggle-close fa-caret-left" : "fa-caret-right";
@@ -36,7 +44,7 @@ class App extends React.Component {
         <NavColumn />
         <div id="main-col" className={extend}>
           {this.props.children}
-          <StreamCanvas/>
+          {this.appendStreamCanvases()}
         </div>
         <ChatColumn />
       </div>

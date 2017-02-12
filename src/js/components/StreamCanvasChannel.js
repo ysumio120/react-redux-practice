@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import store from '../store' 
 
 
-class Channels extends React.Component {
+class StreamCanvasChannel extends React.Component {
   
   constructor(props) {
     super(props);
@@ -13,11 +13,7 @@ class Channels extends React.Component {
   render() {
 
     return (
-      <div id="nav-channels">
-        <ul>
-          <li><i className="fa fa-star" aria-hidden="true"></i>Home</li>
-        </ul>
-      </div>
+      <li><i className="fa fa-bookmark-o" aria-hidden="true"></i>Home</li>
     )
   }
 }
@@ -34,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Channels)
+export default connect(mapStateToProps, mapDispatchToProps)(StreamCanvasChannel)

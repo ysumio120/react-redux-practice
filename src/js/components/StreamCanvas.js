@@ -21,7 +21,15 @@ class StreamCanvas extends React.Component {
   }
 
   streamContainer() {
-    const streamContainers = this.props.activeStreams.map((stream) => {
+    console.log(this.props.activeStreams)
+    const currentStreams = this.props.activeStreams.find((elem) => {
+      console.log(this.props.tab)
+      console.log(elem.name)
+      return elem.name === this.props.tab;
+    })
+    console.log(currentStreams);
+
+    const streamContainers = currentStreams.streams.map((stream) => {
       return <StreamPlayer stream={stream}/>
     })
 
@@ -29,21 +37,21 @@ class StreamCanvas extends React.Component {
   }
 
   render() {
-    return(<p></p>)
-    // return (
-    //   <div className="stream-canvas">
-    //     <div className="stream-canvas-controls">
-    //       <button onClick={() => this.muteToggle(true)}>Mute All</button>
-    //       <button onClick={() => this.muteToggle(false)}>Unmute All</button>
-    //     </div>
-    //     {this.streamContainer()}
-    //   </div>
-    // )
+    return (
+      <div className="stream-canvas">
+        <div className="stream-canvas-controls">
+          <button onClick={() => this.muteToggle(true)}>Mute All</button>
+          <button onClick={() => this.muteToggle(false)}>Unmute All</button>
+        </div>
+        {this.streamContainer()}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    tab: ownProps.tab,
     activeStreams: state.streams.streams,
     muted: state.streams.muted
   }
