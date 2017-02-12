@@ -13,7 +13,7 @@ class NavColumn extends React.Component {
   render() {
 
     return (
-      <div id="nav-menu">
+      <div id="nav-menu" className="nav-list">
         <ul>
           <li><Link to="/featured"><i className="fa fa-star" aria-hidden="true"></i>Featured</Link></li>
           <li><Link to="/games"><i className="fa fa-gamepad" aria-hidden="true"></i>Games</Link></li>

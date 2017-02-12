@@ -1,7 +1,8 @@
-export function addStream(stream) {
+export function addStream(navChannel, streamChannel) {
   return {
     type: "ADD_STREAM",
-    stream
+    navChannel,
+    streamChannel
   }
 }
 
@@ -17,5 +18,12 @@ export function setMuted(muted) {
   return {
     type: "SET_MUTED",
     muted
+  }
+}
+
+export function setActiveChannel(tabName) {
+  return {
+    type: "SET_CHANNEL",
+    tabName
   }
 }
