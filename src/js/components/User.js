@@ -151,8 +151,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch( user.getUser(token) );
     },
     logoutUser: () => {
+      const redirect_uri = location.hostname == "localhost" ? "http://localhost:8080" : "https://twitch-avid.herokuapp.com";
       localStorage.removeItem("accessToken");
-      window.location = "http://localhost:8080"
+      location.href = redirect_uri
     }
   }
 }
