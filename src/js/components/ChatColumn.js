@@ -27,7 +27,7 @@ class ChatColumn extends React.Component {
   loadChats() {
     const chats = this.props.chats.map((chat) => {
 
-      let srcChat = "http://www.twitch.tv/" + chat + "/chat"
+      let srcChat = "https://www.twitch.tv/" + chat + "/chat"
 
       return (
         <iframe 
