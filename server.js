@@ -14,12 +14,15 @@ app.use(bodyParser.json());
 
 app.use("/src", express.static(path.join(__dirname, '/src')));
 
+
+app.use('/', app_controller);
+
 app.get('/*', function(req, res) {
 
   res.sendFile(__dirname + '/src/index.html');
 });
 
-app.use('/', app_controller);
+
 
 require('./src/js/db/connection');
 

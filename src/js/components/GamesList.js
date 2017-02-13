@@ -11,6 +11,8 @@ class GamesList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.props.toggleList(false);
+    
     this.props.fecthGames();
   }
 
@@ -25,7 +27,7 @@ class GamesList extends React.Component {
   render() {
 
     return (
-      <div id="games-list" className="list-results">
+      <div id="games-list" className={"list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
         {this.gamesList()}
       </div>
     )
@@ -34,7 +36,8 @@ class GamesList extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    games: state.games.gamesList
+    games: state.games.gamesList,
+    listCollapse: state.app.listCollapse
   }
 }
 
@@ -42,6 +45,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fecthGames: () => {
       dispatch( fetchTopGames() )
+    },
+    toggleList: (toggle) => {
+      dispatch( {type:"TOGGLE_LIST", toggle: toggle})
     }
   }
 }

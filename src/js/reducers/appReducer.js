@@ -1,7 +1,8 @@
 const initialState = {
   navCollapse: false,
   chatCollapse: false,
-  searchCollapse: true
+  searchCollapse: true,
+  listCollapse: false,
 }
 
 export default function reducer(state=initialState, action) {
@@ -15,6 +16,9 @@ export default function reducer(state=initialState, action) {
     }
     case "TOGGLE_SEARCH": {
       return Object.assign({}, state, {searchCollapse: action.toggle});
+    }
+    case "TOGGLE_LIST": {
+      return Object.assign({}, state, {listCollapse: action.toggle});
     }
   }
 

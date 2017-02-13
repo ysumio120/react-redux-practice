@@ -13,6 +13,8 @@ class StreamsList extends React.Component {
 
     const route = this.props.route.path;
 
+    this.props.toggleList(false);
+    
     if(route == "/featured")
       this.props.fetchFeatured();
     else if(route == "/game/:game")
@@ -51,7 +53,7 @@ class StreamsList extends React.Component {
   render() {
 
     return (
-      <div className="streams-list list-results">
+      <div className={"streams-list list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
         {this.streamsList()}
       </div>
     )
@@ -62,7 +64,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     game: ownProps.params.game,
     streams: state.games.streamsByGame,
-    featured: state.games.featured
+    featured: state.games.featured,
+    listCollapse: state.app.listCollapse
   }
 }
 
@@ -73,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchFeatured: () => {
       dispatch( fetchFeatured() )
+    },
+    toggleList: (toggle) => {
+      dispatch( {type:"TOGGLE_LIST", toggle: toggle})
     }
   }
 }

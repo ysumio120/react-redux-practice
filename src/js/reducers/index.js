@@ -8,6 +8,7 @@ import streams from './streamsReducer'
 import chats from './chatReducer'
 import games from './gamesReducer'
 import following from './followingReducer'
+import history from './historyReducer'
 
 export default combineReducers({
   app,
@@ -16,5 +17,6 @@ export default combineReducers({
   streams,
   chats,
   games,
-  following
+  following,
+  history
 })

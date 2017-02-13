@@ -19,6 +19,10 @@ class App extends React.Component {
     this.props.toggleSearch(false);
   }
 
+  toggleList(toggle) {
+    this.props.toggleList(toggle);
+  }
+
   appendStreamCanvases() {
     const streamCanvases = this.props.navChannels.map((channel) => {
       return <StreamCanvas navChannel={channel} />
@@ -41,6 +45,9 @@ class App extends React.Component {
         <SearchResults />
         <NavColumn />
         <div id="main-col" className={extend}>
+        <div className="list-toggle" onClick={() => this.toggleList(!this.props.listCollapse)}>
+          <div><i className={"fa fa-caret-" + (this.props.listCollapse ? "down" : "up")} aria-hidden="true"></i></div>
+        </div>
           {this.props.children}
           {this.appendStreamCanvases()}
         </div>
@@ -55,6 +62,7 @@ const mapStateToProps = (state, ownProps) => {
     navChannels: state.streams.navChannels,
     navCollapse: state.app.navCollapse,
     chatCollapse: state.app.chatCollapse,
+    listCollapse: state.app.listCollapse,
   }
 }
 
@@ -68,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleSearch: (toggle) => {
       dispatch( {type:"TOGGLE_SEARCH", toggle: toggle})
+    },
+    toggleList: (toggle) => {
+      dispatch( {type:"TOGGLE_LIST", toggle: toggle})
     }
   }
 }

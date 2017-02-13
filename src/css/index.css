@@ -110,14 +110,22 @@ body,
 }
 
 .list-results {
-  height: 182px;
-  max-height: 182px;
   padding: 0 10px;
+  transition: all .3s;
+}
+
+.list-show {
+  height: 190px;
+}
+
+.list-hide {
+  height: 0;
 }
 
 .search-results {
   position: absolute;
   width: 100%;
+  height: 210px;
   padding-left: 240px;
   padding-right: 320px;
   margin: 0;
@@ -147,7 +155,7 @@ body,
 .streams-list > ul > li {
   display: inline-block;
   list-style-type: none;
-  margin: 4px 15px;
+  margin: 10px 15px;
   text-overflow: ellipsis;
   width: 200px;
   cursor: pointer;
@@ -189,8 +197,6 @@ body,
   cursor: pointer;
 }
 
-
-
 #games-list a, 
 #games-list a:visited, 
 #games-list a:hover, 
@@ -215,6 +221,48 @@ body,
 }
 
 
+#history-list .history-item {
+  width: 150px;
+  cursor: default;
+}
+
+.history-item > div > .channel-logo {
+  width: 6em;
+  border: 1px solid black
+}
+
+.history-item > div > p {
+  font-size: 12px;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+} 
+
+.display-message {
+  text-align: center;
+  margin-top: 9%;
+}
+
+.list-toggle {
+  color: white;
+  padding-top: 5px;
+  width: 100%;
+  height: 15px;
+}
+
+.list-toggle > div {
+  text-align: center;
+  width: 100%;
+  height: 20px;
+  background-color: black;
+}
+
+.list-toggle > div:hover {
+  background-color: #5f4d92;
+  cursor: pointer;
+}
+
 #main-col {
   margin-left: 240px;
   margin-right: 320px;
@@ -238,6 +286,8 @@ body,
 }
 
 #user-wrapper {
+  box-sizing: border-box;
+  height: 65px;
   color: white;
   background-color: #30264d;
   padding: 10px 0;
@@ -251,7 +301,8 @@ body,
 }
 
 .twitch-connect {
-  margin-left: 15%;
+  margin-left: 14%;
+  margin-top: 2%;
 }
 
 .profile-logo {

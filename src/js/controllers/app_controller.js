@@ -67,7 +67,6 @@ router.post('/:username/history', function(req, res) {
       for(var i = 0; i < historyArr.length; i++) {
         if(historyArr[i].channel === recentHistory.channel) {
           historyArr[i].dateViewed = recentHistory.dateViewed;
-          console.log("should update date");
           dupeChannel = true;
           break;
         }
