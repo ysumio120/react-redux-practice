@@ -110,16 +110,18 @@ body,
 }
 
 .list-results {
+  height: 100%;
   padding: 0 10px;
-  transition: all .3s;
 }
 
 .list-show {
   height: 190px;
+    transition: all .3s;
 }
 
 .list-hide {
   height: 0;
+    transition: all .3s;
 }
 
 .search-results {

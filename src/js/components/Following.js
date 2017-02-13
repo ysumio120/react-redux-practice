@@ -40,7 +40,7 @@ class Following extends React.Component {
   render() {
 
     return (
-      <div className={"streams-list list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
+      <div className="streams-list list-results">
         {this.display()}
       </div>
     )
@@ -52,8 +52,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user.user,
     loggingIn: state.user.loggingIn,
     token: state.user.token,
-    streams: state.following.streams,
-    listCollapse: state.app.listCollapse
+    streams: state.following.streams
   }
 }
 

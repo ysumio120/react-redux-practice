@@ -53,7 +53,7 @@ class StreamsList extends React.Component {
   render() {
 
     return (
-      <div className={"streams-list list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
+      <div className="streams-list list-results">
         {this.streamsList()}
       </div>
     )
@@ -64,8 +64,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     game: ownProps.params.game,
     streams: state.games.streamsByGame,
-    featured: state.games.featured,
-    listCollapse: state.app.listCollapse
+    featured: state.games.featured
   }
 }
 

@@ -27,7 +27,7 @@ class GamesList extends React.Component {
   render() {
 
     return (
-      <div id="games-list" className={"list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
+      <div id="games-list" className="list-results">
         {this.gamesList()}
       </div>
     )
@@ -36,8 +36,7 @@ class GamesList extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    games: state.games.gamesList,
-    listCollapse: state.app.listCollapse
+    games: state.games.gamesList
   }
 }
 

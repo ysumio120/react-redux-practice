@@ -49,7 +49,7 @@ class History extends React.Component {
 
   render() {
     return (
-      <div id="history-list" className={"streams-list list-results " + (this.props.listCollapse ? "list-hide" : "list-show")}>
+      <div id="history-list" className="streams-list list-results">
         {
           this.display()
         }
@@ -63,8 +63,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user.user,
     loggingIn: state.user.loggingIn,
     history: state.history.history,
-    historyFetched: state.history.fetched,
-    listCollapse: state.app.listCollapse
+    historyFetched: state.history.fetched
   }
 }
 

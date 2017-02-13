@@ -45,10 +45,12 @@ class App extends React.Component {
         <SearchResults />
         <NavColumn />
         <div id="main-col" className={extend}>
-        <div className="list-toggle" onClick={() => this.toggleList(!this.props.listCollapse)}>
-          <div><i className={"fa fa-caret-" + (this.props.listCollapse ? "down" : "up")} aria-hidden="true"></i></div>
-        </div>
-          {this.props.children}
+          <div className="list-toggle" onClick={() => this.toggleList(!this.props.listCollapse)}>
+            <div><i className={"fa fa-caret-" + (this.props.listCollapse ? "down" : "up")} aria-hidden="true"></i></div>
+          </div>
+          <div className={this.props.listCollapse ? "list-hide" : "list-show"}>
+            {this.props.children}
+          </div>
           {this.appendStreamCanvases()}
         </div>
         <ChatColumn />
@@ -62,7 +64,7 @@ const mapStateToProps = (state, ownProps) => {
     navChannels: state.streams.navChannels,
     navCollapse: state.app.navCollapse,
     chatCollapse: state.app.chatCollapse,
-    listCollapse: state.app.listCollapse,
+    listCollapse: state.app.listCollapse
   }
 }
 
