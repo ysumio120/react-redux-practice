@@ -26,7 +26,7 @@ export function setFeatured(streams) {
   }
 }
 
-const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+const client_id = location.hostname == "localhost" ? "kw4mh30kbtoewy0b9dh0mmyrt38r56" : "tgasid8neghal59b29g0hpjg8xt3gu"
 
 export function fetchTopGames() {
     

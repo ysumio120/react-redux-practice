@@ -13,7 +13,8 @@ export function setStreamsQuery(streams) {
 }
 
 export function fetchStreamsByQuery(query) {
-    
+  const client_id = location.hostname == "localhost" ? "kw4mh30kbtoewy0b9dh0mmyrt38r56" : "tgasid8neghal59b29g0hpjg8xt3gu"    
+  
   return (dispatch) => {
     dispatch(setQuery(query))
 
@@ -23,7 +24,7 @@ export function fetchStreamsByQuery(query) {
           method: "GET",
           headers: {
             "Accept": "application/vnd.twitchtv.v5+json", 
-            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+            "Client-ID": client_id
           }
         }
       )

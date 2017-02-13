@@ -16,9 +16,10 @@ export function setToken(token) {
   }
 }
 
-const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
-const client_secret = process.env.NODE_ENV ? "0s6hu10zl4kfg5r85z4j3uhhgca2pb" : "dy6e1q7n3bh5mrtox7f8hejbyj9scq"
-const redirect_uri = process.env.NODE_ENV ? "https://twitch-avid.herokuapp.com" : "http://localhost:8080"
+
+const client_id = location.hostname == "localhost" ? "kw4mh30kbtoewy0b9dh0mmyrt38r56" : "tgasid8neghal59b29g0hpjg8xt3gu"
+const client_secret = location.hostname == "localhost" ? "dy6e1q7n3bh5mrtox7f8hejbyj9scq" : "0s6hu10zl4kfg5r85z4j3uhhgca2pb"
+const redirect_uri = location.hostname == "localhost" ? "http://localhost:8080" : "https://twitch-avid.herokuapp.com"
 
 export function getToken(code) {
   return (dispatch) => {

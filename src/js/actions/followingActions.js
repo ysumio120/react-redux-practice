@@ -8,7 +8,7 @@ export function setStreamsFollowing(streams) {
 export function getLiveFollowing(token) { // Live Streams
   
   return (dispatch) => {
-    const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+    const client_id = location.hostname == "localhost" ? "kw4mh30kbtoewy0b9dh0mmyrt38r56" : "tgasid8neghal59b29g0hpjg8xt3gu"
     
     fetch("https://api.twitch.tv/kraken/streams/followed/?limit=100", 
       {

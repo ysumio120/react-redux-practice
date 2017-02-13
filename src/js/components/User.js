@@ -87,8 +87,8 @@ class User extends React.Component {
   }
 
   login() {
-    const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
-    const redirect_uri = process.env.NODE_ENV ? "https://twitch-avid.herokuapp.com" : "http://localhost:8080"
+    const client_id = location.hostname == "localhost" ? "kw4mh30kbtoewy0b9dh0mmyrt38r56" : "tgasid8neghal59b29g0hpjg8xt3gu" 
+    const redirect_uri = location.hostname == "localhost" ? "http://localhost:8080" : "https://twitch-avid.herokuapp.com" 
 
     const headers = {
       response_type: "code",
@@ -99,7 +99,7 @@ class User extends React.Component {
     };
     
     const params = this.buildQuery(headers);
-    window.location = "https://api.twitch.tv/kraken/oauth2/authorize?" + params;  
+    location.href = "https://api.twitch.tv/kraken/oauth2/authorize?" + params;  
   }
 
   isLoggedIn() {
