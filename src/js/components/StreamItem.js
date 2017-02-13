@@ -6,6 +6,8 @@ import store from '../store'
 import { addStream } from '../actions/streamsActions'
 import { setGame, fetchTopGames } from '../actions/gamesActions'
 
+import { postHistory } from '../utils/helpers'
+
 class Game extends React.Component {
   
   constructor(props) {
@@ -29,9 +31,24 @@ class Game extends React.Component {
     return result.join();
   }
 
+  onClickHandler(activeChannel) {
+    const data = {
+      channel: this.props.name,
+      game: this.props.game,
+      dateViewed: Date.now()
+    }
+
+    if(this.props.user) {
+      postHistory(this.props.user.name, data, (data) => {
+        console.log(data);
+      })
+    }
+    this.props.addStream(this.props.activeChannel, this.props.name)
+  }
+
   render() {
     return (
-      <li onClick={() => this.props.addStream(this.props.activeChannel, this.props.name)}>
+      <li onClick={() => this.onClickHandler(this.props.activeChannel)}>
         <img className="stream-image" src={this.props.preview}/>
         <div className="stream-info">
           <p className="stream-status" title={this.props.status}>{this.props.status}</p>
@@ -44,9 +61,11 @@ class Game extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    user: state.user.user,
     activeChannel: state.streams.activeChannel,
     name: ownProps.stream.channel.name,
     displayName: ownProps.stream.channel.display_name,
+    game: ownProps.stream.game,
     preview: ownProps.stream.preview.large,
     status: ownProps.stream.channel.status,
     viewerCount: ownProps.stream.viewers

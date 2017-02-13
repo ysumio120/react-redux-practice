@@ -21,7 +21,7 @@ app.get('/*', function(req, res) {
 
 app.use('/', app_controller);
 
-//require('./client/src/config/connection');
+require('./src/js/db/connection');
 
 app.listen(PORT, function() {
     console.log('Example app listening on port ' + PORT)

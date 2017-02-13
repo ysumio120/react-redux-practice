@@ -4,12 +4,16 @@ import store from '../store'
 
 import { fetchStreams } from '../actions/searchActions'
 import * as user from '../actions/userActions'
-
+import { getLocalUser } from '../utils/helpers'
 
 class User extends React.Component {
   
   constructor(props) {
     super(props);
+
+    this.state = {
+      localUser: null
+    }
   }
 
   parseQueryString(query) {
@@ -47,15 +51,23 @@ class User extends React.Component {
 
     else if(queryObj.code) {
       this.props.getToken(queryObj.code);
+
     }
     else {
-      this.props.logoutUser();
+      this.props.setUser(null, false);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(this.props)
-    // console.log(nextProps)
+     console.log(this.props)
+     console.log(nextProps)
+    if(nextProps.isLoggedIn && this.state.localUser == null) {
+      getLocalUser({name: nextProps.user.name}, (localUser) => {
+        console.log(localUser)
+        this.setState({localUser: localUser})
+      })
+    }
+
     if(this.props.token != nextProps.token) {
       localStorage.setItem("accessToken", nextProps.token);
       if(nextProps.token)
@@ -128,14 +140,16 @@ const mapDispatchToProps = (dispatch) => {
     getToken: (code) => {
       dispatch( user.getToken(code) );
     },
+    setUser: (storeUser, loggingIn) => {
+      dispatch( user.setUser(storeUser, loggingIn) );
+    },
     getUser: (token) => {
       dispatch( user.setToken(token) );
       dispatch( user.getUser(token) );
     },
     logoutUser: () => {
       localStorage.removeItem("accessToken");
-      dispatch( user.setToken("") );
-      dispatch( user.setUser(null, false) );
+      window.location = "http://localhost:8080"
     }
   }
 }

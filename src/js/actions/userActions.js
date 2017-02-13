@@ -9,6 +9,7 @@ const buildQuery = (headers) => {
 }
 
 export function setToken(token) {
+  console.log(token)
   return {
     type: "SET_TOKEN",
     token
@@ -41,6 +42,8 @@ export function getToken(code) {
       dispatch(setToken(json.access_token));
     })
     .catch(err => {
+      console.log(err)
+      dispatch(setUser(null, false));
       console.log("caught error")
     })
   }
@@ -50,7 +53,7 @@ export function setUser(user, isLoggedIn) { // user object from Twitch API
   return {
     type: "SET_USER",
     user,
-    isLoggedIn,
+    isLoggedIn
   }
 }
 
@@ -75,6 +78,7 @@ export function getUser(token) {
       dispatch(setUser(json, true))
     })
     .catch(err => {
+      console.log(err)
       console.log("caught error")
     })
   }
