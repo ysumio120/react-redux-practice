@@ -87,10 +87,13 @@ class User extends React.Component {
   }
 
   login() {
+    const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+    const redirect_uri = process.env.NODE_ENV ? "https://twitch-avid.herokuapp.com" : "http://localhost:8080"
+
     const headers = {
       response_type: "code",
-      client_id: "kw4mh30kbtoewy0b9dh0mmyrt38r56",
-      redirect_uri: "http://localhost:8080",
+      client_id: client_id,
+      redirect_uri: redirect_uri,
       scope: "user_read channel_read user_follows_edit",
       force_verify: "true"
     };

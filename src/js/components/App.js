@@ -48,7 +48,7 @@ class App extends React.Component {
           <div className="list-toggle" onClick={() => this.toggleList(!this.props.listCollapse)}>
             <div><i className={"fa fa-caret-" + (this.props.listCollapse ? "down" : "up")} aria-hidden="true"></i></div>
           </div>
-          <div className={this.props.listCollapse ? "list-hide" : "list-show"}>
+          <div className={(this.props.listCollapse || this.props.location.pathname == "/") ? "list-hide" : "list-show"}>
             {this.props.children}
           </div>
           {this.appendStreamCanvases()}

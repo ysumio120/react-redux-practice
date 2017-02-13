@@ -26,16 +26,18 @@ export function setFeatured(streams) {
   }
 }
 
+const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+
 export function fetchTopGames() {
     
   return (dispatch) => {
-
+    
     fetch("https://api.twitch.tv/kraken/games/top/?limit=100", 
       {
         method: "GET",
         headers: {
           "Accept": "application/vnd.twitchtv.v5+json", 
-          "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+          "Client-ID": client_id
         }
       }
     )
@@ -67,7 +69,7 @@ export function fetchStreamsByGame(game) {
           method: "GET",
           headers: {
             "Accept": "application/vnd.twitchtv.v5+json", 
-            "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+            "Client-ID": client_id
           }
         }
       )
@@ -99,7 +101,7 @@ export function fetchFeatured() {
         method: "GET",
         headers: {
           "Accept": "application/vnd.twitchtv.v5+json", 
-          "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+          "Client-ID": client_id
         }
       }
     )

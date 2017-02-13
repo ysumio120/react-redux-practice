@@ -16,12 +16,16 @@ export function setToken(token) {
   }
 }
 
+const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
+const client_secret = process.env.NODE_ENV ? "0s6hu10zl4kfg5r85z4j3uhhgca2pb" : "dy6e1q7n3bh5mrtox7f8hejbyj9scq"
+const redirect_uri = process.env.NODE_ENV ? "https://twitch-avid.herokuapp.com" : "http://localhost:8080"
+
 export function getToken(code) {
   return (dispatch) => {
     const headers = {
-      client_id: "kw4mh30kbtoewy0b9dh0mmyrt38r56",
-      client_secret: "dy6e1q7n3bh5mrtox7f8hejbyj9scq",
-      redirect_uri: "http://localhost:8080",
+      client_id: client_id,
+      client_secret: client_secret,
+      redirect_uri: redirect_uri,
       grant_type: "authorization_code",
       code: code
     };
@@ -63,7 +67,7 @@ export function getUser(token) {
       method: "GET",
       headers: {
         "Accept": "application/vnd.twitchtv.v5+json",
-        "Client-ID": "kw4mh30kbtoewy0b9dh0mmyrt38r56",
+        "Client-ID": client_id,
         "Authorization": "OAuth " + token
       }
     })
