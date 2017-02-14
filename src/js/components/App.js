@@ -13,6 +13,19 @@ class App extends React.Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      width: 0,
+      height: 0
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateBroswerSize.bind(this))
+    this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight});
+  }
+
+  updateBroswerSize() {
+    this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight})
   }
 
   appOnClick(e) {
@@ -25,7 +38,7 @@ class App extends React.Component {
 
   appendStreamCanvases() {
     const streamCanvases = this.props.navChannels.map((channel) => {
-      return <StreamCanvas navChannel={channel} />
+      return <StreamCanvas navChannel={channel} width={this.state.width} height={this.state.height}/>
     })
 
     return streamCanvases;
@@ -51,7 +64,7 @@ class App extends React.Component {
           <div className={(this.props.listCollapse || this.props.location.pathname == "/") ? "list-hide" : "list-show"}>
             {this.props.children}
           </div>
-          {this.appendStreamCanvases()}
+          <div className="canvas-container" ref={(canvasContainer) => {this.canvasContainer = canvasContainer}}>{this.appendStreamCanvases()}</div>
         </div>
         <ChatColumn />
       </div>
