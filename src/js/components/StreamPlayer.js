@@ -19,9 +19,14 @@ class StreamPlayer extends React.Component {
   }
 
   render() {
+    const style = {
+      width: this.props.width + "px",
+      height: this.props.height + "px"
+    }
+
     return (
       <div className="stream-container">
-        <div className="vid" id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel}>
+        <div style={style} className="vid" id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel}>
           <div className="player-controls">
             <div>
               <i onClick={() => this.props.addChat(this.props.stream.streamChannel)} className="fa fa-commenting" aria-hidden="true"></i>
@@ -36,6 +41,8 @@ class StreamPlayer extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    width: ownProps.width,
+    height: ownProps.height,
     stream: ownProps.stream
   }
 }
