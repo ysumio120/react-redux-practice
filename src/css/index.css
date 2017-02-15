@@ -56,7 +56,7 @@ body,
   display: inline-block;
 }
 
-.stream-container:hover .overlay {
+.vid:hover .overlay {
   display: block;
 }
 
