@@ -14,6 +14,8 @@ class StreamCanvas extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.state)
+    console.log(prevState)
     if(this.props.activeStreams.length != prevProps.activeStreams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
       this.optimizeStreamSize();
   }
@@ -39,22 +41,17 @@ class StreamCanvas extends React.Component {
   }
 
   optimizeStreamSize() {
-    console.log("running")
     const numStreams = this.streamContainer().length;
-    console.log(numStreams)
     const height = this.props.containerHeight;
     const width = this.props.containerWidth;
-    console.log(height)
 
     let bestHeight = 0;
     let bestWidth = 0;
 
     for(let perRow = 1; perRow <= numStreams; perRow++) {
       const numRows = Math.ceil(numStreams / perRow);
-      let maxHeight = Math.floor(height / numRows) - 34;
-      let maxWidth = Math.floor(width / perRow) - 4;
-      console.log(maxHeight)
-      console.log(maxWidth)
+      let maxHeight = Math.floor(height / numRows) - 50;
+      let maxWidth = Math.floor(width / perRow);
       if (maxWidth * 9/16 < maxHeight) {
         maxHeight = maxWidth * 9/16;
       }

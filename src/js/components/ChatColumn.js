@@ -10,8 +10,6 @@ class ChatColumn extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.selected)
-    console.log(prevProps.selected)
     if(this.props.selected !== prevProps.selected)
       document.getElementById("chat-selector").value = this.props.selected;
   }
@@ -84,7 +82,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSelected: (channel) => {
-      console.log("selected")
       dispatch( {type: "SET_SELECTED", channel: channel} )
     }
   }

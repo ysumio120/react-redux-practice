@@ -24,6 +24,22 @@ class App extends React.Component {
     this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight});
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if(this.state.width == nextState.width && this.state.heigth == nextState.heigth)
+  //     return false
+
+  //   return true;
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+        console.log(this.state)
+    console.log(prevState)
+    if(this.props.navCollapse != prevProps.navCollapse || this.props.chatCollapse != prevProps.chatCollapse || this.props.listCollapse != prevProps.listCollapse)
+      //setTimeout(() => {
+        this.updateBroswerSize();
+     // }, 400)
+  }
+
   updateBroswerSize() {
     this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight})
   }
