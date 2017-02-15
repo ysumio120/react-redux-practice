@@ -56,18 +56,30 @@ body,
   display: inline-block;
 }
 
-.stream-container:hover .player-controls {
+.stream-container:hover .overlay {
   display: block;
 }
 
-.player-controls {
+.overlay {
   display: none;
+}
+
+.player-controls {
   position: absolute;
   background-color: rgba(0,0,0,0.5);
   z-index: 10;
   bottom: 12px;
   left: 46%;
-/*  display: none;*/
+}
+
+.fa.fa-times {
+  color: white;
+  font-size: 125%;
+  padding: 4px 4px;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .player-controls > div {
@@ -81,7 +93,8 @@ body,
   padding: 4px 4px;
 }
 
-.player-controls .fa-commenting:hover {
+.player-controls .fa-commenting:hover,
+.fa.fa-times:hover {
   cursor: pointer;
   color: #b2a0d2;
 }
@@ -106,9 +119,6 @@ body,
 
 .vid {
   position: relative;
-/*  width: 100%;
-  height: 0;*/
-/*  padding-bottom: 56.25%;*/
   left:0;
   top:0;
   border: 3px solid transparent;

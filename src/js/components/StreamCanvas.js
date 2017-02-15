@@ -14,8 +14,6 @@ class StreamCanvas extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state)
-    console.log(prevState)
     if(this.props.activeStreams.length != prevProps.activeStreams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
       this.optimizeStreamSize();
   }
@@ -50,7 +48,7 @@ class StreamCanvas extends React.Component {
 
     for(let perRow = 1; perRow <= numStreams; perRow++) {
       const numRows = Math.ceil(numStreams / perRow);
-      let maxHeight = Math.floor(height / numRows) - 50;
+      let maxHeight = Math.floor(height / numRows) - 40;
       let maxWidth = Math.floor(width / perRow);
       if (maxWidth * 9/16 < maxHeight) {
         maxHeight = maxWidth * 9/16;
@@ -71,7 +69,7 @@ class StreamCanvas extends React.Component {
     const classNames = "stream-canvas" + (this.props.navChannel === this.props.activeChannel ? " show" : " hide");
 
     return (
-      <div ref={(canvas) => {this.canvas = canvas}} data-tab={this.props.navChannel} className={classNames}>
+      <div data-tab={this.props.navChannel} className={classNames}>
         <div className="stream-canvas-header">
         <div className="header-text">{this.props.navChannel}</div>
         <div className="stream-canvas-controls">

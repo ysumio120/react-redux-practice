@@ -27,6 +27,16 @@ export default function reducer(state=initialState, action) {
       
       return Object.assign({}, state, {streams: [...streamsClone, newStream]});
     }
+    case "REMOVE_STREAM": {
+      const filtered = state.streams.filter((stream) => {
+        if(stream.navChannel == action.navChannel && stream.streamChannel == action.streamChannel)
+          return false;
+
+        return true;
+      })
+
+      return Object.assign({}, state, {streams: filtered})
+    } 
     case "SET_MUTED": {
       return Object.assign({}, state, {muted: action.muted})
     }
@@ -36,9 +46,6 @@ export default function reducer(state=initialState, action) {
     case "SET_CHANNEL": {
       return Object.assign({}, state, {activeChannel: action.navChannel})
     }
-    // case "REMOVE_STREAM": {
-    //   return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn})
-    // } 
   }
 
   return state;

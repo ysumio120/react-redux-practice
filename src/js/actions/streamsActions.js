@@ -6,6 +6,14 @@ export function addStream(navChannel, streamChannel) {
   }
 }
 
+export function removeStream(navChannel, streamChannel) {
+  return {
+    type: "REMOVE_STREAM",
+    navChannel,
+    streamChannel
+  }
+}
+
 export function loadStream(channel, player) {
   return {
     type: "LOAD_STREAM",
