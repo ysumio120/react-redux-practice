@@ -68,14 +68,14 @@ class StreamCanvas extends React.Component {
   render() {
     const classNames = "stream-canvas" + (this.props.navChannel === this.props.activeChannel ? " show" : " hide");
 
+        //<div className="stream-canvas-controls">
+        //  <button onClick={() => this.muteToggle(true)}>Mute All</button>
+        //  <button onClick={() => this.muteToggle(false)}>Unmute All</button>
+        //</div>
     return (
       <div data-tab={this.props.navChannel} className={classNames}>
         <div className="stream-canvas-header">
         <div className="header-text">{this.props.navChannel}</div>
-        <div className="stream-canvas-controls">
-          <button onClick={() => this.muteToggle(true)}>Mute All</button>
-          <button onClick={() => this.muteToggle(false)}>Unmute All</button>
-        </div>
         </div>
         {this.streamContainer()}
       </div>
