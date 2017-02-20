@@ -45,7 +45,7 @@ class App extends React.Component {
 
   appendStreamCanvases() {
     const streamCanvases = this.props.navChannels.map((channel) => {
-      return <StreamCanvas navChannel={channel} width={this.state.width} height={this.state.height}/>
+      return <StreamCanvas key={channel} navChannel={channel} width={this.state.width} height={this.state.height}/>
     })
 
     return streamCanvases;

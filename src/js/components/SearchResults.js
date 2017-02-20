@@ -14,7 +14,7 @@ class SearchResults extends React.Component {
 
   streamsList() {
     const streamsList = this.props.streams.map((stream) => {
-      return <StreamItem stream={stream}/>
+      return <StreamItem key={stream._id} stream={stream}/>
     })
 
     return <ul>{streamsList}</ul>

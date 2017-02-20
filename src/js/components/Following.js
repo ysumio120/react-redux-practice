@@ -17,7 +17,7 @@ class Following extends React.Component {
 
   followingList() {
     const followingList = this.props.streams.map((stream) => {
-      return <StreamItem stream={stream}/>
+      return <StreamItem key={stream._id} stream={stream}/>
     })
 
     return <ul>{followingList}</ul>

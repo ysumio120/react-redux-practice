@@ -26,12 +26,12 @@ class StreamPlayer extends React.Component {
     // )
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(this.props.stream.streamChannel != this.state.channel) {
-      this.state.player.setChannel(this.props.stream.streamChannel);
-      this.setState({channel: this.props.stream.streamChannel});
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if(this.props.stream.streamChannel != this.state.channel) {
+  //     this.state.player.setChannel(this.props.stream.streamChannel);
+  //     this.setState({channel: this.props.stream.streamChannel});
+  //   }
+  // }
 
   render() {
     const style = {

@@ -38,12 +38,12 @@ class StreamsList extends React.Component {
 
     if(this.props.route.path == "/featured") {
       streamsList = this.props.featured.map((stream) => {
-        return <StreamItem stream={stream.stream}/>
+        return <StreamItem key={stream.stream._id} stream={stream.stream}/>
       })
     }
     else if(this.props.route.path == "/game/:game") {
       streamsList = this.props.streams.map((stream) => {
-        return <StreamItem stream={stream}/>
+        return <StreamItem key={stream._id} stream={stream}/>
       })
     }
 

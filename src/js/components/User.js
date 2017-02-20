@@ -59,14 +59,14 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-     console.log(this.props)
-     console.log(nextProps)
-    if(nextProps.isLoggedIn && this.state.localUser == null) {
-      getLocalUser({name: nextProps.user.name}, (localUser) => {
-        console.log(localUser)
-        this.setState({localUser: localUser})
-      })
-    }
+     // console.log(this.props)
+     // console.log(nextProps)
+    // if(this.props.isLogged && nextProps.isLoggedIn && this.state.localUser == null) {
+    //   getLocalUser({name: nextProps.user.name}, (localUser) => {
+    //     console.log(localUser)
+    //     this.setState({localUser: localUser})
+    //   })
+    // }
 
     if(this.props.token != nextProps.token) {
       localStorage.setItem("accessToken", nextProps.token);

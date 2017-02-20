@@ -32,7 +32,7 @@ class StreamCanvas extends React.Component {
     })
 
     const streamContainers = filteredStreams.map((stream) => {
-      return <StreamPlayer stream={stream} width={this.state.opWidth} height={this.state.opHeight}/>
+      return <StreamPlayer key={stream.navChannel + "-" + stream.streamChannel} stream={stream} width={this.state.opWidth} height={this.state.opHeight}/>
     })
 
     return streamContainers;

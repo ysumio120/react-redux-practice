@@ -50,7 +50,7 @@ class NavChannelsList extends React.Component {
 
   getChannels() {
     const channels = this.props.navChannels.map((channel) => {
-      return <li onClick={() => this.props.setActiveChannel(channel)} className={this.props.activeChannel == channel ? "active" : ""}><i onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className="fa fa-bookmark-o"  aria-hidden="true"></i>{channel}</li>
+      return <li key={channel} onClick={() => this.props.setActiveChannel(channel)} className={this.props.activeChannel == channel ? "active" : ""}><i onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className="fa fa-bookmark-o"  aria-hidden="true"></i>{channel}</li>
     })
 
     return channels;

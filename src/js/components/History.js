@@ -27,7 +27,7 @@ class History extends React.Component {
 
   historyList() {
     const historyList = this.props.history.map((channel) => {
-      return <HistoryItem channel={channel}/>
+      return <HistoryItem key={channel.channel} channel={channel}/>
     })
 
     return <ul>{historyList}</ul>
