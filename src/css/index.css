@@ -56,6 +56,10 @@ body,
   display: inline-block;
 }
 
+.vid {
+  transition: all .3s;
+}
+
 .vid:hover .overlay {
   display: block;
 }
