@@ -11,16 +11,17 @@ class StreamPlayer extends React.Component {
     super(props);
     this.state = {
       channel: "",
-      player: null
+      player: null,
+      dragging: false
     }
   }
 
   componentDidMount() {
-    this.vid.addEventListener("transitionend", this.setPosition.bind(this));
+    //this.vid.addEventListener("transitionend", this.setPosition.bind(this));
 
     this.setState({
-      top: this.vid.offsetTop,
-      left: this.vid.offsetLeft,
+      // top: this.vid.offsetTop,
+      // left: this.vid.offsetLeft,
       channel: this.props.stream.streamChannel, 
       player: new Twitch.Player(this.props.stream.navChannel + "-" + this.props.stream.streamChannel, {channel: this.props.stream.streamChannel})
     })
@@ -31,16 +32,32 @@ class StreamPlayer extends React.Component {
   }
 
   dragStart(e) {
-    console.log(e.target)
     e.preventDefault();
+    console.log(e.pageY)
+    console.log(e.target)
 
-    console.log("holding")
+    this.setState({dragging: true, xPos: e.pageX, yPos: e.pageY})
   }
 
   dragStop(e) {
     e.preventDefault();
 
-    console.log("stop holding")
+    this.setState({dragging: false})
+  }
+
+  onDrag(e) {
+    if(this.state.dragging) {
+      console.log(this.vid.offsetLeft);
+      console.log(this.vid.offsetTop);
+      const xOffset = e.pageX - this.state.xPos;
+      const yOffset = e.pageY - this.state.yPos;
+
+      console.log(xOffset)
+      console.log(yOffset)
+
+
+      this.setState({top: yOffset, left: xOffset, xPos: e.pageX, yPos: e.pageY});
+    }
   }
 
   render() {
@@ -50,13 +67,22 @@ class StreamPlayer extends React.Component {
       order: this.props.order
     }
 
+    const style2 = {
+      top: this.state.top + "px",
+      left: this.state.left + "px",
+    }
+
+    const mainStyle = this.state.dragging ? {...style, ...style2} : {...style};
+
+
+
     return (
-      <div draggable="true" onMouseDown={this.dragStart.bind(this)} ref={vid => this.vid = vid} style={style} className="vid" id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel} data-stream={this.props.stream.streamChannel}>
+      <div ref={vid => this.vid = vid} style={mainStyle} className={"vid " + (this.state.dragging ? "dragging" : "")} id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel} data-stream={this.props.stream.streamChannel}>
         <div className="overlay">
           <i onClick={() => this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel)} className="fa fa-times" aria-hidden="true"></i>
           <div className="player-controls">
             <div>
-              <i onMouseUp={this.dragStop.bind(this)} className="fa fa-arrows" aria-hidden="true"></i>
+              <i draggable="true" onMouseMove={this.onDrag.bind(this)} onMouseDown={this.dragStart.bind(this)} onMouseUp={this.dragStop.bind(this)} className="fa fa-arrows" aria-hidden="true"></i>
               <span className="control-text fa-arrows-text">Move</span>
               <i onClick={() => this.props.addChat(this.props.stream.streamChannel)} className="fa fa-commenting" aria-hidden="true"></i>
               <span className="control-text fa-commenting-text">Open Chat</span>

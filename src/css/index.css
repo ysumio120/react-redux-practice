@@ -58,6 +58,10 @@ body,
   align-content: flex-start;
 }
 
+.vid.dragging {
+  transition: none;
+}
+
 .vid {
   position: relative;
 /*  display: inline-block;
