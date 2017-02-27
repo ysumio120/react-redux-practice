@@ -3,6 +3,7 @@ const initialState = {
   chatCollapse: false,
   searchCollapse: true,
   listCollapse: false,
+  dragging: false
 }
 
 export default function reducer(state=initialState, action) {
@@ -19,6 +20,9 @@ export default function reducer(state=initialState, action) {
     }
     case "TOGGLE_LIST": {
       return Object.assign({}, state, {listCollapse: action.toggle});
+    }
+    case "TOGGLE_DRAGGING": {
+      return Object.assign({}, state, {dragging: action.dragging});
     }
   }
 

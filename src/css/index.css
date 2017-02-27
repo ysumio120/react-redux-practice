@@ -59,6 +59,7 @@ body,
 }
 
 .vid.dragging {
+  z-index: 99999999;
   transition: none;
 }
 
@@ -89,6 +90,13 @@ body,
 
 .overlay {
   display: none;
+}
+
+.drag-overlay {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .player-controls {
