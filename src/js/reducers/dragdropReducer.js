@@ -4,8 +4,7 @@ const initialState = {
   dragLeft: 0,
   dropTop: 0,
   dropLeft: 0,
-  cursorX: 0,
-  cursorY: 0
+  cursorPos: {x: 0, y: 0}
 }
 
 export default function reducer(state=initialState, action) {
@@ -19,6 +18,9 @@ export default function reducer(state=initialState, action) {
     }
     case "SET_DROP_POS": {
       return Object.assign({}, state, {dropTop: action.pos.top, dropLeft: action.pos.left});
+    }
+    case "SET_CURSOR_POS": {
+      return Object.assign({}, state, {cursorPos: action.pos});
     }
   }
 

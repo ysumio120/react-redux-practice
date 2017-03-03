@@ -68,6 +68,11 @@ body,
   transition: none;
 }
 
+.vid.droppable-hover {
+  opacity: 0.8;
+
+}
+
 .vid {
   position: relative;
 /*  display: inline-block;
