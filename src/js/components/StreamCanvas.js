@@ -18,13 +18,13 @@ class StreamCanvas extends React.Component {
       this.optimizeStreamSize();
   }
 
-  muteToggle(muted) {
-    this.props.activeStreams.forEach((stream) => {
-      stream.player.setMuted(muted);
-    })
+  // muteToggle(muted) {
+  //   this.props.activeStreams.forEach((stream) => {
+  //     stream.player.setMuted(muted);
+  //   })
 
-    this.props.setMuted(muted);
-  }
+  //   this.props.setMuted(muted);
+  // }
 
   streamPlayers() {
     const filteredStreams = this.props.activeStreams.filter((stream) => {
