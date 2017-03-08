@@ -1,6 +1,6 @@
 html {
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 body,
@@ -58,6 +58,17 @@ body,
   align-content: flex-start;
 }
 
+.vid {
+  position: relative;
+/*  display: inline-block;
+  margin: auto;*/
+/*  transition: all .3s;*/
+  left: 0;
+  top: 0;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+}
+
 .vid.dragging {
   z-index: 1000;
   transition: none;
@@ -69,22 +80,14 @@ body,
 }
 
 .vid.droppable-hover {
-  opacity: 0.8;
-  border: 2px solid black;
+  opacity: 0.9;
+  border: 3px solid black;
   transition: none;
 }
 
-.vid {
-  position: relative;
-/*  display: inline-block;
-  margin: auto;*/
+.vid.transitions {
   transition: all .3s;
-  left: 0;
-  top: 0;
-  border: 3px solid transparent;
-  box-sizing: border-box;
 }
-
 .vid:hover {
 /*  transform: translate(50px, 50px);*/
 }
@@ -106,13 +109,13 @@ body,
 .drag-overlay {
   z-index: 2;
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 1000%;
+  height: 1000%;
 }
 
 .drop-overlay {
   background-color: black;
-  z-index: 100000;
+  z-index: 100;
   position: absolute;
   width: 100%;
   height: 100%;

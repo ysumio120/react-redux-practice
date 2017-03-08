@@ -24,22 +24,19 @@ class StreamPlayer extends React.Component {
   }
 
   componentDidMount() {
+    // id of stream container (div)
+    const divID = this.props.stream.navChannel + "-" + this.props.stream.streamChannel;
+
     this.setState({
       channel: this.props.stream.streamChannel, 
-      player: new Twitch.Player(this.props.stream.navChannel + "-" + this.props.stream.streamChannel, {channel: this.props.stream.streamChannel})
+      player: new Twitch.Player(divID, {channel: this.props.stream.streamChannel})
     })
   }
 
-  // setPosition() {
-  //   this.setState({top: this.vid.offsetTop, left: this.vid.offsetLeft});
-  // }
-
   componentDidUpdate(prevProps, prevState) {
-
     if(prevProps.allStreams != this.props.allStreams || prevProps.width != this.props.width || prevProps.height != this.props.height) {
       this.setState({order: this.state.newOrder, top: 0, left: 0});
     }
-
 
     if(this.state.dragging && !prevState.dragging) {
       document.addEventListener('mousemove', this.onDrag.bind(this))
@@ -48,21 +45,29 @@ class StreamPlayer extends React.Component {
       document.removeEventListener('mousemove', this.onDrag.bind(this))
     }
 
-    if(this.state.drophover && !this.props.dragActive) {
-      const topDiff = (this.props.dragdrop.dragTop - this.props.dragdrop.dropTop);
-      const leftDiff = (this.props.dragdrop.dragLeft - this.props.dragdrop.dropLeft);
-
-      const newTop = this.state.top + topDiff;
-      const newLeft = this.state.left + leftDiff;
+    if(this.state.drophover && this.props.dragActive && this.props.swapTransition) { // new position for droppable
+      const newPos = this.setNewPosition(false);
     
-      this.setState({drophover: false, top: newTop, left: newLeft, newOrder: this.props.dragdrop.dragOrder})
+      this.setState({drophover: false, ...newPos, newOrder: this.props.dragdrop.dragOrder});
     }
     else if(!this.state.dragging && this.props.dragActive && (prevProps.cursor.x != this.props.cursor.x || prevProps.cursor.y != this.props.cursor.y)) {
       this.onDroppable();
     }
   }
 
-  dragStart(e) {
+  setNewPosition(isDraggable) {
+    const flag = isDraggable ? 1 : -1;
+
+    const topDiff = flag * (this.props.dragdrop.dropTop - this.props.dragdrop.dragTop);
+    const leftDiff = flag * (this.props.dragdrop.dropLeft - this.props.dragdrop.dragLeft);
+
+    const newTop = this.state.top + topDiff;
+    const newLeft = this.state.left + leftDiff;
+
+    return {top: newTop, left: newLeft};
+  }
+
+  onDragStart(e) {
     e.preventDefault();
 
     const pos = {
@@ -70,64 +75,63 @@ class StreamPlayer extends React.Component {
       left: this.vid.offsetLeft
     } 
 
-    this.setState({dragging: true, xPos: e.pageX, yPos: e.pageY}, () => {
-      this.props.toggleDragging(true, pos, this.state.newOrder);
-      this.props.setDroppable(pos, this.state.newOrder);
-      this.props.setCursorPos({x: e.pageX, y: e.pageY});
-    })
+    this.setState({dragging: true, xPos: e.pageX, yPos: e.pageY})
+
+    this.props.toggleDragging(true, pos, this.state.newOrder);
+    this.props.setDroppable(pos, this.state.newOrder);
+    this.props.setCursorPos({x: e.pageX, y: e.pageY});
+    
   }
 
-  dragStop(e) {
-    const top = (this.props.dragdrop.dropTop - this.props.dragdrop.dragTop);
-    const left =  (this.props.dragdrop.dropLeft - this.props.dragdrop.dragLeft);
+  onDragStop(e) { // new position for draggable
+    const newPos = this.setNewPosition(true);
 
-    this.setState({dragging: false, newOrder: this.props.dragdrop.dropOrder, top: this.state.top + top, left:this.state.left + left, yOffset: 0, xOffset: 0}, () => {
-      this.props.toggleDragging(false)
-    })
+    this.setState({dragging: false, newOrder: this.props.dragdrop.dropOrder, ...newPos, yOffset: 0, xOffset: 0});
+    
+    this.props.setTransition(true);
+    setTimeout(() => {
+      this.props.toggleDragging(false);
+      this.props.setTransition(false);
+    }, 400);
+
   }
 
   onDrag(e) {
-    //e.persist();
-    if(!this.state.dragging && this.props.dragActive) {
-      this.onDroppable();
-    }
-
-    else if(this.state.dragging) {
+    if(this.state.dragging) {
       const xOffset = e.pageX - this.state.xPos;
       const yOffset = e.pageY - this.state.yPos;
 
-      this.setState({yOffset: yOffset, xOffset: xOffset}, () => {
-        this.props.setCursorPos({x: e.pageX, y: e.pageY});
-      });
+      this.setState({yOffset: yOffset, xOffset: xOffset})
+
+      this.props.setCursorPos({x: e.pageX, y: e.pageY});
     }
   }
 
   onDroppable() {
-    if(this.props.dragActive && !this.state.dragging) {
-      const cursorX = this.props.cursor.x;
-      const cursorY = this.props.cursor.y;
-      const viewportPos = this.vid.getBoundingClientRect();
+    const cursorX = this.props.cursor.x;
+    const cursorY = this.props.cursor.y;
+    const viewportPos = this.vid.getBoundingClientRect(); // pos relative to browser
 
-      const xHover = (cursorX > viewportPos.left) && (cursorX < viewportPos.left + this.props.width);
-      const yHover = (cursorY > viewportPos.top) && (cursorY < viewportPos.top + this.props.height);
+    const xHover = (cursorX > viewportPos.left) && (cursorX < viewportPos.left + this.props.width);
+    const yHover = (cursorY > viewportPos.top) && (cursorY < viewportPos.top + this.props.height);
 
-      if(xHover && yHover) { // hovering droppable element
-        const pos = {
-          top: this.vid.offsetTop,
-          left: this.vid.offsetLeft
-        }
+    const pos = {
+      top: this.vid.offsetTop,
+      left: this.vid.offsetLeft
+    }
 
-        this.setState({drophover: true}, () => {
-          this.props.setDroppable(pos, this.state.newOrder);         
-        });
+    if(xHover && yHover) { // hovering droppable element
+      this.setState({drophover: true});
+
+      this.props.setDroppable(pos, this.state.newOrder);         
+    }
+    else {
+      this.setState({drophover: false});
+ 
+      if(pos.top == this.props.dragdrop.dropTop && pos.left == this.props.dragdrop.dropLeft) {
+        this.props.setDroppable({top: this.props.dragdrop.dragTop, left: this.props.dragdrop.dragLeft}, this.state.newOrder);
       }
-      else {
-        this.setState({drophover: false}, () => {
-          if(this.vid.offsetTop == this.props.dragdrop.dropTop && this.vid.offsetLeft == this.props.dragdrop.dropLeft) {
-            this.props.setDroppable({top: this.props.dragdrop.dragTop, left: this.props.dragdrop.dragLeft}, this.state.newOrder);
-          }
-        });
-      }
+
     }
   }
 
@@ -143,14 +147,16 @@ class StreamPlayer extends React.Component {
 
     const dragORdrop =  this.state.dragging ? "dragging" :
                           this.state.drophover ? "droppable-hover" : 
-                            this.props.dragActive ? "droppable" : "";
+                            this.props.dragActive && !this.props.swapTransition ? "droppable" : "";
+
+    const transitions = this.props.swapTransition ? " transitions" : "";
 
     return (
       <div 
         style={style} 
         ref={vid => this.vid = vid} 
         id={this.props.stream.navChannel + "-" + this.props.stream.streamChannel} 
-        className={"vid " + dragORdrop} 
+        className={"vid " + dragORdrop + transitions} 
         data-stream={this.props.stream.streamChannel}
       >
         <div className={this.state.dragging ? "drag-overlay" : ""}></div>
@@ -159,8 +165,8 @@ class StreamPlayer extends React.Component {
           <div className="player-controls">
             <div>
               <i
-                onMouseDown={this.dragStart.bind(this)} 
-                onMouseUp={this.dragStop.bind(this)} 
+                onMouseDown={this.onDragStart.bind(this)} 
+                onMouseUp={this.onDragStop.bind(this)} 
                 className="fa fa-arrows" 
                 aria-hidden="true"
               ></i>
@@ -184,6 +190,7 @@ const mapStateToProps = (state, ownProps) => {
     stream: ownProps.stream,
     navChannel: state.streams.activeChannel,
     dragActive: state.dragdrop.dragActive,
+    swapTransition: state.dragdrop.swapTransition,
     dragdrop: state.dragdrop,
     cursor: state.dragdrop.cursorPos
   }
@@ -203,15 +210,18 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleDragging: (dragActive, dragPos, order) => {
       if(dragPos) {
-        dispatch( {type: "SET_DRAG_POS", pos: dragPos, order: order});
+        dispatch( {type: "SET_DRAG_POS", pos: dragPos, order});
       }
-      dispatch ( {type: "TOGGLE_DRAGGING", dragActive: dragActive} )
+      dispatch ( {type: "TOGGLE_DRAGGING", dragActive} )
     },
     setCursorPos: (pos) => {
-      dispatch( {type: "SET_CURSOR_POS", pos: pos} )
+      dispatch( {type: "SET_CURSOR_POS", pos} )
     },
     setDroppable: (pos, order) => {
-      dispatch ( {type: "SET_DROP_POS", pos: pos, order: order} )
+      dispatch ( {type: "SET_DROP_POS", pos, order} )
+    },
+    setTransition: (transition) => {
+      dispatch( {type: "SET_TRANSITION", transition} )
     }
   }
 }

@@ -6,7 +6,8 @@ const initialState = {
   dropOrder: 0,
   dropTop: 0,
   dropLeft: 0,
-  cursorPos: {x: 0, y: 0}
+  cursorPos: {x: 0, y: 0},
+  swapTransition: false
 }
 
 export default function reducer(state=initialState, action) {
@@ -23,6 +24,9 @@ export default function reducer(state=initialState, action) {
     }
     case "SET_CURSOR_POS": {
       return Object.assign({}, state, {cursorPos: action.pos});
+    }
+    case "SET_TRANSITION": {
+      return Object.assign({}, state, {swapTransition: action.transition});
     }
   }
 
