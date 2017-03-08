@@ -1,6 +1,6 @@
 html {
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 body,
@@ -51,13 +51,51 @@ body,
 }
 
 .stream-container {
-  /*flex: 1 1 50%;*/
-  /*width: 50%;*/
-  display: inline-block;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
 }
 
 .vid {
+  position: relative;
+/*  display: inline-block;
+  margin: auto;*/
+/*  transition: all .3s;*/
+  left: 0;
+  top: 0;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+}
+
+.vid.dragging {
+  z-index: 1000;
+  transition: none;
+}
+
+.vid.droppable {
+  opacity: 0.5;
+  transition: none;
+}
+
+.vid.droppable-hover {
+  opacity: 0.9;
+  border: 3px solid black;
+  transition: none;
+}
+
+.vid.transitions {
   transition: all .3s;
+}
+.vid:hover {
+/*  transform: translate(50px, 50px);*/
+}
+
+.vid iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .vid:hover .overlay {
@@ -66,6 +104,21 @@ body,
 
 .overlay {
   display: none;
+}
+
+.drag-overlay {
+  z-index: 2;
+  position: absolute;
+  width: 1000%;
+  height: 1000%;
+}
+
+.drop-overlay {
+  background-color: black;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .player-controls {
@@ -91,29 +144,31 @@ body,
   display: inline-block;
 }
 
-.player-controls .fa-commenting {
+.player-controls .fa-commenting,
+.player-controls .fa-arrows {
   color: white;
   font-size: 125%;
   padding: 4px 4px;
 }
 
 .player-controls .fa-commenting:hover,
+.player-controls .fa-arrows:hover,
 .fa.fa-times:hover {
   cursor: pointer;
   color: #b2a0d2;
 }
 
+.player-controls .fa-arrows:hover + .fa-arrows-text,
 .player-controls .fa-commenting:hover + .fa-commenting-text {
   display: inline;
 }
 
-.player-controls .fa-commenting-text {
+.player-controls .control-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: absolute;
   z-index: 10;
   font-size: 11px;
   color: white;
-  left: -4.5%;
   bottom: 38px;
   background-color: rgba(0,0,0,0.7);
   padding: 4px 5px;
@@ -121,18 +176,12 @@ body,
   display: none;
 }
 
-.vid {
-  position: relative;
-  left:0;
-  top:0;
-  border: 3px solid transparent;
-  box-sizing: border-box;
+.player-controls .fa-arrows-text {
+  left: -4.5%;
 }
 
-.vid iframe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.player-controls .fa-commenting-text {
+  left: 25%;
 }
 
 .list-results {

@@ -18,30 +18,32 @@ class StreamCanvas extends React.Component {
       this.optimizeStreamSize();
   }
 
-  muteToggle(muted) {
-    this.props.activeStreams.forEach((stream) => {
-      stream.player.setMuted(muted);
-    })
+  // muteToggle(muted) {
+  //   this.props.activeStreams.forEach((stream) => {
+  //     stream.player.setMuted(muted);
+  //   })
 
-    this.props.setMuted(muted);
-  }
+  //   this.props.setMuted(muted);
+  // }
 
-  streamContainer() {
+  streamPlayers() {
     const filteredStreams = this.props.activeStreams.filter((stream) => {
       return this.props.navChannel === stream.navChannel;
     })
 
-    const streamContainers = filteredStreams.map((stream) => {
-      return <StreamPlayer key={stream.navChannel + "-" + stream.streamChannel} stream={stream} width={this.state.opWidth} height={this.state.opHeight}/>
+    const streamPlayers = filteredStreams.map((stream, index) => {
+      return <StreamPlayer key={stream.navChannel + "-" + stream.streamChannel} order={index} stream={stream} width={this.state.opWidth} height={this.state.opHeight}/>
     })
 
-    return streamContainers;
+    return streamPlayers;
   }
 
   optimizeStreamSize() {
-    const numStreams = this.streamContainer().length;
+    const numStreams = this.streamPlayers().length;
     const height = this.props.containerHeight;
     const width = this.props.containerWidth;
+    // console.log(height)
+    // console.log(width)
 
     let bestHeight = 0;
     let bestWidth = 0;
@@ -77,7 +79,9 @@ class StreamCanvas extends React.Component {
         <div className="stream-canvas-header">
         <div className="header-text">{this.props.navChannel}</div>
         </div>
-        {this.streamContainer()}
+        <div className="stream-container">
+          {this.streamPlayers()}
+        </div>
       </div>
     )
   }

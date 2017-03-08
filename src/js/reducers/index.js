@@ -2,6 +2,7 @@
 import { combineReducers } from "redux"
 
 import app from './appReducer'
+import dragdrop from './dragdropReducer'
 import search from './searchReducer'
 import user from './userReducer'
 import streams from './streamsReducer'
@@ -12,6 +13,7 @@ import history from './historyReducer'
 
 export default combineReducers({
   app,
+  dragdrop,
   search,
   user,
   streams,

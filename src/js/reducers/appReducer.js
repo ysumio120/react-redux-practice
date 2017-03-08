@@ -2,7 +2,7 @@ const initialState = {
   navCollapse: false,
   chatCollapse: false,
   searchCollapse: true,
-  listCollapse: true,
+  listCollapse: false
 }
 
 export default function reducer(state=initialState, action) {
