@@ -36,12 +36,11 @@ router.post('/user', function(req, res) {
           return err;
         }
         else {
-          res.send(createdUser);
+          return res.send(createdUser);
         }
-
       })
     }
-    res.send(foundUser);
+    else return res.send(foundUser);
   })
 });
 
@@ -50,13 +49,13 @@ router.get('/:username/history', function(req, res) {
     if(err)
       return err;
     else
-      res.send(user);
+      return res.send(user);
   })
 });
 
 // Add recently viewed content
 router.post('/:username/history', function(req, res) {
-  let recentHistory = req.body;
+  let recentHistory = {game: req.body.game, channel: req.body.channel, dateViewed: Number(req.body.dateViewed)};
 
   Users.findOne({name: req.params.username}, function(err, user) {
     if(err) return err;
@@ -71,11 +70,12 @@ router.post('/:username/history', function(req, res) {
           break;
         }
       }
-      if(!dupeChannel)
+      if(!dupeChannel) {
         user.viewHistory.push(recentHistory);
+      }
 
       user.save(function(err, doc) {
-        if(err) return err;
+        if(err) return console.log(err);
         res.send(doc);
       })
     }
