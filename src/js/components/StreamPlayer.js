@@ -55,6 +55,17 @@ class StreamPlayer extends React.Component {
     }
   }
 
+  // Must load empty content before deleting iframe to prevent memory leak 
+  closeStream() {
+    const iframe = this.vid.querySelector("iframe");
+
+    iframe.addEventListener("load", () => {
+      this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel)    
+    })
+
+    iframe.src = "about:blank";
+  }
+
   setNewPosition(isDraggable) {
     const flag = isDraggable ? 1 : -1;
 
@@ -161,7 +172,7 @@ class StreamPlayer extends React.Component {
       >
         <div className={this.state.dragging ? "drag-overlay" : ""}></div>
         <div className="overlay">
-          <i onClick={() => this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel)} className="fa fa-times" aria-hidden="true"></i>
+          <i onClick={this.closeStream.bind(this)} className="fa fa-times" aria-hidden="true"></i>
           <div className="player-controls">
             <div>
               <i
