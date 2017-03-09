@@ -33,6 +33,16 @@ class StreamPlayer extends React.Component {
     })
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if(!this.state.player && nextState.player) {
+      const iframe = this.vid.querySelector("iframe");
+
+      iframe.setAttribute("name", nextState.channel);
+    }
+
+
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.allStreams != this.props.allStreams || prevProps.width != this.props.width || prevProps.height != this.props.height) {
       this.setState({order: this.state.newOrder, top: 0, left: 0});
@@ -55,15 +65,20 @@ class StreamPlayer extends React.Component {
     }
   }
 
-  // Must load empty content before deleting iframe to prevent memory leak 
+  // Load empty content before deleting iframe to prevent memory leak
+  // *****CAUSES ROUTING ISSUES******
+  // Changing src adds new entry to browser history 
   closeStream() {
-    const iframe = this.vid.querySelector("iframe");
+    this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel);
+    // const iframe = this.vid.querySelector("iframe");
 
-    iframe.addEventListener("load", () => {
-      this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel)    
-    })
+    // iframe.addEventListener("load", () => {
+    //   //window.history.replaceState(null, null, window.location.href);
+    //   this.props.removeStream(this.props.navChannel, this.props.stream.streamChannel)    
+    // })
 
-    iframe.src = "about:blank";
+    // //iframe.contentWindow.location.ref = "about:blank";
+    // iframe.src = "about:blank";
   }
 
   setNewPosition(isDraggable) {
