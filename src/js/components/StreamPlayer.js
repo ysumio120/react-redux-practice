@@ -45,7 +45,7 @@ class StreamPlayer extends React.Component {
       document.removeEventListener('mousemove', this.onDrag.bind(this))
     }
 
-    if(this.props.stream.navChannel != this.props.navChannel) {
+    if(this.props.stream.navChannel == this.props.navChannel) {
       if(this.state.drophover && this.props.dragActive && this.props.swapTransition) { // new position for droppable
         const newPos = this.setNewPosition(false);
       
