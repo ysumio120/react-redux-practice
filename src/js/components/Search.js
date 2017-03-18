@@ -20,28 +20,27 @@ class Search extends React.Component {
   }
 
   onClickHandler(e) {
+    console.log(this.input)
+
     e.stopPropagation();
+    if(this.props.navCollapse) {
+      this.input.focus();
+      this.input.setSelectionRange(0, this.input.value.length);
+      this.props.toggleNav(false);
+    }
+
     this.props.toggleSearch(true);
-  }
-
-  onFocusHandler() {
-    document.querySelector(".fa.fa-search").classList.add("search-focus");
-  }
-
-  onBlurHandler() {
-    document.querySelector(".fa.fa-search").classList.remove("search-focus");
   }
 
   render() {
 
     return (
-      <div id="search">
-        <i className="fa fa-search" aria-hidden="true"></i>
+      <div id="search" ref={search => {this.search = search}} onClick={this.onClickHandler.bind(this)}>
         <input type="text" placeholder="Search" 
-            onClick={this.onClickHandler.bind(this)} 
-            onFocus={this.onFocusHandler.bind(this)}
-            onBlur={this.onBlurHandler.bind(this)} 
+            ref={input => {this.input = input}}
+            // onClick={this.onClickHandler.bind(this)} 
             onChange={this.onChangeHandler.bind(this)}/>
+        <i className={"fa fa-search"} aria-hidden="true"></i>
       </div>
     )
   }
@@ -49,7 +48,8 @@ class Search extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    query: state.search.query
+    query: state.search.query,
+    navCollapse: state.app.navCollapse
   }
 }
 
@@ -60,6 +60,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleSearch: (toggle) => {
       dispatch( {type: "TOGGLE_SEARCH", toggle} )
+    },
+    toggleNav: (toggle) => {
+      dispatch( {type:"TOGGLE_NAV", toggle: toggle})
     }
   }
 }

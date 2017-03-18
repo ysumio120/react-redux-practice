@@ -15,10 +15,11 @@ class NavColumn extends React.Component {
 
 
   render() {
+    const header = this.props.navCollapse ? "TA" : "TwitchAvid";
 
     return (
       <div id="nav-col" className={this.props.navCollapse ? "nav-close" : "nav-open"}>
-        <h1>TwitchAvid</h1>
+        <h1>{header}</h1>
         <User />
         <Search />
         <NavMenu />

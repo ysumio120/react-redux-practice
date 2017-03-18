@@ -13,12 +13,10 @@ class HistoryItem extends React.Component {
 
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(this.state.channel == null) {
+  componentDidMount() {
       getChannel(this.props.channel.channel, function(channel) {
           this.setState({channel: channel});
       }.bind(this));
-    }
   }
 
   historyInfo() {

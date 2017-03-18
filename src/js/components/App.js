@@ -28,7 +28,7 @@ class App extends React.Component {
     if(this.props.navCollapse != prevProps.navCollapse || this.props.chatCollapse != prevProps.chatCollapse || this.props.listCollapse != prevProps.listCollapse)
       //setTimeout(() => {
         this.updateBroswerSize();
-     // }, 400)
+      //}, 200)
   }
 
   updateBroswerSize() {

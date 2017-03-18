@@ -33,16 +33,6 @@ class StreamPlayer extends React.Component {
     })
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if(!this.state.player && nextState.player) {
-      const iframe = this.vid.querySelector("iframe");
-
-      iframe.setAttribute("name", nextState.channel);
-    }
-
-
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.allStreams != this.props.allStreams || prevProps.width != this.props.width || prevProps.height != this.props.height) {
       this.setState({order: this.state.newOrder, top: 0, left: 0});
@@ -55,13 +45,15 @@ class StreamPlayer extends React.Component {
       document.removeEventListener('mousemove', this.onDrag.bind(this))
     }
 
-    if(this.state.drophover && this.props.dragActive && this.props.swapTransition) { // new position for droppable
-      const newPos = this.setNewPosition(false);
-    
-      this.setState({drophover: false, ...newPos, newOrder: this.props.dragdrop.dragOrder});
-    }
-    else if(!this.state.dragging && this.props.dragActive && (prevProps.cursor.x != this.props.cursor.x || prevProps.cursor.y != this.props.cursor.y)) {
-      this.onDroppable();
+    if(this.props.stream.navChannel != this.props.navChannel) {
+      if(this.state.drophover && this.props.dragActive && this.props.swapTransition) { // new position for droppable
+        const newPos = this.setNewPosition(false);
+      
+        this.setState({drophover: false, ...newPos, newOrder: this.props.dragdrop.dragOrder});
+      }
+      else if(!this.state.dragging && this.props.dragActive && (prevProps.cursor.x != this.props.cursor.x || prevProps.cursor.y != this.props.cursor.y)) {
+        this.onDroppable();
+      }
     }
   }
 

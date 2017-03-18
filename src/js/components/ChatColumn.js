@@ -16,7 +16,7 @@ class ChatColumn extends React.Component {
 
   getOptions() {
     const chatOptions = this.props.chats.map((chat) => {
-      return <option value={chat}>{chat}</option>
+      return <option key={chat + "-dropdown"} value={chat}>{chat}</option>
     })
 
     return chatOptions;
@@ -29,7 +29,8 @@ class ChatColumn extends React.Component {
 
       return (
         <iframe 
-          frameborder="0" 
+          key={chat + "-chat"}
+          frameBorder="0" 
           scrolling="no" 
           className={"chat " + (this.props.selected == chat ? "chat-selected" : "")} 
           src={srcChat}>
@@ -55,7 +56,7 @@ class ChatColumn extends React.Component {
             <div className="chat-instructions">
               <p><b>Chat</b></p>
               <p>Start any stream and click on "<span><i className="fa fa-commenting" aria-hidden="true"></i></span>" along the bottom of the stream to open chat</p>
-              <p>When opening multiple chats, a dropdown is available at the top to select through current chats</p>
+              <p>When opening multiple chats, a dropdown is available above to select any active chats</p>
             </div>
           </div>
         )
