@@ -246,6 +246,15 @@ body,
   font-size: 12px;
 }
 
+/*.streams-list > ul > li:hover > .stream-info {
+  color: slateblue;
+  font-weight: 600;
+}*/
+
+.streams-list > ul > li:hover > .stream-image {
+  transform: scale(1.05,1.05);
+}
+
 .stream-status,
 .stream-channel {
   line-height: 1em;
