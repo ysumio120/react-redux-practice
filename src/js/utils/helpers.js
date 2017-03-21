@@ -33,6 +33,30 @@ export function getLocalUser(user, callback) {
   })
 }
 
+export function postFavorite(username, content, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites', {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: content
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
 export function postHistory(username, content, callback) {
   var params = buildQuery(content);
   fetch('/' + username + '/history', {

@@ -5,6 +5,7 @@ import SearchResults from './SearchResults'
 import NavColumn from './NavColumn'
 import StreamCanvas from './StreamCanvas'
 import ChatColumn from './ChatColumn'
+import ModalBookmark from './ModalBookmark'
 
 import { fetchStreams } from '../actions/searchActions'
 import { addStream } from '../actions/streamsActions'
@@ -74,6 +75,8 @@ class App extends React.Component {
           <div className="canvas-container" ref={(canvasContainer) => {this.canvasContainer = canvasContainer}}>{this.appendStreamCanvases()}</div>
         </div>
         <ChatColumn />
+        <div className={this.props.modalOpen ? "modal-dim" : "modal-no-dim"}></div>
+        <ModalBookmark />
       </div>
     )
   }
@@ -84,7 +87,8 @@ const mapStateToProps = (state, ownProps) => {
     navChannels: state.streams.navChannels,
     navCollapse: state.app.navCollapse,
     chatCollapse: state.app.chatCollapse,
-    listCollapse: state.app.listCollapse
+    listCollapse: state.app.listCollapse,
+    modalOpen: state.app.modalOpen
   }
 }
 

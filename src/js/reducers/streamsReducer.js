@@ -18,6 +18,7 @@ export default function reducer(state=initialState, action) {
     case "ADD_STREAM": {
       const newStream = {
         navChannel: action.navChannel,
+        streamChannelID: action.streamChannelID,
         streamChannel: action.streamChannel
       }
 

@@ -1,7 +1,8 @@
-export function addStream(navChannel, streamChannel) {
+export function addStream(navChannel, streamChannelID, streamChannel) {
   return {
     type: "ADD_STREAM",
     navChannel,
+    streamChannelID,
     streamChannel
   }
 }

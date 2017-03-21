@@ -33,6 +33,7 @@ class Game extends React.Component {
 
   onClickHandler(activeChannel) {
     const data = {
+      channel_id: this.props.channelID,
       channel: this.props.name,
       game: this.props.game,
       dateViewed: Date.now()
@@ -43,7 +44,7 @@ class Game extends React.Component {
         console.log(data);
       })
     }
-    this.props.addStream(this.props.activeChannel, this.props.name)
+    this.props.addStream(this.props.activeChannel, this.props.channelID, this.props.name)
   }
 
   render() {
@@ -63,6 +64,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user.user,
     activeChannel: state.streams.activeChannel,
+    channelID: ownProps.stream.channel._id, 
     name: ownProps.stream.channel.name,
     displayName: ownProps.stream.channel.display_name,
     game: ownProps.stream.game,
@@ -74,8 +76,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addStream: (navChannel, streamChannel) => {
-      dispatch( addStream(navChannel, streamChannel) )
+    addStream: (navChannel, streamChannelID, streamChannel) => {
+      dispatch( addStream(navChannel, streamChannelID, streamChannel) )
     },
     fecthGames: () => {
       dispatch( fetchTopGames() )

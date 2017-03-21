@@ -44,6 +44,44 @@ router.post('/user', function(req, res) {
   })
 });
 
+router.get('/:username/favorites', function(req, res) {
+  Users.findOne({name: req.params.username}, 'favorites', function(err, user) {
+    if(err)
+      return err;
+    else
+      return res.send(user);
+  })
+});
+
+// Save favorite
+router.post('/:username/favorites', function(req, res) {
+  const favorite = req.body
+  console.log(favorite)
+  Users.findOne({name: req.params.username}, function(err, user) {
+    if(err) return err;
+    else if(!user) res.send(user)
+    else {
+      const favoritesArr = user.favorites;
+      let dupeBookmark = false;
+      for(var i = 0; i < favoritesArr.length; i++) {
+        if(favoritesArr[i].bookmark === favorite.bookmark) {
+          favoritesArr[i].streams = favorite.streams;
+          dupeChannel = true;
+          break;
+        }
+      }
+      if(!dupeBookmark) {
+        user.favorites.push(favorite);
+      }
+
+      user.save(function(err, doc) {
+        if(err) return console.log(err);
+        res.send(doc);
+      })
+    }
+  })
+});
+
 router.get('/:username/history', function(req, res) {
   Users.findOne({name: req.params.username}, 'viewHistory', function(err, user) {
     if(err)
@@ -55,7 +93,12 @@ router.get('/:username/history', function(req, res) {
 
 // Add recently viewed content
 router.post('/:username/history', function(req, res) {
-  let recentHistory = {game: req.body.game, channel: req.body.channel, dateViewed: Number(req.body.dateViewed)};
+  let recentHistory = {
+    channel_id: req.body.channel_id,
+    channel: req.body.channel,
+    game: req.body.game, 
+    dateViewed: Number(req.body.dateViewed)
+  };
 
   Users.findOne({name: req.params.username}, function(err, user) {
     if(err) return err;
@@ -81,6 +124,7 @@ router.post('/:username/history', function(req, res) {
     }
   })
 });
+
 
 
 export default router;
