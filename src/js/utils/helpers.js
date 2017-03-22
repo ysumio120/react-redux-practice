@@ -33,6 +33,46 @@ export function getLocalUser(user, callback) {
   })
 }
 
+export function getFavoriteByBookmark(username, bookmark, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites/' + bookmark, {
+    method: "GET"
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+export function getAllFavorite(username, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites', {
+    method: "GET"
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
 export function postFavorite(username, content, callback) {
   //var params = buildQuery(content);
   fetch('/' + username + '/favorites', {

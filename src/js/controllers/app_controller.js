@@ -44,19 +44,28 @@ router.post('/user', function(req, res) {
   })
 });
 
-router.get('/:username/favorites', function(req, res) {
+router.get('/:username/favorites/:bookmark?', function(req, res) {
   Users.findOne({name: req.params.username}, 'favorites', function(err, user) {
     if(err)
       return err;
-    else
-      return res.send(user);
+    else {
+      if(req.params.bookmark) {
+        user.favorites.forEach(favorite => {
+          if(favorite.bookmark === req.params.bookmark)
+            return res.send(favorite);
+        })
+      }
+      else {
+        return res.send(user.favorites)
+      }
+    }
   })
 });
 
 // Save favorite
 router.post('/:username/favorites', function(req, res) {
   const favorite = req.body
-  console.log(favorite)
+
   Users.findOne({name: req.params.username}, function(err, user) {
     if(err) return err;
     else if(!user) res.send(user)
@@ -66,7 +75,7 @@ router.post('/:username/favorites', function(req, res) {
       for(var i = 0; i < favoritesArr.length; i++) {
         if(favoritesArr[i].bookmark === favorite.bookmark) {
           favoritesArr[i].streams = favorite.streams;
-          dupeChannel = true;
+          dupeBookmark = true;
           break;
         }
       }

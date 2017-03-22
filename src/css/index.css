@@ -747,6 +747,8 @@ select {
 .modal {
   position: absolute;
   margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
   z-index: 9999999;
   top: 0;
   bottom: 0;
@@ -758,7 +760,7 @@ select {
 
 .modal-show {
   width: 500px;
-  height: 500px;
+  height: 300px;
   opacity: 1.0;
 }
 
@@ -781,4 +783,16 @@ select {
 .modal-no-dim {
   width: 0%;
   height: 0%;
+}
+
+.modal ul {
+  padding-left: 0;
+}
+
+.modal ul > li {
+  display: inline-block;
+  padding-left: 20px;
+  width: 50%;
+  list-style-type: none;
+  box-sizing: border-box;
 }
