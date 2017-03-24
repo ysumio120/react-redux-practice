@@ -24,7 +24,7 @@ class Following extends React.Component {
   }
 
   display() {
-    if(this.props.user) {
+    if(this.props.userTwitch && this.props.userLocal) {
       if(this.props.streams.length == 0) {
         return <ul><div className="display-message"><i>All followed channels are currently offline</i></div></ul>
       } 
@@ -49,7 +49,8 @@ class Following extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.user,
+    userTwitch: state.user.userTwitch,
+    userLocal: state.user.userLocal,
     loggingIn: state.user.loggingIn,
     token: state.user.token,
     streams: state.following.streams

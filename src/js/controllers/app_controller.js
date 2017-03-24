@@ -46,14 +46,20 @@ router.post('/user', function(req, res) {
 
 router.get('/:username/favorites/:bookmark?', function(req, res) {
   Users.findOne({name: req.params.username}, 'favorites', function(err, user) {
+    let bookmarkFound = false;
+
     if(err)
       return err;
     else {
       if(req.params.bookmark) {
         user.favorites.forEach(favorite => {
-          if(favorite.bookmark === req.params.bookmark)
+          if(favorite.bookmark === req.params.bookmark) {
+            bookmarkFound = true;
             return res.send(favorite);
+          }
         })
+        if(!bookmarkFound)
+          return res.send({bookmark: req.params.bookmark, streams: []});
       }
       else {
         return res.send(user.favorites)

@@ -1,7 +1,8 @@
 const initialState = {
   loggingIn: true,
   isLoggedIn: false, 
-  user: null, 
+  userTwitch: null,
+  userLocal: null,
   token: ""
 }
 
@@ -11,8 +12,11 @@ export default function reducer(state=initialState, action) {
     case "SET_TOKEN": {
       return Object.assign({}, state, {token: action.token})
     }
-    case "SET_USER": {
-      return Object.assign({}, state, {user: action.user, isLoggedIn: action.isLoggedIn, loggingIn: false})
+    case "SET_USER_TWITCH": {
+      return Object.assign({}, state, {userTwitch: action.user})
+    }
+    case "SET_USER_LOCAL": {
+      return Object.assign({}, state, {userLocal: action.user, isLoggedIn: action.isLoggedIn, loggingIn: false})
     }
   }
 

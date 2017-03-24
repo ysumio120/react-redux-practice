@@ -39,8 +39,8 @@ class Game extends React.Component {
       dateViewed: Date.now()
     }
 
-    if(this.props.user) {
-      postHistory(this.props.user.name, data, (data) => {
+    if(this.props.userLocal) {
+      postHistory(this.props.userLocal.name, data, (data) => {
         console.log(data);
       })
     }
@@ -62,7 +62,7 @@ class Game extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.user,
+    userLocal: state.user.userLocal,
     activeChannel: state.streams.activeChannel,
     channelID: ownProps.stream.channel._id, 
     name: ownProps.stream.channel.name,

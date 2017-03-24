@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { getFavoriteByBookmark, postFavorite } from '../utils/helpers'
+import { getBookmarks } from '../actions/bookmarkActions'
 
 class ModalBookmark extends React.Component {
   
@@ -106,8 +107,10 @@ class ModalBookmark extends React.Component {
 
     console.log(JSON.stringify(obj));
 
-    postFavorite(this.props.user.name, JSON.stringify(obj), (data) => {
-      console.log(data);
+    postFavorite(this.props.userLocal.name, JSON.stringify(obj), (data) => {
+      if(data) {
+        this.props.fetchBookmarks(this.props.userLocal.name);
+      }
     })
   }
 
@@ -118,17 +121,26 @@ class ModalBookmark extends React.Component {
 
     return (
       <div ref={list => this.list = list} className={"modal " + modalOpen}>
-        <h3>{this.props.bookmarkChannel}</h3>
-        <div><i>{currentStreams.length > 0 ? "Currently playing:" : "Currently playing: N/A"}</i></div>
-        <ul>
-          {currentStreams}
-        </ul>
-        <div><i>Previously saved:</i></div>
-        <ul>
-          {this.getSavedStreams()}
-        </ul>
-        <button onClick={this.onSubmit.bind(this)}>Submit</button>
-        <button onClick={() => {this.props.toggleModal(false)}}>Close</button>
+        <div className="modal-header">
+          Add Bookmark
+        </div>
+        <div className="modal-content">
+          {this.props.bookmarkChannel}
+          <div><i>{currentStreams.length > 0 ? "Currently playing:" : "Currently playing: N/A"}</i></div>
+          <ul>
+            {currentStreams}
+          </ul>
+          <div><i>Previously saved:</i></div>
+          <ul>
+            {this.getSavedStreams()}
+          </ul>
+        </div>
+        <div className="modal-footer">
+          <div className="buttons">
+            <button onClick={this.onSubmit.bind(this)}>Save</button>
+            <button onClick={() => {this.props.toggleModal(false)}}>Close</button>
+          </div>
+        </div>
       </div>
     )
   }
@@ -136,7 +148,7 @@ class ModalBookmark extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.user,
+    userLocal: state.user.userLocal,
     streams: state.streams.streams,
     modalOpen: state.app.modalOpen,
     bookmarkChannel: state.app.bookmarkChannel
@@ -147,6 +159,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleModal: (toggle) => {
       dispatch( {type: "TOGGLE_MODAL", toggle: toggle} )
+    },
+    fetchBookmarks: (username) => {
+      dispatch( getBookmarks(username) )
     }
   }
 }

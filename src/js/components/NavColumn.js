@@ -6,13 +6,13 @@ import Search from './Search'
 import NavMenu from './NavMenu'
 import User from './User'
 import NavChannelsList from './NavChannelsList'
+import BookmarkList from './BookmarkList'
 
 class NavColumn extends React.Component {
   
   constructor(props) {
     super(props);
   }
-
 
   render() {
     const header = this.props.navCollapse ? "TA" : "TwitchAvid";
@@ -24,6 +24,7 @@ class NavColumn extends React.Component {
         <Search />
         <NavMenu />
         <NavChannelsList />
+        <BookmarkList />
       </div>
     )
   }

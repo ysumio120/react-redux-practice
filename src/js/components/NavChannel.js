@@ -30,6 +30,29 @@ class NavChannel extends React.Component {
     console.log(this.props.channel)
   }
 
+  isBookmarked() {
+    console.log(this.props.bookmarks.length)
+    for(let i = 0; i < this.props.bookmarks.length; i++) {
+      if(this.props.bookmarks[i].bookmark == this.props.channel) {
+        return (
+            <i className="fa fa-star"  
+               aria-hidden="true">
+            </i>
+        )
+      }
+    }
+
+    return (  
+      <i
+        onClick={this.bookmark.bind(this)}
+        onMouseEnter={this.onMouseEnter.bind(this)} 
+        onMouseLeave={this.onMouseLeave.bind(this)} 
+        className={this.state.bookmarkHover ? "fa fa-bookmark" : "fa fa-bookmark-o"}  
+        aria-hidden="true"
+      ></i>
+    )
+  }
+
   render() {
     const label = this.props.navCollapse ? this.props.channel.substring(0,1).toUpperCase() : this.props.channel 
 
@@ -38,13 +61,7 @@ class NavChannel extends React.Component {
           onClick={() => this.props.setActiveChannel(this.props.channel)} 
           className={this.props.activeChannel == this.props.channel ? "active" : ""}
         >
-          <i
-            onClick={this.bookmark.bind(this)}
-            onMouseEnter={this.onMouseEnter.bind(this)} 
-            onMouseLeave={this.onMouseLeave.bind(this)} 
-            className={this.state.bookmarkHover ? "fa fa-bookmark" : "fa fa-bookmark-o"}  
-            aria-hidden="true"
-          ></i>
+          {this.isBookmarked()}
           {label}
         </li>
     )
@@ -55,7 +72,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     activeChannel: state.streams.activeChannel,
     channel: ownProps.channel,
-    navCollapse: state.app.navCollapse
+    navCollapse: state.app.navCollapse,
+    bookmarks: state.bookmarks.bookmarks
   }
 }
 

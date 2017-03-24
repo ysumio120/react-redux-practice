@@ -16,13 +16,13 @@ class History extends React.Component {
 
     this.props.toggleList(false);
 
-    if(this.props.user)
-      this.props.fetchHistory(this.props.user.name)
+    if(this.props.userLocal)
+      this.props.fetchHistory(this.props.userLocal.name)
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.user && this.props.historyFetched == false)
-      this.props.fetchHistory(nextProps.user.name)
+    if(nextProps.userLocal && this.props.historyFetched == false)
+      this.props.fetchHistory(nextProps.userLocal.name)
   }
 
   historyList() {
@@ -33,10 +33,10 @@ class History extends React.Component {
     return <ul>{historyList}</ul>
   }
 
-  display() {
-    if(this.props.user) {
+  displayHistory() {
+    if(this.props.userTwitch && this.props.userLocal) {
       if(this.props.history.length == 0){
-        <ul><div className="display-message"><i>Start watching streams to grow your history!</i></div></ul>
+        return <ul><div className="display-message"><i>Start watching streams to grow your history!</i></div></ul>
       }
       return this.historyList()
     }
@@ -51,7 +51,7 @@ class History extends React.Component {
     return (
       <div id="history-list" className="streams-list list-results">
         {
-          this.display()
+          this.displayHistory()
         }
       </div>
     )
@@ -60,7 +60,8 @@ class History extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.user,
+    userTwitch: state.user.userTwitch,
+    userLocal: state.user.userLocal,
     loggingIn: state.user.loggingIn,
     history: state.history.history,
     historyFetched: state.history.fetched

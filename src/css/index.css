@@ -502,13 +502,16 @@ body,
 }
 
 #nav-menu > ul,
-#nav-channels > ul {
+#nav-channels > ul,
+#bookmarks > ul {
   padding: 0;
+  overflow: hidden;
+  list-style-type: none;
+  transition: all .2s;
 }
 
 #nav-menu > ul >  li {
   font-size: 15px;
-  list-style-type: none;
   color: white;
   transition: background-color .3s;
 }
@@ -516,7 +519,8 @@ body,
 #nav-menu > ul > a >  li.active,
 #nav-menu > ul > li:hover,
 #nav-channels > ul > li.active,
-#nav-channels > ul > li:hover {
+#nav-channels > ul > li:hover,
+#bookmarks > ul > li:hover {
   cursor: pointer;
   background-color: #614b88;
 }
@@ -546,7 +550,9 @@ body,
 }
 
 .nav-header > i {
-  margin-left: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
   padding: 5px;
   opacity: 0.5;
   cursor: pointer;
@@ -556,13 +562,27 @@ body,
   opacity: 1.0;
 }
 
+.nav-header .fa-.fa-plus {
+  font-size: 1em;
+}
+
+.nav-header .fa-.fa-chevron-down,
+.nav-header .fa-.fa-chevron-up {
+  font-size: 0.9em;
+}
+
+#bookmarks > ul > li,
 #nav-channels > ul > li {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 35px;
+  padding-right: 10px;
   color: white;
   cursor: pointer;
   transition: background-color .3s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #nav-col.nav-close #nav-channels > ul > li {
@@ -580,6 +600,7 @@ body,
   position: relative;
   color: white;
   margin: 0 25px;
+  padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid white;
 }
@@ -587,9 +608,8 @@ body,
 #nav-col.nav-close .nav-header,
 #nav-col.nav-close .fa.fa-plus {
   border: none;
-  text-align: center;
-  margin: 0;
-  font-size: 20px;
+  top: -5px;
+  right: -6px;
 }
 
 .nav-header hr {
@@ -601,6 +621,10 @@ body,
 }
 
 #nav-col.nav-close span {
+  display: none;
+}
+
+#nav-col.nav-close #bookmarks {
   display: none;
 }
 
@@ -744,23 +768,38 @@ select {
   /*background-color: #6441a4;*/
 }
 
-.modal {
-  position: absolute;
-  margin: auto;
+.modal-header {
+  font-weight: bolder;
+  font-size: 1.3em;
   padding: 10px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.modal-content {
+  padding: 10px;
+}
+
+.modal-footer {
+  padding: 10px;
+  border-top: 1px solid lightgrey;
+}
+
+.modal {
+  width: 500px;
+  position: absolute;
+  margin: 150px auto auto;
   box-sizing: border-box;
   z-index: 9999999;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
-  transition: opacity .3s;
+  transition: opacity .2s;
   background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 3px 20px;
 }
 
 .modal-show {
-  width: 500px;
-  height: 300px;
   opacity: 1.0;
 }
 
@@ -774,7 +813,7 @@ select {
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.7;
+  opacity: 0.3;
   z-index: 999999;
   top: 0;
   left: 0;
@@ -792,7 +831,32 @@ select {
 .modal ul > li {
   display: inline-block;
   padding-left: 20px;
-  width: 50%;
+  padding-bottom: 3px;
+  width: 100%;
   list-style-type: none;
   box-sizing: border-box;
+}
+
+.modal ul > li > label {
+  padding-left: 10px;
+}
+
+.modal .buttons {
+  text-align: right;
+}
+.modal button {
+  font-weight: 600;
+  margin: 5px 10px;
+  padding: 5px 15px;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  transition: all .2s;
+}
+
+.modal button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #614b88;
+  border-color: grey;
 }
