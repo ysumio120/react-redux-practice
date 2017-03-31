@@ -131,19 +131,19 @@ class ModalBookmark extends React.Component {
 
     for(let i = 0; i < inputs.length; i++) {
       if(inputs[i].checked) {
-        obj.streams.push({
+        toSubmit.streams.push({
           channel_id: inputs[i].getAttribute("data-id"), 
           channel: inputs[i].getAttribute("data-channel")
         });
       }
     }
 
-    console.log(obj)
+    console.log(toSubmit)
 
-    console.log(JSON.stringify(obj));
+    console.log(JSON.stringify(toSubmit));
 
     if(this.props.userLocal) {
-      postFavorite(this.props.userLocal.name, JSON.stringify(obj), (data) => {
+      postFavorite(this.props.userLocal.name, JSON.stringify(toSubmit), (data) => {
         if(data) {
           this.props.fetchBookmarks(this.props.userLocal.name);
         }
