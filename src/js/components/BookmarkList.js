@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
+import Bookmark from './Bookmark'
+
 import { getAllFavorite } from '../utils/helpers'
 import { getBookmarks } from '../actions/bookmarkActions'
 
@@ -29,8 +31,14 @@ class BookmarkList extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.bookmarks.length != this.props.bookmarks.length) {
       const li_Node = this.list.querySelector("li");
-      const li_NodeHeight = li_Node.offsetHeight;
-      this.setState({listHeight: this.props.bookmarks.length * li_NodeHeight})
+
+      if(li_Node == null) { // zero bookmarks
+        this.setState({listHeight: 0});
+      }
+      else {
+        const li_NodeHeight = li_Node.offsetHeight;
+        this.setState({listHeight: this.props.bookmarks.length * li_NodeHeight});
+      }
     }
   }
 
@@ -49,13 +57,7 @@ class BookmarkList extends React.Component {
   displayBookmarks() {
     const bookmarks = this.props.bookmarks.map((bookmark) => {
       return (         
-        <li 
-        key={"bookmark--" + bookmark.bookmark}
-        onClick={() => this.addToList(bookmark.bookmark)} 
-        className={"test"}
-        >
-        {bookmark.bookmark}
-        </li>
+        <Bookmark key={"bookmark--" + bookmark.bookmark} bookmark={bookmark} />
       )
     })
 
@@ -64,6 +66,14 @@ class BookmarkList extends React.Component {
 
   toggleBookmarks() {
     this.setState({collapse: !this.state.collapse});
+  }
+
+  updateBookmark(e) {
+    e.stopPropagation(); 
+
+    this.props.setBookMark(this.props.channel);
+    this.props.toggleModal(true, 'update');
+    console.log(this.props.channel)
   }
 
   render() {
@@ -104,6 +114,12 @@ const mapDispatchToProps = (dispatch) => {
     setActiveChannel: (channelName) => {
       dispatch( {type: "SET_CHANNEL", navChannel: channelName} )
     },
+    toggleModal: (toggle, modalType) => {
+      dispatch( {type: "TOGGLE_MODAL", toggle, modalType} )
+    },
+    setBookMark: (channel) => {
+      dispatch( {type: "SET_BOOKMARK_CHANNEL", channel} )
+    }
   }
 }
 

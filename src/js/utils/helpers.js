@@ -97,6 +97,29 @@ export function postFavorite(username, content, callback) {
   })
 }
 
+export function deleteBookmark(username, content, callback) {
+  fetch('/' + username + '/favorites', {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: content
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
 export function postHistory(username, content, callback) {
   var params = buildQuery(content);
   fetch('/' + username + '/history', {

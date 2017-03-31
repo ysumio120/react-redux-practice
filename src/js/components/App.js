@@ -88,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
     navCollapse: state.app.navCollapse,
     chatCollapse: state.app.chatCollapse,
     listCollapse: state.app.listCollapse,
-    modalOpen: state.app.modalOpen
+    modalOpen: state.bookmarks.modalOpen
   }
 }
 

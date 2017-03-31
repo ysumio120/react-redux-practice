@@ -10,7 +10,9 @@ class StreamsList extends React.Component {
   
   constructor(props) {
     super(props);
+  }
 
+  componentDidMount() {
     const route = this.props.route.path;
 
     this.props.toggleList(false);

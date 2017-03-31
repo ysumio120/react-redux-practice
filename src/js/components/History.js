@@ -13,7 +13,9 @@ class History extends React.Component {
     this.state = {
       history: null,
     }
+  }
 
+  componentDidMount() {
     this.props.toggleList(false);
 
     if(this.props.userLocal)

@@ -50,7 +50,7 @@ class StreamCanvas extends React.Component {
 
     for(let perRow = 1; perRow <= numStreams; perRow++) {
       const numRows = Math.ceil(numStreams / perRow);
-      let maxHeight = Math.floor(height / numRows) - 40;
+      let maxHeight = Math.floor((height - 45) / numRows);
       let maxWidth = Math.floor(width / perRow);
       if (maxWidth * 9/16 < maxHeight) {
         maxHeight = maxWidth * 9/16;

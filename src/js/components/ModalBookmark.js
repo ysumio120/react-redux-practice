@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getFavoriteByBookmark, postFavorite } from '../utils/helpers'
+import { getFavoriteByBookmark, postFavorite, deleteBookmark } from '../utils/helpers'
 import { getBookmarks } from '../actions/bookmarkActions'
 
 class ModalBookmark extends React.Component {
@@ -9,7 +9,8 @@ class ModalBookmark extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedFavorites: []
+      savedFavorites: [],
+      value: ""
     }
   }
 
@@ -18,7 +19,10 @@ class ModalBookmark extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(!prevProps.modalOpen && this.props.modalOpen) {
-      this.fetchFavorite();
+      if(this.props.userLocal) 
+        this.fetchFavorite();
+
+      this.setState({value: this.props.bookmarkChannel});
     }
 
     this.markCheckboxes();
@@ -33,7 +37,7 @@ class ModalBookmark extends React.Component {
   }
 
   fetchFavorite() {
-    const username = this.props.user.name;
+    const username = this.props.userLocal.name;
     const bookmark = this.props.bookmarkChannel;
 
     getFavoriteByBookmark(username, bookmark, (data) => {
@@ -57,7 +61,12 @@ class ModalBookmark extends React.Component {
       )
     })
 
-    return streams;
+    return (
+      <div>
+        <i>{streams.length > 0 ? "Channels Saved: " : "Channels Saved: None"}</i>
+        <ul>{streams}</ul>
+      </div>
+    )
   }
 
   getCurrentStreams() {
@@ -66,7 +75,7 @@ class ModalBookmark extends React.Component {
     })
 
     const streams = filteredStreams.map(stream => {
-      const id = this.props.bookmarkChannel + "--" + stream.streamChannel
+      const id = this.props.bookmarkChannel + "--" + stream.streamChannel;
 
       return (
         <li key={id}>
@@ -81,7 +90,32 @@ class ModalBookmark extends React.Component {
       )
     })
 
-    return streams;
+    return (
+      <div>
+        <i>{streams.length > 0 ? "Currently Playing:" : "Currently Playing: None"}</i>
+        <ul>{streams}</ul>
+      </div>
+    )
+  }
+
+  onChangeHandler(e) {
+    this.setState({value: e.target.value});
+  }
+
+  onDelete() {
+    const toDelete = {
+      bookmark: this.props.bookmarkChannel
+    }
+
+    if(this.props.userLocal) {
+      deleteBookmark(this.props.userLocal.name, JSON.stringify(toDelete), (data) => {
+        if(data) {
+          this.props.fetchBookmarks(this.props.userLocal.name);
+        }
+      });
+    }
+
+    this.props.toggleModal(false, "");
   }
 
   onSubmit() {
@@ -89,8 +123,9 @@ class ModalBookmark extends React.Component {
 
     const inputs = list.querySelectorAll("li > input");
 
-    const obj = {
+    const toSubmit = {
       bookmark: this.props.bookmarkChannel,
+      newName: this.state.value,
       streams: []
     }
 
@@ -107,38 +142,44 @@ class ModalBookmark extends React.Component {
 
     console.log(JSON.stringify(obj));
 
-    postFavorite(this.props.userLocal.name, JSON.stringify(obj), (data) => {
-      if(data) {
-        this.props.fetchBookmarks(this.props.userLocal.name);
-      }
-    })
+    if(this.props.userLocal) {
+      postFavorite(this.props.userLocal.name, JSON.stringify(obj), (data) => {
+        if(data) {
+          this.props.fetchBookmarks(this.props.userLocal.name);
+        }
+      });
+    }
+
+    this.props.toggleModal(false, "");
+
   }
 
   render() {
     const modalOpen = this.props.modalOpen ? "modal-show" : "modal-hide";
 
-    const currentStreams = this.getCurrentStreams();
+    const modalHeader = this.props.modalType == "add" ? 
+                          "Add Bookmark" : "Update Bookmark";
 
     return (
       <div ref={list => this.list = list} className={"modal " + modalOpen}>
         <div className="modal-header">
-          Add Bookmark
+          {modalHeader}
         </div>
         <div className="modal-content">
-          {this.props.bookmarkChannel}
-          <div><i>{currentStreams.length > 0 ? "Currently playing:" : "Currently playing: N/A"}</i></div>
-          <ul>
-            {currentStreams}
-          </ul>
-          <div><i>Previously saved:</i></div>
-          <ul>
-            {this.getSavedStreams()}
-          </ul>
+          <label htmlFor={"modal-input--" + this.props.bookmarkChannel}>{"Name: "}</label>
+          <input type="text" 
+            placeholder="Bookmark Name"  
+            value={this.state.value}
+            onChange={this.onChangeHandler.bind(this)}
+          />
+          {this.getCurrentStreams()}
+          {this.getSavedStreams()}
         </div>
         <div className="modal-footer">
           <div className="buttons">
-            <button onClick={this.onSubmit.bind(this)}>Save</button>
-            <button onClick={() => {this.props.toggleModal(false)}}>Close</button>
+            <button className="btn-delete" onClick={this.onDelete.bind(this)}>Delete</button> 
+            <button className="btn-save" onClick={this.onSubmit.bind(this)}>Save</button>
+            <button className="btn-close" onClick={() => {this.props.toggleModal(false)}}>Close</button>
           </div>
         </div>
       </div>
@@ -150,15 +191,16 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userLocal: state.user.userLocal,
     streams: state.streams.streams,
-    modalOpen: state.app.modalOpen,
-    bookmarkChannel: state.app.bookmarkChannel
+    modalOpen: state.bookmarks.modalOpen,
+    bookmarkChannel: state.bookmarks.bookmarkChannel,
+    modalType: state.bookmarks.modalType
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleModal: (toggle) => {
-      dispatch( {type: "TOGGLE_MODAL", toggle: toggle} )
+    toggleModal: (toggle, modalType) => {
+      dispatch( {type: "TOGGLE_MODAL", toggle, modalType} )
     },
     fetchBookmarks: (username) => {
       dispatch( getBookmarks(username) )

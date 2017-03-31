@@ -77,15 +77,18 @@ router.post('/:username/favorites', function(req, res) {
     else if(!user) res.send(user)
     else {
       const favoritesArr = user.favorites;
-      let dupeBookmark = false;
+      let foundBookmark = false;
       for(var i = 0; i < favoritesArr.length; i++) {
         if(favoritesArr[i].bookmark === favorite.bookmark) {
+          favoritesArr[i].bookmark = favorite.newName;
           favoritesArr[i].streams = favorite.streams;
-          dupeBookmark = true;
+          foundBookmark = true;
           break;
         }
       }
-      if(!dupeBookmark) {
+      if(!foundBookmark) {
+        favorite.bookmark = favorite.newName;
+        delete favorite.newName;
         user.favorites.push(favorite);
       }
 
@@ -96,6 +99,31 @@ router.post('/:username/favorites', function(req, res) {
     }
   })
 });
+
+router.delete('/:username/favorites', function(req, res) {
+
+  const bookmark = req.body.bookmark;
+
+  Users.findOne({name: req.params.username}, function(err, user) {
+    if(err) return err;
+    else if(!user) res.send(user)
+    else {
+      const favoritesArr = user.favorites;
+      let foundBookmark = false;
+      for(var i = 0; i < favoritesArr.length; i++) {
+        if(favoritesArr[i].bookmark === bookmark) {
+          favoritesArr.splice(i, 1);
+          break;
+        }
+      }
+
+      user.save(function(err, doc) {
+        if(err) return console.log(err);
+        res.send(doc);
+      })
+    }
+  })
+})
 
 router.get('/:username/history', function(req, res) {
   Users.findOne({name: req.params.username}, 'viewHistory', function(err, user) {
@@ -120,15 +148,15 @@ router.post('/:username/history', function(req, res) {
     else if(!user) res.send(user)
     else {
       let historyArr = user.viewHistory;
-      let dupeChannel = false;
+      let foundChannel = false;
       for(var i = 0; i < historyArr.length; i++) {
         if(historyArr[i].channel === recentHistory.channel) {
           historyArr[i].dateViewed = recentHistory.dateViewed;
-          dupeChannel = true;
+          foundChannel = true;
           break;
         }
       }
-      if(!dupeChannel) {
+      if(!foundChannel) {
         user.viewHistory.push(recentHistory);
       }
 

@@ -4,7 +4,8 @@ const initialState = {
   searchCollapse: true,
   listCollapse: true,
   modalOpen: false,
-  bookmarkChannel: ""
+  bookmarkChannel: "",
+  modalType: "" // add, update, or remove
 }
 
 export default function reducer(state=initialState, action) {
@@ -21,12 +22,6 @@ export default function reducer(state=initialState, action) {
     }
     case "TOGGLE_LIST": {
       return Object.assign({}, state, {listCollapse: action.toggle});
-    }
-    case "TOGGLE_MODAL": {
-      return Object.assign({}, state, {modalOpen: action.toggle});
-    }
-    case "SET_BOOKMARK_CHANNEL": {
-      return Object.assign({}, state, {bookmarkChannel: action.channel});
     }
   }
 

@@ -22,11 +22,11 @@ class NavChannel extends React.Component {
     this.setState({bookmarkHover: false});
   }
 
-  bookmark(e) {
+  addBookmark(e) {
     e.stopPropagation(); 
 
     this.props.setBookMark(this.props.channel);
-    this.props.toggleModal(true);
+    this.props.toggleModal(true, 'add');
     console.log(this.props.channel)
   }
 
@@ -35,21 +35,23 @@ class NavChannel extends React.Component {
     for(let i = 0; i < this.props.bookmarks.length; i++) {
       if(this.props.bookmarks[i].bookmark == this.props.channel) {
         return (
-            <i className="fa fa-star"  
-               aria-hidden="true">
-            </i>
+          <div>
+            <i className="fa fa-star" aria-hidden="true"></i>
+          </div>
         )
       }
     }
 
-    return (  
-      <i
-        onClick={this.bookmark.bind(this)}
-        onMouseEnter={this.onMouseEnter.bind(this)} 
-        onMouseLeave={this.onMouseLeave.bind(this)} 
-        className={this.state.bookmarkHover ? "fa fa-bookmark" : "fa fa-bookmark-o"}  
-        aria-hidden="true"
-      ></i>
+    return (
+      <div>  
+        <i
+          onClick={this.addBookmark.bind(this)}
+          onMouseEnter={this.onMouseEnter.bind(this)} 
+          onMouseLeave={this.onMouseLeave.bind(this)} 
+          className={this.state.bookmarkHover ? "fa fa-bookmark" : "fa fa-bookmark-o"}  
+          aria-hidden="true"
+        ></i>
+      </div>
     )
   }
 
@@ -82,8 +84,8 @@ const mapDispatchToProps = (dispatch) => {
     setActiveChannel: (channelName) => {
       dispatch( {type: "SET_CHANNEL", navChannel: channelName} )
     },
-    toggleModal: (toggle) => {
-      dispatch( {type: "TOGGLE_MODAL", toggle} )
+    toggleModal: (toggle, modalType) => {
+      dispatch( {type: "TOGGLE_MODAL", toggle, modalType} )
     },
     setBookMark: (channel) => {
       dispatch( {type: "SET_BOOKMARK_CHANNEL", channel} )

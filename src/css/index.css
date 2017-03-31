@@ -88,9 +88,6 @@ body,
 .vid.transitions {
   transition: all .3s;
 }
-.vid:hover {
-/*  transform: translate(50px, 50px);*/
-}
 
 .vid iframe {
   position: absolute;
@@ -335,7 +332,6 @@ body,
   color: white;
   padding-top: 5px;
   width: 100%;
-  height: 15px;
 }
 
 .list-toggle > div {
@@ -539,13 +535,53 @@ body,
   color: inherit;
 }
 
-#nav-menu > ul > li > a > i,
-#nav-channels > ul > li > i {
+#nav-menu > ul > li > a > i {
   margin-right: 15px;
   width: 15px;
 }
 
-#nav-col.nav-close #nav-channels > ul > li > i {
+
+#nav-channels > ul > li > div,
+#bookmarks > ul > li > div {
+  display: inline-block;
+}
+
+#bookmarks > ul > li:hover > div > .fa.fa-cog {
+  opacity: 0.7;
+}
+
+#nav-channels > ul > li > div > i {
+  margin-right: 15px;
+  font-size: .8em;
+}
+
+#bookmarks > ul > li > div > .fa.fa-bookmark,
+#bookmarks > ul > li > div > .fa.fa-bookmark-o {
+  padding: 2px;
+}
+
+#bookmarks > ul > li > div > .fa.fa-cog {
+  margin-right: 10px;
+  font-size: 1em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  opacity: 0;
+}
+
+#bookmarks > ul > li > div > .fa.fa-cog:hover {
+  opacity: 1.0;
+  animation: spin-cog 2s linear infinite;
+}
+
+@keyframes spin-cog {
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+#nav-col.nav-close #nav-channels > ul > li > div {
   display: none;
 }
 
@@ -571,12 +607,13 @@ body,
   font-size: 0.9em;
 }
 
-#bookmarks > ul > li,
-#nav-channels > ul > li {
+/*------------------------------*/
+#bookmarks > ul > li {
+  position: relative;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 35px;
-  padding-right: 10px;
+  padding-right: 35px;
   color: white;
   cursor: pointer;
   transition: background-color .3s;
@@ -584,6 +621,20 @@ body,
   overflow: hidden;
   white-space: nowrap;
 }
+
+#nav-channels > ul > li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 30px;
+  padding-right: 35px;
+  color: white;
+  cursor: pointer;
+  transition: background-color .3s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+/*------------------------------*/
 
 #nav-col.nav-close #nav-channels > ul > li {
   text-align: center;
@@ -730,10 +781,6 @@ select {
   transition: max-height .3s;
 }
 
-/*#nav-col.nav-close #addChannel {
-  transition: max-height .1s;
-}*/
-
 #addChannel > input {
   width: 100%;
   margin-top: 10px;
@@ -779,8 +826,14 @@ select {
   padding: 10px;
 }
 
+.modal-content input {
+  font-size: 1em;
+  padding-left: 3px;
+  margin-bottom: 10px;
+}
+
 .modal-footer {
-  padding: 10px;
+  padding: 5px;
   border-top: 1px solid lightgrey;
 }
 
@@ -830,8 +883,7 @@ select {
 
 .modal ul > li {
   display: inline-block;
-  padding-left: 20px;
-  padding-bottom: 3px;
+  padding-left: 15px;
   width: 100%;
   list-style-type: none;
   box-sizing: border-box;
@@ -844,6 +896,11 @@ select {
 .modal .buttons {
   text-align: right;
 }
+
+.modal .buttons .btn-delete {
+  float: left;
+}
+
 .modal button {
   font-weight: 600;
   margin: 5px 10px;
@@ -852,11 +909,15 @@ select {
   background-color: white;
   border: 1px solid lightgrey;
   transition: all .2s;
+  cursor: pointer;
 }
 
-.modal button:hover {
-  cursor: pointer;
+.modal .btn-save:hover,
+.modal .btn-close:hover {
   color: white;
   background-color: #614b88;
-  border-color: grey;
+}
+
+.modal .btn-delete:hover {
+  background-color: #ff544b;
 }

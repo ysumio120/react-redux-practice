@@ -9,9 +9,11 @@ class Following extends React.Component {
   
   constructor(props) {
     super(props);
+  }
 
+
+  componentDidMount() {
     this.props.toggleList(false);
-
     this.props.fetchStreams(this.props.token);
   }
 
