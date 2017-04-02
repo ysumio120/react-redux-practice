@@ -16,6 +16,9 @@ class StreamCanvas extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(this.props.activeStreams.length != prevProps.activeStreams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
       this.optimizeStreamSize();
+  
+    // if(this.props.navChannel == this.props.activeChannel && prevProps.bookmarks !== this.props.bookmarks) {}
+    //   this.getBookmarkedChannels();
   }
 
   // muteToggle(muted) {
@@ -25,6 +28,23 @@ class StreamCanvas extends React.Component {
 
   //   this.props.setMuted(muted);
   // }
+
+  getBookmarkedChannels() {
+    let channels  = [];
+
+    for(let i = 0; i < this.props.bookmarks.length; i++) {
+      if(this.props.bookmarks[i].bookmark === this.props.activeChannel) {
+        channels = this.props.bookmarks[i].streams;
+        break;
+      }
+    }
+
+    const list = channels.map(channel => {
+      return <li key={channel._id}>{channel.channel}</li>
+    })
+
+    return <ul>{list}</ul>
+  }
 
   streamPlayers() {
     const filteredStreams = this.props.activeStreams.filter((stream) => {
@@ -50,7 +70,7 @@ class StreamCanvas extends React.Component {
 
     for(let perRow = 1; perRow <= numStreams; perRow++) {
       const numRows = Math.ceil(numStreams / perRow);
-      let maxHeight = Math.floor((height - 45) / numRows);
+      let maxHeight = Math.floor((height - 70) / numRows);
       let maxWidth = Math.floor(width / perRow);
       if (maxWidth * 9/16 < maxHeight) {
         maxHeight = maxWidth * 9/16;
@@ -77,7 +97,19 @@ class StreamCanvas extends React.Component {
     return (
       <div data-tab={this.props.navChannel} className={classNames}>
         <div className="stream-canvas-header">
-        <div className="header-text">{this.props.navChannel}</div>
+          <div className="header-tab">
+            <div className="header-channel-name">
+              <span>{this.props.navChannel}</span>
+            </div>
+          </div>
+          <div className="header-tab">
+            <div className="header-saved-channels">
+              <span>Channels</span>
+              <div className="header-channels-dropdown">
+                {this.getBookmarkedChannels()}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="stream-container">
           {this.streamPlayers()}
@@ -94,6 +126,7 @@ const mapStateToProps = (state, ownProps) => {
     navChannel: ownProps.navChannel,
     activeChannel: state.streams.activeChannel,
     activeStreams: state.streams.streams,
+    bookmarks: state.bookmarks.bookmarks,
     muted: state.streams.muted
   }
 }

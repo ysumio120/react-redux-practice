@@ -1,8 +1,13 @@
 const initialState = {
   bookmarks: [],  
   // {
-  //   bookmark: String,
-  //   streams: [ String ]
+  //  _id: String,
+  //  bookmark: String,
+  //  streams: [ {
+  //     _id: String,
+  //     channel: String,
+  //     channel_id: Number
+  //   } ]
   // }
   modalOpen: false,
   modalType: "", // add, update, or remove
