@@ -14,7 +14,7 @@ class HistoryItem extends React.Component {
   }
 
   componentDidMount() {
-      getChannel(this.props.channel.channel, function(channel) {
+      getChannel(this.props.channel.channel_id, function(channel) {
           this.setState({channel: channel});
       }.bind(this));
   }
@@ -25,7 +25,7 @@ class HistoryItem extends React.Component {
         <div>
           <img className="channel-logo" src={this.state.channel.logo}/>
           <p className="historyChannelName"> {this.state.channel.display_name} </p>
-          <p className="historyGameName"> {"Played " + this.props.channel.game} </p>
+          <p className="historyGameName"> {"Played " + this.state.channel.game} </p>
         </div>
       )
     }

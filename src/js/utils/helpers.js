@@ -144,13 +144,13 @@ export function postHistory(username, content, callback) {
   })
 }
 
-export function getChannel(channelName, callback) {
+export function getChannel(channelID, callback) {
   const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
 
-  fetch("https://api.twitch.tv/kraken/channels/" + channelName, {
+  fetch("https://api.twitch.tv/kraken/channels/" + channelID, {
     method: "GET",
     headers: {
-      //"Accept": "application/vnd.twitchtv.v5+json", // using v3 api
+      "Accept": "application/vnd.twitchtv.v5+json",
       "Client-ID":"kw4mh30kbtoewy0b9dh0mmyrt38r56"
     }
   })

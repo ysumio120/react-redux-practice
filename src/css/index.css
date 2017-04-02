@@ -64,6 +64,10 @@ body,
 
 .header-channel-name {
   font-size: 1.3em;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .header-channels-dropdown {
@@ -75,6 +79,7 @@ body,
   z-index: 100000;
   background-color: white;
   border: 1px solid darkgrey;
+  white-space: nowrap;
 }
 
 .header-tab:hover .header-channels-dropdown {

@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 
 import StreamPlayer from './StreamPlayer'
 
+import { addStream } from '../actions/streamsActions'
+import { getChannel, postHistory } from '../utils/helpers'
+
 class StreamCanvas extends React.Component {
   
   constructor(props) {
@@ -16,9 +19,6 @@ class StreamCanvas extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(this.props.activeStreams.length != prevProps.activeStreams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
       this.optimizeStreamSize();
-  
-    // if(this.props.navChannel == this.props.activeChannel && prevProps.bookmarks !== this.props.bookmarks) {}
-    //   this.getBookmarkedChannels();
   }
 
   // muteToggle(muted) {
@@ -28,6 +28,27 @@ class StreamCanvas extends React.Component {
 
   //   this.props.setMuted(muted);
   // }
+
+  playStream(channelID, channelName) {
+    if(this.props.userLocal) {
+      getChannel(channelID, (channel) => {
+
+        if(channel) {
+          const data = {
+            channel_id: channel._id,
+            channel: channel.name,
+            game: channel.game,
+            dateViewed: Date.now()
+          }
+
+          postHistory(this.props.userLocal.name, data, (data) => {
+            console.log(data);
+          })
+        }
+      })
+    }
+    this.props.addStream(this.props.activeChannel, channelID, channelName)
+  }
 
   getBookmarkedChannels() {
     let channels  = [];
@@ -40,9 +61,12 @@ class StreamCanvas extends React.Component {
     }
 
     const list = channels.map(channel => {
-      return <li key={channel._id}>{channel.channel}</li>
+      return <li key={channel._id} onClick={() => {this.playStream(channel.channel_id, channel.channel)}}>{channel.channel}</li>
     })
 
+    if(list.length == 0) {
+      return <ul><i>No saved channels</i></ul>
+    }
     return <ul>{list}</ul>
   }
 
@@ -121,6 +145,7 @@ class StreamCanvas extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    userLocal: state.user.userLocal,
     containerWidth: ownProps.width,
     containerHeight: ownProps.height,
     navChannel: ownProps.navChannel,
@@ -133,6 +158,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addStream: (navChannel, streamChannelID, streamChannel) => {
+      dispatch( addStream(navChannel, streamChannelID, streamChannel) )
+    },
     setMuted: (muted) => {
       dispatch( {type: "SET_MUTED", muted} )
     }
