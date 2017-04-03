@@ -110,8 +110,19 @@ class User extends React.Component {
           </div>
         </div>
       )
-    else if(!this.props.loggingIn)
-      return <img onClick={this.login.bind(this)} src="http://ttv-api.s3.amazonaws.com/assets/connect_light.png" className="twitch-connect"/>
+    else if(!this.props.loggingIn) {
+      if(!this.props.navCollapse)
+        return <img onClick={this.login.bind(this)} src="http://ttv-api.s3.amazonaws.com/assets/connect_light.png" className="twitch-connect"/>
+      else
+        return (
+          <button onClick={this.login.bind(this)} className="sm-login-btn">
+            <div>
+              <img src="src/images/twitch_logo.png" />
+              <i className="fa fa-sign-in" aria-hidden="true"></i>
+            </div>
+          </button>
+        )
+    }
   }
 
   render() {
@@ -130,6 +141,7 @@ const mapStateToProps = (state, ownProps) => {
     token: state.user.token,
     userTwitch: state.user.userTwitch,
     userLocal: state.user.userLocal,
+    navCollapse: state.app.navCollapse
   }
 }
 

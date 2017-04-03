@@ -452,6 +452,38 @@ body,
   margin-left: 3px;
 }
 
+.sm-login-btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  padding: 5px 4px;
+  margin-left: 4px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.sm-login-btn img {
+  width: 30px;
+  transform: translateX(0%);
+  transition: all .3s;
+}
+
+.sm-login-btn .fa.fa-sign-in {
+  position: absolute;
+  font-size: 1.2em;
+  top: 20%;
+  right: -100%;
+  transition: all .3s;
+}
+
+.sm-login-btn:hover img {
+  transform: translateX(-100%);
+}
+
+.sm-login-btn:hover .fa.fa-sign-in {
+  right: 34%;
+}
+
 .twitch-connect {
   margin-left: 14%;
   margin-top: 2%;
