@@ -38,7 +38,7 @@ class History extends React.Component {
   displayHistory() {
     if(this.props.userTwitch && this.props.userLocal) {
       if(this.props.history.length == 0){
-        return <ul><div className="display-message"><i>Start watching streams to grow your history!</i></div></ul>
+        return <ul><div className="display-message"><i>Your history is empty</i></div></ul>
       }
       return this.historyList()
     }
