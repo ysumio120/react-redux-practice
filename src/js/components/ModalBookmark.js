@@ -129,13 +129,23 @@ class ModalBookmark extends React.Component {
       streams: []
     }
 
+    let noDuplicates = {};
+
     for(let i = 0; i < inputs.length; i++) {
       if(inputs[i].checked) {
-        toSubmit.streams.push({
-          channel_id: inputs[i].getAttribute("data-id"), 
-          channel: inputs[i].getAttribute("data-channel")
-        });
+        
+        const channel_id = inputs[i].getAttribute("data-id");
+        const channel = inputs[i].getAttribute("data-channel");
+        
+        noDuplicates[channel] = {
+          channel_id: channel_id, 
+          channel: channel
+        };
       }
+    }
+
+    for(let channel in noDuplicates) {
+      toSubmit.streams.push(noDuplicates[channel]);
     }
 
     console.log(toSubmit)
