@@ -117,7 +117,7 @@ class User extends React.Component {
         return (
           <button onClick={this.login.bind(this)} className="sm-login-btn">
             <div>
-              <img src="src/images/twitch_logo.png" />
+              <img src="/src/images/twitch_logo.PNG" />
               <i className="fa fa-sign-in" aria-hidden="true"></i>
             </div>
           </button>
