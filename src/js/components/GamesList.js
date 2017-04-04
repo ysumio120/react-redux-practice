@@ -10,9 +10,10 @@ class GamesList extends React.Component {
   
   constructor(props) {
     super(props);
+  } 
 
+  componentDidMount() { 
     this.props.toggleList(false);
-    
     this.props.fecthGames();
   }
 

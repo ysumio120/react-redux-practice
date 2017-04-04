@@ -44,6 +44,87 @@ router.post('/user', function(req, res) {
   })
 });
 
+router.get('/:username/favorites/:bookmark?', function(req, res) {
+  Users.findOne({name: req.params.username}, 'favorites', function(err, user) {
+    let bookmarkFound = false;
+
+    if(err)
+      return err;
+    else {
+      if(req.params.bookmark) {
+        user.favorites.forEach(favorite => {
+          if(favorite.bookmark === req.params.bookmark) {
+            bookmarkFound = true;
+            return res.send(favorite);
+          }
+        })
+        if(!bookmarkFound)
+          return res.send({bookmark: req.params.bookmark, streams: []});
+      }
+      else {
+        return res.send(user.favorites)
+      }
+    }
+  })
+});
+
+// Save favorite
+router.post('/:username/favorites', function(req, res) {
+  const favorite = req.body
+
+  Users.findOne({name: req.params.username}, function(err, user) {
+    if(err) return err;
+    else if(!user) res.send(user)
+    else {
+      const favoritesArr = user.favorites;
+      let foundBookmark = false;
+      for(var i = 0; i < favoritesArr.length; i++) {
+        if(favoritesArr[i].bookmark === favorite.bookmark) {
+          favoritesArr[i].bookmark = favorite.newName;
+          favoritesArr[i].streams = favorite.streams;
+          foundBookmark = true;
+          break;
+        }
+      }
+      if(!foundBookmark) {
+        favorite.bookmark = favorite.newName;
+        delete favorite.newName;
+        user.favorites.push(favorite);
+      }
+
+      user.save(function(err, doc) {
+        if(err) return console.log(err);
+        res.send(doc);
+      })
+    }
+  })
+});
+
+router.delete('/:username/favorites', function(req, res) {
+
+  const bookmark = req.body.bookmark;
+
+  Users.findOne({name: req.params.username}, function(err, user) {
+    if(err) return err;
+    else if(!user) res.send(user)
+    else {
+      const favoritesArr = user.favorites;
+      let foundBookmark = false;
+      for(var i = 0; i < favoritesArr.length; i++) {
+        if(favoritesArr[i].bookmark === bookmark) {
+          favoritesArr.splice(i, 1);
+          break;
+        }
+      }
+
+      user.save(function(err, doc) {
+        if(err) return console.log(err);
+        res.send(doc);
+      })
+    }
+  })
+})
+
 router.get('/:username/history', function(req, res) {
   Users.findOne({name: req.params.username}, 'viewHistory', function(err, user) {
     if(err)
@@ -55,22 +136,27 @@ router.get('/:username/history', function(req, res) {
 
 // Add recently viewed content
 router.post('/:username/history', function(req, res) {
-  let recentHistory = {game: req.body.game, channel: req.body.channel, dateViewed: Number(req.body.dateViewed)};
+  let recentHistory = {
+    channel_id: req.body.channel_id,
+    channel: req.body.channel,
+    game: req.body.game, 
+    dateViewed: Number(req.body.dateViewed)
+  };
 
   Users.findOne({name: req.params.username}, function(err, user) {
     if(err) return err;
     else if(!user) res.send(user)
     else {
       let historyArr = user.viewHistory;
-      let dupeChannel = false;
+      let foundChannel = false;
       for(var i = 0; i < historyArr.length; i++) {
         if(historyArr[i].channel === recentHistory.channel) {
           historyArr[i].dateViewed = recentHistory.dateViewed;
-          dupeChannel = true;
+          foundChannel = true;
           break;
         }
       }
-      if(!dupeChannel) {
+      if(!foundChannel) {
         user.viewHistory.push(recentHistory);
       }
 
@@ -81,6 +167,7 @@ router.post('/:username/history', function(req, res) {
     }
   })
 });
+
 
 
 export default router;

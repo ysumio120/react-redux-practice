@@ -10,6 +10,7 @@ import chats from './chatReducer'
 import games from './gamesReducer'
 import following from './followingReducer'
 import history from './historyReducer'
+import bookmarks from './bookmarkReducer'
 
 export default combineReducers({
   app,
@@ -20,5 +21,6 @@ export default combineReducers({
   chats,
   games,
   following,
-  history
+  history,
+  bookmarks
 })

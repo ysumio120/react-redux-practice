@@ -33,6 +33,93 @@ export function getLocalUser(user, callback) {
   })
 }
 
+export function getFavoriteByBookmark(username, bookmark, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites/' + bookmark, {
+    method: "GET"
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+export function getAllFavorite(username, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites', {
+    method: "GET"
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+export function postFavorite(username, content, callback) {
+  //var params = buildQuery(content);
+  fetch('/' + username + '/favorites', {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: content
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+export function deleteBookmark(username, content, callback) {
+  fetch('/' + username + '/favorites', {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: content
+  })
+  .then(response => {
+    console.log(response)
+    if(!response.ok) 
+      throw new Error()
+    
+    return response.json()
+  })
+  .then((data) => {
+    callback(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
 export function postHistory(username, content, callback) {
   var params = buildQuery(content);
   fetch('/' + username + '/history', {
@@ -57,13 +144,13 @@ export function postHistory(username, content, callback) {
   })
 }
 
-export function getChannel(channelName, callback) {
+export function getChannel(channelID, callback) {
   const client_id = process.env.NODE_ENV ? "tgasid8neghal59b29g0hpjg8xt3gu" : "kw4mh30kbtoewy0b9dh0mmyrt38r56"
 
-  fetch("https://api.twitch.tv/kraken/channels/" + channelName, {
+  fetch("https://api.twitch.tv/kraken/channels/" + channelID, {
     method: "GET",
     headers: {
-      //"Accept": "application/vnd.twitchtv.v5+json", // using v3 api
+      "Accept": "application/vnd.twitchtv.v5+json",
       "Client-ID":"kw4mh30kbtoewy0b9dh0mmyrt38r56"
     }
   })

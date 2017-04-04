@@ -54,15 +54,22 @@ export function getToken(code) {
   }
 }
 
-export function setUser(user, isLoggedIn) { // user object from Twitch API
+export function setTwitchUser(user) { // user object from Twitch API
   return {
-    type: "SET_USER",
+    type: "SET_USER_TWITCH",
+    user
+  }
+}
+
+export function setLocalUser(user, isLoggedIn) { // user object from Twitch API
+  return {
+    type: "SET_USER_LOCAL",
     user,
     isLoggedIn
   }
 }
 
-export function getUser(token) {
+export function getTwitchUser(token) {
   return (dispatch) => {
     fetch("https://api.twitch.tv/kraken/user", {
       method: "GET",
@@ -80,11 +87,42 @@ export function getUser(token) {
     })
     .then(json => {
       console.log(json)
-      dispatch(setUser(json, true))
+      dispatch(setTwitchUser(json))
     })
     .catch(err => {
       console.log(err)
       console.log("caught error")
+      dispatch(setTwitchUser(null))
     })
   }
+}
+
+export function getLocalUser(user) {
+  const params = buildQuery(user);
+
+  return (dispatch) => {
+    fetch('/user', {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: params
+    })
+    .then((response) => {
+      if(!response.ok) 
+        throw new Error()
+
+      return response.json()
+    })
+    .then(json => {
+      console.log(json)
+      dispatch(setLocalUser(json, true))
+    })
+    .catch(err => {
+      console.log(err)
+      console.log("caught error")
+      dispatch(setLocalUser(null, false))
+    })
+  }
+
 }

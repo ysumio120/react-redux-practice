@@ -2,7 +2,10 @@ const initialState = {
   navCollapse: false,
   chatCollapse: false,
   searchCollapse: true,
-  listCollapse: true
+  listCollapse: true,
+  modalOpen: false,
+  bookmarkChannel: "",
+  modalType: "" // add, update, or remove
 }
 
 export default function reducer(state=initialState, action) {

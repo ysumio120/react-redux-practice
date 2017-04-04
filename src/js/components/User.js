@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import store from '../store' 
 
 import { fetchStreams } from '../actions/searchActions'
-import * as user from '../actions/userActions'
-import { getLocalUser } from '../utils/helpers'
+import * as userActions from '../actions/userActions'
 
 class User extends React.Component {
   
@@ -46,7 +45,7 @@ class User extends React.Component {
     }
 
     else if(token && token !== "null") {
-      this.props.getUser(token);
+      this.props.getTwitchUser(token);
     }
 
     else if(queryObj.code) {
@@ -54,23 +53,22 @@ class User extends React.Component {
 
     }
     else {
-      this.props.setUser(null, false);
+      this.props.setTwitchUser(null);
+      this.props.setLocalUser(null, false);
     }
   }
 
   componentWillReceiveProps(nextProps) {
      // console.log(this.props)
      // console.log(nextProps)
-    if(this.props.loggingIn && nextProps.isLoggedIn && this.props.user == null) {
-      getLocalUser({name: nextProps.user.name}, (localUser) => {
-        console.log(localUser)
-      })
+    if(this.props.loggingIn && !this.props.userTwitch && nextProps.userTwitch) {
+      this.props.getLocalUser({name: nextProps.userTwitch.name})
     }
 
     if(this.props.token != nextProps.token) {
       localStorage.setItem("accessToken", nextProps.token);
       if(nextProps.token)
-        this.props.getUser(nextProps.token);
+        this.props.getTwitchUser(nextProps.token);
     }
 
   }
@@ -102,18 +100,29 @@ class User extends React.Component {
   }
 
   isLoggedIn() {
-    if(this.props.user && this.props.isLoggedIn && !this.props.loggingIn)
+    if(this.props.userLocal && this.props.isLoggedIn && !this.props.loggingIn)
       return (
         <div id="user">
-          <img className="profile-logo" src={this.props.user.logo ? this.props.user.logo : "/src/images/profile_default.jpg"} />
+          <img className="profile-logo" src={this.props.userTwitch.logo ? this.props.userTwitch.logo : "/src/images/profile_default.jpg"} />
           <div className="user-info">  
-            {this.props.user.display_name}
+            {this.props.userTwitch.display_name}
             <button className="logout-btn" onClick={this.props.logoutUser}><i className="fa fa-sign-out" aria-hidden="true"></i>Logout</button>
           </div>
         </div>
       )
-    else if(!this.props.loggingIn)
-      return <img onClick={this.login.bind(this)} src="http://ttv-api.s3.amazonaws.com/assets/connect_light.png" className="twitch-connect"/>
+    else if(!this.props.loggingIn) {
+      if(!this.props.navCollapse)
+        return <img onClick={this.login.bind(this)} src="http://ttv-api.s3.amazonaws.com/assets/connect_light.png" className="twitch-connect"/>
+      else
+        return (
+          <button onClick={this.login.bind(this)} className="sm-login-btn">
+            <div>
+              <img src="/src/images/twitch_logo.PNG" />
+              <i className="fa fa-sign-in" aria-hidden="true"></i>
+            </div>
+          </button>
+        )
+    }
   }
 
   render() {
@@ -130,24 +139,33 @@ const mapStateToProps = (state, ownProps) => {
     loggingIn: state.user.loggingIn,
     isLoggedIn: state.user.isLoggedIn,
     token: state.user.token,
-    user: state.user.user
+    userTwitch: state.user.userTwitch,
+    userLocal: state.user.userLocal,
+    navCollapse: state.app.navCollapse
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setToken: (token) => {
-      dispatch( user.setToken(token) );
+      dispatch( userActions.setToken(token) );
     },
     getToken: (code) => {
-      dispatch( user.getToken(code) );
+      dispatch( userActions.getToken(code) );
     },
-    setUser: (storeUser, loggingIn) => {
-      dispatch( user.setUser(storeUser, loggingIn) );
+    setTwitchUser: (user) => {
+      dispatch( userActions.setTwitchUser(user) );
     },
-    getUser: (token) => {
-      dispatch( user.setToken(token) );
-      dispatch( user.getUser(token) );
+    setLocalUser: (user, loggingIn) => {
+      dispatch( userActions.setLocalUser(user, loggingIn) );
+    },
+    getTwitchUser: (token) => {
+      dispatch( userActions.setToken(token) );
+      dispatch( userActions.getTwitchUser(token) );
+    },
+    getLocalUser: (user) => {
+      //dispatch( user.setToken(token) );
+      dispatch( userActions.getLocalUser(user) );
     },
     logoutUser: () => {
       const redirect_uri = location.hostname == "localhost" ? "http://localhost:8080" : "https://twitch-avid.herokuapp.com";
