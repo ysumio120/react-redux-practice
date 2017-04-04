@@ -17,12 +17,12 @@ class StreamCanvas extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.activeStreams.length != prevProps.activeStreams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
+    if(this.props.streams.length != prevProps.streams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
       this.optimizeStreamSize();
   }
 
   // muteToggle(muted) {
-  //   this.props.activeStreams.forEach((stream) => {
+  //   this.props.streams.forEach((stream) => {
   //     stream.player.setMuted(muted);
   //   })
 
@@ -40,14 +40,20 @@ class StreamCanvas extends React.Component {
             game: channel.game,
             dateViewed: Date.now()
           }
-
+          
+          for(let i = 0; i < this.props.streams.length; i++) {
+            if(this.props.streams[i].streamChannel == channel.name && this.props.streams[i].navChannel == this.props.activeChannel)
+              return;
+          }
+  
           postHistory(this.props.userLocal.name, data, (data) => {
             console.log(data);
-          })
+          });
+
+          this.props.addStream(this.props.activeChannel, channelID, channelName)
         }
       })
     }
-    this.props.addStream(this.props.activeChannel, channelID, channelName)
   }
 
   getBookmarkedChannels() {
@@ -71,7 +77,7 @@ class StreamCanvas extends React.Component {
   }
 
   streamPlayers() {
-    const filteredStreams = this.props.activeStreams.filter((stream) => {
+    const filteredStreams = this.props.streams.filter((stream) => {
       return this.props.navChannel === stream.navChannel;
     })
 
@@ -150,9 +156,8 @@ const mapStateToProps = (state, ownProps) => {
     containerHeight: ownProps.height,
     navChannel: ownProps.navChannel,
     activeChannel: state.streams.activeChannel,
-    activeStreams: state.streams.streams,
-    bookmarks: state.bookmarks.bookmarks,
-    muted: state.streams.muted
+    streams: state.streams.streams,
+    bookmarks: state.bookmarks.bookmarks
   }
 }
 

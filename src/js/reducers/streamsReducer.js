@@ -26,10 +26,10 @@ export default function reducer(state=initialState, action) {
         return {...stream};
       })
       
-      for(let i = 0; i < state.streams.length; i++) {
-        if(state.streams[i].streamChannel == action.streamChannel && state.streams[i].navChannel == action.navChannel)
-          return Object.assign({}, state, {streams: [...streamsClone]});
-      }
+      // for(let i = 0; i < state.streams.length; i++) {
+      //   if(state.streams[i].streamChannel == action.streamChannel && state.streams[i].navChannel == action.navChannel)
+      //     return Object.assign({}, state, {streams: [...streamsClone]});
+      // }
       return Object.assign({}, state, {streams: [...streamsClone, newStream]});
     }
     case "REMOVE_STREAM": {

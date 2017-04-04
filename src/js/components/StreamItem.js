@@ -40,11 +40,18 @@ class Game extends React.Component {
     }
 
     if(this.props.userLocal) {
+      for(let i = 0; i < this.props.streams.length; i++) {
+        if(this.props.streams[i].streamChannel == this.props.name && this.props.streams[i].navChannel == this.props.activeChannel) {
+          return;
+        }
+      }
+      
       postHistory(this.props.userLocal.name, data, (data) => {
         console.log(data);
       })
+
+      this.props.addStream(this.props.activeChannel, this.props.channelID, this.props.name)
     }
-    this.props.addStream(this.props.activeChannel, this.props.channelID, this.props.name)
   }
 
   render() {
@@ -64,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userLocal: state.user.userLocal,
     activeChannel: state.streams.activeChannel,
+    streams: state.streams.streams,
     channelID: ownProps.stream.channel._id, 
     name: ownProps.stream.channel.name,
     displayName: ownProps.stream.channel.display_name,
