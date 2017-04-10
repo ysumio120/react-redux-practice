@@ -15,25 +15,24 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 0,
-      height: 0
+      resize: false
     }
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.updateBroswerSize.bind(this))
-    this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight});
   }
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.navCollapse != prevProps.navCollapse || this.props.chatCollapse != prevProps.chatCollapse || this.props.listCollapse != prevProps.listCollapse)
-      //setTimeout(() => {
         this.updateBroswerSize();
-      //}, 200)
+
   }
 
   updateBroswerSize() {
-    this.setState({ width: this.canvasContainer.offsetWidth, height: this.canvasContainer.offsetHeight})
+    this.setState({resize: true}, () => {
+      this.setState({resize: false})
+    })
   }
 
   appOnClick(e) {
@@ -46,7 +45,7 @@ class App extends React.Component {
 
   appendStreamCanvases() {
     const streamCanvases = this.props.navChannels.map((channel) => {
-      return <StreamCanvas key={channel} navChannel={channel} width={this.state.width} height={this.state.height}/>
+      return <StreamCanvas key={channel} navChannel={channel} resize={this.state.resize}/>
     })
 
     return streamCanvases;
@@ -72,7 +71,7 @@ class App extends React.Component {
           <div className={(this.props.listCollapse || this.props.location.pathname == "/") ? "list-hide" : "list-show"}>
             {this.props.children}
           </div>
-          <div className="canvas-container" ref={(canvasContainer) => {this.canvasContainer = canvasContainer}}>{this.appendStreamCanvases()}</div>
+          <div className="canvas-container">{this.appendStreamCanvases()}</div>
         </div>
         <ChatColumn />
         <div className={this.props.modalOpen ? "modal-dim" : "modal-no-dim"}></div>

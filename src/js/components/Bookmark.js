@@ -10,13 +10,14 @@ class Bookmark extends React.Component {
 
   addToList(e) {
     const bookmark = this.props.bookmark.bookmark;
-
-    for(let i = 0; i < this.props.navChannels.length; i++) {
+ 
+    for(let i = 0; i < this.props.navChannels.length; i++) { // Check if bookmark is already in active list
       if(this.props.navChannels[i] == bookmark) {
         return this.props.setActiveChannel(bookmark);
       }  
     }
 
+    // Otherwise add to list and set as current active
     this.props.setActiveChannel(bookmark);
     this.props.addChannel(bookmark);
   }

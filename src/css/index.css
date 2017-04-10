@@ -18,14 +18,11 @@ body,
 }
 
 .stream-canvas.show {
-  display: flex;
-  flex-wrap: wrap;
   position: absolute;
   padding: 10px 0px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  justify-content: center;
 }
 
 .stream-canvas.hide {
@@ -33,9 +30,10 @@ body,
 }
 
 .stream-canvas-header {
+  overflow: hidden;
   display: flex;
   flex: 0 0 100%;
-  height: 50px;
+  height: 40px;
   align-self: flex-start;
   padding-bottom: 3px;
   border-bottom: 1px solid lightgrey;
@@ -48,18 +46,33 @@ body,
   height: 100%;
   border-right: 1px solid lightgrey;
   border-bottom: 3px transparent;
-  padding: 8px 10px;
+  padding: 10px 15px;
   box-sizing: border-box;
-  cursor:pointer;
+  cursor: default;
 }
 
-.header-tab:hover::after {
+.header-tab span {
+  user-select: none;
+}
+
+.header-tab:not(:nth-child(1)) {
+  cursor:pointer;
+  font-size: 0.9em;
+}
+
+.header-tab:not(:nth-child(1)):hover::after {
   content: '';
   position: absolute;
   bottom: -3px;
   left: 0;
   width: 100%;
   border-bottom: 3px solid blueviolet;
+}
+
+.header-tab.settings {
+  margin-left: auto;
+  border-left: 1px solid lightgrey;
+  border-right: none;
 }
 
 .header-channel-name {
@@ -70,19 +83,19 @@ body,
   overflow: hidden;
 }
 
-.header-channels-dropdown {
+.header-dropdown {
   display: none;
   position: absolute;
-  top: 53px;
+  top: 43px;
   left: -1px;
-  padding: 15px;
+  padding: 5px 15px;
   z-index: 100000;
   background-color: white;
   border: 1px solid darkgrey;
   white-space: nowrap;
 }
 
-.header-tab:hover .header-channels-dropdown {
+.header-tab:hover .header-dropdown {
   display: block;
 }
 
@@ -92,6 +105,7 @@ body,
 }
 
 .header-channels-dropdown > ul > li {
+  padding: 5px 0;
   margin: 5px 0;
 
 }
@@ -100,16 +114,27 @@ body,
   color: blueviolet;
 }
 
+.fa.fa-volume-up, 
+.fa.fa-volume-off {
+  min-width: 15px;
+  font-size: 1.1em;
+  margin-left: 7px;
+  color: dimgrey;
+}
+
 .stream-canvas-controls  {
   margin-left: 15px;
 }
 
 .stream-container {
-  position: relative;
+  position: absolute;
+  height: calc(100% - 50px);
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: flex-start;
+  align-content: center;
+  align-items: center;
 }
 
 .vid {
@@ -291,6 +316,7 @@ body,
 
 .stream-image {
   width: 200px;
+  transition: all .2s;
 }
 
 .stream-info {

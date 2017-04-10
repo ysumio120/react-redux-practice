@@ -12,22 +12,15 @@ class StreamCanvas extends React.Component {
     super(props);
     this.state = {
       opWidth: 0,
-      opHeight: 0
+      opHeight: 0,
+      muted: false
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.streams.length != prevProps.streams.length || this.props.containerHeight != prevProps.containerHeight || this.props.containerWidth != prevProps.containerWidth)
+    if(this.props.streams.length != prevProps.streams.length || (!prevProps.resize && this.props.resize))
       this.optimizeStreamSize();
   }
-
-  // muteToggle(muted) {
-  //   this.props.streams.forEach((stream) => {
-  //     stream.player.setMuted(muted);
-  //   })
-
-  //   this.props.setMuted(muted);
-  // }
 
   playStream(channelID, channelName) {
     if(this.props.userLocal) {
@@ -82,16 +75,26 @@ class StreamCanvas extends React.Component {
     })
 
     const streamPlayers = filteredStreams.map((stream, index) => {
-      return <StreamPlayer key={stream.navChannel + "-" + stream.streamChannel} order={index} stream={stream} width={this.state.opWidth} height={this.state.opHeight}/>
+      return <StreamPlayer 
+        key={stream.navChannel + "-" + stream.streamChannel} 
+        order={index} stream={stream} 
+        width={this.state.opWidth} 
+        height={this.state.opHeight}
+        mute={this.state.muted ? true : false}
+        />
     })
 
     return streamPlayers;
   }
 
+  muteCanvas(e) {
+    this.setState({muted: !this.state.muted});
+  }
+
   optimizeStreamSize() {
     const numStreams = this.streamPlayers().length;
-    const height = this.props.containerHeight;
-    const width = this.props.containerWidth;
+    const height = this.container.offsetHeight;
+    const width = this.container.offsetWidth;
     // console.log(height)
     // console.log(width)
 
@@ -100,7 +103,7 @@ class StreamCanvas extends React.Component {
 
     for(let perRow = 1; perRow <= numStreams; perRow++) {
       const numRows = Math.ceil(numStreams / perRow);
-      let maxHeight = Math.floor((height - 70) / numRows);
+      let maxHeight = Math.floor((height - 10) / numRows);
       let maxWidth = Math.floor(width / perRow);
       if (maxWidth * 9/16 < maxHeight) {
         maxHeight = maxWidth * 9/16;
@@ -120,12 +123,10 @@ class StreamCanvas extends React.Component {
   render() {
     const classNames = "stream-canvas" + (this.props.navChannel === this.props.activeChannel ? " show" : " hide");
 
-        //<div className="stream-canvas-controls">
-        //  <button onClick={() => this.muteToggle(true)}>Mute All</button>
-        //  <button onClick={() => this.muteToggle(false)}>Unmute All</button>
-        //</div>
+    const muted = this.state.muted ? "fa fa-volume-off" : "fa fa-volume-up";
+
     return (
-      <div data-tab={this.props.navChannel} className={classNames}>
+      <div className={classNames}>
         <div className="stream-canvas-header">
           <div className="header-tab">
             <div className="header-channel-name">
@@ -134,14 +135,25 @@ class StreamCanvas extends React.Component {
           </div>
           <div className="header-tab">
             <div className="header-saved-channels">
-              <span>Channels</span>
-              <div className="header-channels-dropdown">
+              <span>Collections</span>
+              <div className="header-dropdown header-channels-dropdown">
                 {this.getBookmarkedChannels()}
               </div>
             </div>
+          </div>          
+          <div className="header-tab" onClick={this.muteCanvas.bind(this)}>
+            <div className="" >
+              <span>Mute/Unmute</span>
+              <i className={muted} aria-hidden="true"></i>
+            </div>
+          </div>
+          <div className="header-tab">
+            <div className="">
+              <span>Settings</span>
+            </div>
           </div>
         </div>
-        <div className="stream-container">
+        <div ref={container => this.container = container} className="stream-container">
           {this.streamPlayers()}
         </div>
       </div>
@@ -152,9 +164,8 @@ class StreamCanvas extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     userLocal: state.user.userLocal,
-    containerWidth: ownProps.width,
-    containerHeight: ownProps.height,
     navChannel: ownProps.navChannel,
+    resize: ownProps.resize,
     activeChannel: state.streams.activeChannel,
     streams: state.streams.streams,
     bookmarks: state.bookmarks.bookmarks

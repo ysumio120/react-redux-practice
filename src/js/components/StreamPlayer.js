@@ -34,6 +34,10 @@ class StreamPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if(prevProps.mute != this.props.mute) {
+      this.state.player.setMuted(this.props.mute);
+    }
+
     if(prevProps.allStreams != this.props.allStreams || prevProps.width != this.props.width || prevProps.height != this.props.height) {
       this.setState({order: this.state.newOrder, top: 0, left: 0});
     }
@@ -206,6 +210,7 @@ const mapStateToProps = (state, ownProps) => {
     height: ownProps.height,
     order: ownProps.order,
     stream: ownProps.stream,
+    mute: ownProps.mute,
     navChannel: state.streams.activeChannel,
     dragActive: state.dragdrop.dragActive,
     swapTransition: state.dragdrop.swapTransition,
