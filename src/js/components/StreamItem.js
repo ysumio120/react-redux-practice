@@ -50,8 +50,8 @@ class Game extends React.Component {
         console.log(data);
       })
 
-      this.props.addStream(this.props.activeChannel, this.props.channelID, this.props.name)
     }
+    this.props.addStream(this.props.activeChannel, this.props.channelID, this.props.name)
   }
 
   render() {

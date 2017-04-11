@@ -10,7 +10,8 @@ class ModalBookmark extends React.Component {
     super(props);
     this.state = {
       savedFavorites: [],
-      value: ""
+      value: "",
+      validName: true
     }
   }
 
@@ -22,7 +23,7 @@ class ModalBookmark extends React.Component {
       if(this.props.userLocal) 
         this.fetchFavorite();
 
-      this.setState({value: this.props.bookmarkChannel});
+      this.setState({value: this.props.bookmarkChannel, validName: true});
     }
 
     this.markCheckboxes();
@@ -81,6 +82,7 @@ class ModalBookmark extends React.Component {
         <li key={id}>
           <input type="checkbox"
             id={id} 
+            onChange={this.onChangeHandler.bind(this)}
             data-id={stream.streamChannelID} 
             data-channel={stream.streamChannel} 
             value={stream.streamChannel} 
@@ -99,7 +101,16 @@ class ModalBookmark extends React.Component {
   }
 
   onChangeHandler(e) {
-    this.setState({value: e.target.value});
+    const bookmarks = this.props.bookmarks;
+    const value = e.target.value.trim();
+    for(let i = 0; i < bookmarks.length; i++)  {
+      if(value != this.props.bookmarkChannel && value === bookmarks[i].bookmark.trim() || value === "") {
+        this.setState({validName: false, value: e.target.value});
+        break;
+      }
+      else 
+        this.setState({validName: true, value: e.target.value})
+    }
   }
 
   onDelete() {
@@ -182,13 +193,14 @@ class ModalBookmark extends React.Component {
             value={this.state.value}
             onChange={this.onChangeHandler.bind(this)}
           />
+          <span className={this.state.validName ? "modal-error-hide" : "modal-error-show"}><i>{this.state.value ? "Already in use" : "Please enter a name"}</i></span>
           {this.getCurrentStreams()}
           {this.getSavedStreams()}
         </div>
         <div className="modal-footer">
           <div className="buttons">
             <button className="btn-delete" onClick={this.onDelete.bind(this)}>Delete</button> 
-            <button className="btn-save" onClick={this.onSubmit.bind(this)}>Save</button>
+            <button className="btn-save" onClick={this.onSubmit.bind(this)} disabled={!this.state.validName}>Save</button>
             <button className="btn-close" onClick={() => {this.props.toggleModal(false)}}>Close</button>
           </div>
         </div>
@@ -202,6 +214,7 @@ const mapStateToProps = (state, ownProps) => {
     userLocal: state.user.userLocal,
     streams: state.streams.streams,
     modalOpen: state.bookmarks.modalOpen,
+    bookmarks: state.bookmarks.bookmarks,
     bookmarkChannel: state.bookmarks.bookmarkChannel,
     modalType: state.bookmarks.modalType
   }

@@ -14,7 +14,9 @@ class Following extends React.Component {
 
   componentDidMount() {
     this.props.toggleList(false);
-    this.props.fetchStreams(this.props.token);
+    if(this.props.userLocal) {
+      this.props.fetchStreams(this.props.token);
+    }
   }
 
   followingList() {

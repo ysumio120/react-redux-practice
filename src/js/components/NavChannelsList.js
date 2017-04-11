@@ -22,9 +22,9 @@ class NavChannelsList extends React.Component {
 
   onChangeInput(e) {
     const navChannels = this.props.navChannels;
-    const value = this.input.value.toLowerCase().trim();
+    const value = this.input.value.trim();
     for(let i = 0; i < navChannels.length; i++)  {
-      if(value === navChannels[i].toLowerCase().trim() || value === "") {
+      if(value === navChannels[i].trim() || value === "") {
         this.setState({validChannel: false});
         break;
       }

@@ -18,8 +18,14 @@ class StreamCanvas extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.streams.length != prevProps.streams.length || (!prevProps.resize && this.props.resize))
+    if(this.props.navChannel === this.props.activeChannel && 
+        (prevProps.activeChannel !== this.props.activeChannel || 
+          this.props.streams.length != prevProps.streams.length || 
+          (!prevProps.resize && this.props.resize))) {
+
       this.optimizeStreamSize();
+    
+    }
   }
 
   playStream(channelID, channelName) {
