@@ -31,7 +31,7 @@ class User extends React.Component {
     return queryObj;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let token = localStorage.getItem("accessToken");
     //console.log(token);
 
