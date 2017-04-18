@@ -492,6 +492,7 @@ body,
 .sm-login-btn {
   position: relative;
   overflow: hidden;
+  max-width: 43px;
   border-radius: 3px;
   padding: 5px 4px;
   margin-left: 4px;
