@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/ysumio120/react-redux-practice#readme",
   "dependencies": {
-    "axios": "^0.15.3",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
@@ -36,13 +35,15 @@
     "express": "^4.14.1",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.6",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^1.16.3"
+  },
+  "devDependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^1.16.3"
+    "redux-thunk": "^2.2.0"
   }
 }

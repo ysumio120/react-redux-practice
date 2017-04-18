@@ -97,6 +97,18 @@ class StreamCanvas extends React.Component {
     this.setState({muted: !this.state.muted});
   }
 
+  openSettings(e) {
+    this.props.setBookMark(this.props.activeChannel);
+
+    for(let i = 0; i < this.props.bookmarks.length; i++) {
+      if(this.props.bookmarks[i].bookmark == this.props.activeChannel) {
+        return this.props.toggleModal(true, "update");
+      }
+    }
+
+    this.props.toggleModal(true, "add");
+  }
+
   optimizeStreamSize() {
     const numStreams = this.streamPlayers().length;
     const height = this.container.offsetHeight;
@@ -153,7 +165,7 @@ class StreamCanvas extends React.Component {
               <i className={muted} aria-hidden="true"></i>
             </div>
           </div>
-          <div className="header-tab">
+          <div className="header-tab" onClick={this.openSettings.bind(this)}>
             <div className="">
               <span>Settings</span>
             </div>
@@ -185,6 +197,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     setMuted: (muted) => {
       dispatch( {type: "SET_MUTED", muted} )
+    }, 
+    toggleModal: (toggle, modalType) => {
+      dispatch( {type: "TOGGLE_MODAL", toggle, modalType} )
+    },
+    setBookMark: (channel) => {
+      dispatch( {type: "SET_BOOKMARK_CHANNEL", channel} )
     }
   }
 }

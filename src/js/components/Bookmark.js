@@ -50,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addChannel: (channelName) => {
-      dispatch( {type: "ADD_CHANNEL", channel: channelName} )
+      dispatch( {type: "ADD_CHANNEL", navChannel: channelName} )
     },
     setActiveChannel: (channelName) => {
       dispatch( {type: "SET_CHANNEL", navChannel: channelName} )

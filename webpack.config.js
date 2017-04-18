@@ -15,10 +15,6 @@ module.exports = {
           presets: ['react', 'es2015']
           //plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
         }
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },
@@ -33,7 +29,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
   ],
 };

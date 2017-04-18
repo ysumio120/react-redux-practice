@@ -14,7 +14,13 @@ class Following extends React.Component {
 
   componentDidMount() {
     this.props.toggleList(false);
-    if(this.props.userLocal) {
+    // if(this.props.userLocal) {
+    //   this.props.fetchStreams(this.props.token);
+    // }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevProps.userLocal && this.props.userLocal) {
       this.props.fetchStreams(this.props.token);
     }
   }

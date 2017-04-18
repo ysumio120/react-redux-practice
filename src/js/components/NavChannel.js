@@ -22,6 +22,11 @@ class NavChannel extends React.Component {
     this.setState({bookmarkHover: false});
   }
 
+  removeChannel(e) {
+    e.stopPropagation();
+    this.props.removeChannel(this.props.channel);
+  }
+
   addBookmark(e) {
     e.stopPropagation(); 
 
@@ -31,7 +36,6 @@ class NavChannel extends React.Component {
   }
 
   isBookmarked() {
-    console.log(this.props.bookmarks.length)
     for(let i = 0; i < this.props.bookmarks.length; i++) {
       if(this.props.bookmarks[i].bookmark == this.props.channel) {
         return (
@@ -58,6 +62,9 @@ class NavChannel extends React.Component {
   render() {
     const label = this.props.navCollapse ? this.props.channel.substring(0,1).toUpperCase() : this.props.channel 
 
+    const close = this.props.channel != "Home" ? 
+                    <i className="fa fa-times-circle" onClick={this.removeChannel.bind(this)} aria-hidden="true"></i> 
+                      : null;
     return (
         <li 
           onClick={() => this.props.setActiveChannel(this.props.channel)} 
@@ -65,6 +72,7 @@ class NavChannel extends React.Component {
         >
           {this.isBookmarked()}
           {label}
+          {close}
         </li>
     )
   }
@@ -83,6 +91,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChannel: (channelName) => {
       dispatch( {type: "SET_CHANNEL", navChannel: channelName} )
+    },
+    removeChannel: (channelName) => {
+      dispatch( {type: "REMOVE_CHANNEL", navChannel: channelName} )
     },
     toggleModal: (toggle, modalType) => {
       dispatch( {type: "TOGGLE_MODAL", toggle, modalType} )

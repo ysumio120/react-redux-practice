@@ -88,7 +88,7 @@ body,
   position: absolute;
   min-width: 150px;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   top: 43px;
   left: -1px;
@@ -210,7 +210,7 @@ body,
   left: 46%;
 }
 
-.fa.fa-times {
+.overlay .fa.fa-times {
   color: white;
   font-size: 125%;
   padding: 4px 4px;
@@ -683,6 +683,20 @@ body,
   padding: 1px;
 }
 
+#nav-channels > ul > li > .fa.fa-times-circle {
+  position: absolute;
+  right: 9px;
+  opacity: 0;
+}
+
+#nav-channels > ul > li:hover > .fa.fa-times-circle {
+  opacity: 0.6;
+}
+
+#nav-channels > ul > li > .fa.fa-times-circle:hover {
+  opacity: 1.0;
+}
+
 #bookmarks > ul > li > div > .fa.fa-cog {
   margin-right: 10px;
   font-size: 1em;
@@ -907,6 +921,7 @@ select {
 #addChannel > input {
   width: 100%;
   margin-top: 10px;
+  padding: 3px;
 }
 
 #addChannel.open {
@@ -969,10 +984,11 @@ select {
   top: 0;
   left: 0;
   right: 0;
-  transition: opacity .2s;
+/*  transition: opacity .2s;*/
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 3px 20px;
+  font-size: .95em;
 }
 
 .modal-show {
@@ -989,7 +1005,7 @@ select {
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.3;
+  opacity: 0.5;
   z-index: 999999;
   top: 0;
   left: 0;
@@ -1001,6 +1017,7 @@ select {
 }
 
 .modal ul {
+  margin: 5px;
   padding-left: 0;
 }
 
@@ -1014,6 +1031,11 @@ select {
 
 .modal ul > li > label {
   padding-left: 10px;
+}
+
+.modal .modal-instruction {
+  font-size: .95em;
+  margin-bottom: 10px;
 }
 
 .modal .buttons {
@@ -1043,6 +1065,10 @@ select {
 
 .modal .btn-delete:hover {
   background-color: #ff544b;
+}
+
+.btn-hide {
+  display: none;
 }
 
 .modal-error-hide {

@@ -34,14 +34,18 @@ class StreamPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+
+    // Check 'mute' state
     if(prevProps.mute != this.props.mute) {
       this.state.player.setMuted(this.props.mute);
     }
 
+    // Reset flexbox order
     if(prevProps.allStreams != this.props.allStreams || prevProps.width != this.props.width || prevProps.height != this.props.height) {
       this.setState({order: this.state.newOrder, top: 0, left: 0});
     }
 
+    // Add/Remove Event Listener
     if(this.state.dragging && !prevState.dragging) {
       document.addEventListener('mousemove', this.onDrag.bind(this))
     }
@@ -49,8 +53,9 @@ class StreamPlayer extends React.Component {
       document.removeEventListener('mousemove', this.onDrag.bind(this))
     }
 
+    // Reset or set new position
     if(this.props.stream.navChannel == this.props.navChannel) {
-      if(this.state.drophover && this.props.dragActive && this.props.swapTransition) { // new position for droppable
+      if(this.state.drophover && this.props.dragActive && this.props.swapTransition) {
         const newPos = this.setNewPosition(false);
       
         this.setState({drophover: false, ...newPos, newOrder: this.props.dragdrop.dragOrder});

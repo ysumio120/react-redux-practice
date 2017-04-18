@@ -62,12 +62,16 @@ class ModalBookmark extends React.Component {
       )
     })
 
-    return (
-      <div>
-        <i>{streams.length > 0 ? "Channels Saved: " : "Channels Saved: None"}</i>
-        <ul>{streams}</ul>
-      </div>
-    )
+    if(streams.length > 0) {
+      return (
+        <div>
+          <b>Channels Saved:</b>
+          <ul>{streams}</ul>
+        </div>
+      )
+    }
+
+    return null;
   }
 
   getCurrentStreams() {
@@ -82,7 +86,6 @@ class ModalBookmark extends React.Component {
         <li key={id}>
           <input type="checkbox"
             id={id} 
-            onChange={this.onChangeHandler.bind(this)}
             data-id={stream.streamChannelID} 
             data-channel={stream.streamChannel} 
             value={stream.streamChannel} 
@@ -92,12 +95,16 @@ class ModalBookmark extends React.Component {
       )
     })
 
-    return (
-      <div>
-        <i>{streams.length > 0 ? "Currently Playing:" : "Currently Playing: None"}</i>
-        <ul>{streams}</ul>
-      </div>
-    )
+    if(streams.length > 0) {
+      return (
+        <div>
+          <b>Currently Playing:</b>
+          <ul>{streams}</ul>
+        </div>
+      )
+    }
+
+    return null;
   }
 
   onChangeHandler(e) {
@@ -194,12 +201,13 @@ class ModalBookmark extends React.Component {
             onChange={this.onChangeHandler.bind(this)}
           />
           <span className={this.state.validName ? "modal-error-hide" : "modal-error-show"}><i>{this.state.value ? "Already in use" : "Please enter a name"}</i></span>
+          <div className="modal-instruction"><i>Check the following channels to add to bookmark</i></div>
           {this.getCurrentStreams()}
           {this.getSavedStreams()}
         </div>
         <div className="modal-footer">
           <div className="buttons">
-            <button className="btn-delete" onClick={this.onDelete.bind(this)}>Delete</button> 
+            <button className={"btn-delete " + (this.props.modalType == "add" ? "btn-hide" : "")} onClick={this.onDelete.bind(this)}>Delete</button> 
             <button className="btn-save" onClick={this.onSubmit.bind(this)} disabled={!this.state.validName}>Save</button>
             <button className="btn-close" onClick={() => {this.props.toggleModal(false)}}>Close</button>
           </div>

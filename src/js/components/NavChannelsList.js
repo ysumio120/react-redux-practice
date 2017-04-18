@@ -23,6 +23,11 @@ class NavChannelsList extends React.Component {
   onChangeInput(e) {
     const navChannels = this.props.navChannels;
     const value = this.input.value.trim();
+
+    if(value && navChannels.length == 0) {
+        this.setState({validChannel: true});
+    }
+
     for(let i = 0; i < navChannels.length; i++)  {
       if(value === navChannels[i].trim() || value === "") {
         this.setState({validChannel: false});
@@ -53,7 +58,7 @@ class NavChannelsList extends React.Component {
 
   getChannels() {
     const channels = this.props.navChannels.map((channel) => {
-      return <NavChannel key={channel} channel={channel} />
+      return <NavChannel key={"tab--" + channel} channel={channel} />
     })
 
     return channels;
@@ -64,11 +69,11 @@ class NavChannelsList extends React.Component {
     return (
       <div id="nav-channels" className="nav-list">
         <div className="nav-header">
-          <span>ACTIVE CHANNELS</span>
+          <span>ACTIVE TABS</span>
           <i onClick={this.onToggleInput.bind(this)} className="fa fa-plus" aria-hidden="true"></i>
         </div>
         <div id="addChannel" className={(this.state.inputOpen && !this.props.navCollapse) ? "open" : "close" }>
-          <input ref={input => {this.input = input}} onChange={this.onChangeInput.bind(this)} placeholder="Enter channel name"/>
+          <input ref={input => {this.input = input}} onChange={this.onChangeInput.bind(this)} placeholder="Enter tab name"/>
           <button onClick={this.onSubmit.bind(this)} disabled={!this.state.validChannel}>OK</button>
           <button onClick={this.onToggleInput.bind(this)}>Close</button>
         </div>
@@ -91,7 +96,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addChannel: (channelName) => {
-      dispatch( {type: "ADD_CHANNEL", channel: channelName} )
+      dispatch( {type: "ADD_CHANNEL", navChannel: channelName} )
     },
     setActiveChannel: (channelName) => {
       dispatch( {type: "SET_CHANNEL", navChannel: channelName} )
