@@ -301,16 +301,16 @@ body,
   transition: all .15s;
 }
 
-.streams-list > ul {
+.streams-list ul {
   height: 100%;
   padding: 0 10px;
   margin: 0;
   white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+/*  overflow-x: scroll;
+  overflow-y: hidden;*/
 }
 
-.streams-list > ul > li {
+.streams-list ul > li {
   display: inline-block;
   list-style-type: none;
   margin: 10px 15px 10px 0px;
@@ -346,17 +346,17 @@ body,
   overflow: hidden;
 }
 
-#games-list > ul {
+#games-list ul {
   height: 100%;
   padding: 0;
   margin: 0;
   text-align: center;
   white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  /*overflow-x: scroll;*/
+  /*overflow-y: hidden;*/
 }
 
-#games-list > ul > li {
+#games-list ul > li {
   display: inline-block;
   list-style-type: none;
   margin: 10px 15px;
@@ -456,15 +456,15 @@ body,
   background-color: #3a2c55;
 }
 
-#nav-col.nav-open {
+.nav-open {
   width: 240px;
 }
 
-#nav-col.nav-close {
-  width: 50px;
+.nav-close {
+  width: 55px;
 }
 
-#nav-col > h1 {
+#nav-col h1 {
   text-align: center;
   color: white;
 }
@@ -472,7 +472,6 @@ body,
 #user-wrapper {
   box-sizing: border-box;
   height: 65px;
-  min-width: 240px;
   color: white;
   background-color: #30264d;
   padding: 10px 0;
@@ -486,7 +485,7 @@ body,
 }
 
 #nav-col.nav-close #user-wrapper #user {
-  margin-left: 3px;
+  margin-left: 6px;
 }
 
 .sm-login-btn {
@@ -529,7 +528,6 @@ body,
 
 .profile-logo {
   width: 40px;
-  margin-right: 8px;
   vertical-align: top;
   border: 1px solid grey;
 }
@@ -538,6 +536,11 @@ body,
   font-size: 13px;
   display: inline-block;
   margin-top: 2px;
+  margin-left: 8px;
+}
+
+.nav-close .user-info {
+  display: none;
 }
 
 .logout-btn {
@@ -559,6 +562,10 @@ body,
   margin-left: 20px;
 }
 
+.nav-close .fa.fa-search {
+  position: static;
+} 
+
 .fa.fa-search {
   position: absolute;
   font-size: 14px;
@@ -571,6 +578,10 @@ body,
   padding-bottom: 6px;
 }
 
+
+.nav-close #search > input {
+  display: none;
+}
 
 #search > input {
   color: #dddddd;
@@ -601,8 +612,7 @@ body,
 }
 
 #nav-col.nav-close .fa.fa-search {
-  top: 4px;
-  left: 9px;
+  margin-left: 3px;
   font-size: 19px;
   cursor: pointer;
 }
@@ -610,8 +620,6 @@ body,
 #nav-col.nav-close #search > input {
   opacity: 0;
 }
-
-
 
 .nav-list {
   margin: 20px 0;
@@ -664,6 +672,10 @@ body,
   width: 15px;
 }
 
+.nav-close #nav-menu > ul > li > a > i {
+margin-left: 3px;
+}
+
 
 #nav-channels > ul > li > div,
 #bookmarks > ul > li > div {
@@ -696,6 +708,10 @@ body,
 
 #nav-channels > ul > li > .fa.fa-times-circle:hover {
   opacity: 1.0;
+}
+
+.nav-close .fa.fa-times-circle {
+  display: none;
 }
 
 #bookmarks > ul > li > div > .fa.fa-cog {
@@ -777,8 +793,8 @@ body,
 #nav-col.nav-close #nav-channels > ul > li {
   text-align: center;
   margin-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 8px;
+  margin-right: 8px;
   padding: 10px;
   line-height: 1em;
   border: 1px solid white;
@@ -798,7 +814,7 @@ body,
 #nav-col.nav-close .fa.fa-plus {
   border: none;
   top: -5px;
-  right: -6px;
+  right: -4px;
 }
 
 .nav-header hr {

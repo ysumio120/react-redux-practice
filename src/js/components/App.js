@@ -36,6 +36,8 @@ class App extends React.Component {
   }
 
   appOnClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
     this.props.toggleSearch(false);
   }
 
